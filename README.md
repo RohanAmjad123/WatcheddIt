@@ -1,4 +1,4 @@
-# WatchedIt
+# Watcheddit
 
 ## Authors/Contributers
 
