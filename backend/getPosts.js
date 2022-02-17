@@ -7,7 +7,7 @@ exports.getPosts = (req, res) => {
     console.log("posts");
     dbConnect
     .collection("media")
-    .find({title: title}, {projection: {_id: 0, title: 0}}).limit(100)
+    .find({title: title}, {projection: { title: 0}}).limit(100)
     .toArray(function (err, result) {
       if (err) {
         res.status(400).send("Error fetching posts!");
