@@ -1,39 +1,14 @@
 const express = require("express");
-const bodyParser = require("body-parser");
-const getComments = require("./getComments.js");
 
 const dbi = require("./database.js");
-const  getPosts  = require("./getPosts.js");
 
-dbi.connectToServer();
+const getComments = require("./getComment.js");
+const getPosts = require("./getPosts.js");
+const getMovies = require("./getMovies.js");
 
 const app = express();
 
-app.listen(3000, function(){
-    console.log("server started");
-});
-
-app.get('/', function(req, res){
-    
-    const dbConnect = dbi.getDb();
-    const matchDocument = {
-    //   listing_id: 10006542,
-    //   last_modified: new Date(),
-    //   session_id: 1,
-    //   direction: "req.body.direction"
-    };
-  
-    dbConnect
-    .collection("comments")
-    .find({}).limit(50)
-    .toArray(function (err, result) {
-      if (err) {
-        res.status(400).send("Error fetching listings!");
-     } else {
-        res.json(result); 
-      }
-    });
-});
+dbi.connectToServer();
 
 // examples:
 // retrieves all comments for a post with a given id:
@@ -50,6 +25,26 @@ app.route('/api/:postId/comments').get(function(req, res){getComments.getComment
 app.route('/api/:postTitle/:postId/comments/:limit').get(function(req, res){getComments.getComments(req, res)});
 app.route('/api/:postId/comments/:limit').get(function(req, res){getComments.getComments(req, res)});
 
-
 // Retrieves all posts (ObjectId) associated with a Movie Title. 
-app.route('/api/media/:title/posts/').get(function(req, res){getPosts.getPosts(req, res)});
+app.route('/api/media/:title/posts/').get(function (req, res) {
+    getPosts.getPosts(req, res)
+});
+
+// Retrieve all movies in the database
+app.route('/api/media').get(function (req, res) {
+    getMovies.getMovies(req, res)
+});
+
+// Retrieve movies from the database based on page number with limit of 10
+app.route('/api/media/:page').get(function (req, res) {
+    getMovies.getMoviePage(req, res)
+});
+
+// Retrieve the amount of movies in the database
+app.route('/api/media-count/').get(function (req, res) {
+    getMovies.getMovieCount(req, res)
+});
+
+app.listen(3000, function () {
+    console.log("server started on http://127.0.0.1:3000");
+});
