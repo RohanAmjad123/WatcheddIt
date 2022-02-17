@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/RohanAmjad123/WatcheddIt/issues"
   },
-  "homepage": "https://github.com/RohanAmjad123/WatcheddIt#readme"
+  "homepage": "https://github.com/RohanAmjad123/WatcheddIt#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "mongoose": "^6.2.2"
+  }
 }
