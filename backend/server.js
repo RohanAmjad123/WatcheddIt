@@ -35,10 +35,9 @@ app.get('/', function(req, res){
     });
 });
 
-//app.route('/api/:media/:post/').get(function(req, res){getComments.getComments(req, res)});
+app.route('/api/:media/:post/comments').get(function(req, res){getComments.getComments(req, res)});
 
-//app.route('/api/:post/').get(function(req, res){getComments.getComments(req, res)});
-
+app.route('/api/:post/comments').get(function(req, res){getComments.getComments(req, res)});
 
 // Retrieves all posts (ObjectId) associated with a Movie Title. 
 app.route('/api/media/:title/posts/').get(function(req, res){getPosts.getPosts(req, res)});
