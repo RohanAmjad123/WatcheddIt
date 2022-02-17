@@ -9,16 +9,14 @@ const client = new MongoClient(connection, {
 let dbConnection;
 
 module.exports = {
-    connectToServer: function (callback) {
+    connectToServer: function () {
         client.connect(function (err, db) {
             if (err || !db) {
-                // return callback(err);
+                console.log(err)
+                return
             }
-
             dbConnection = db.db("read");
             console.log("Successfully connected to MongoDB.");
-
-            //   return callback();
         });
     },
 
