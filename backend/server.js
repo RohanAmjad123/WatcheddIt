@@ -35,9 +35,12 @@ app.get('/', function(req, res){
     });
 });
 
+// retrieves all comments for a given post. 
+// two endpoints in case you want to include the name of the media in the url
+// {
 app.route('/api/:media/:post/comments').get(function(req, res){getComments.getComments(req, res)});
-
 app.route('/api/:post/comments').get(function(req, res){getComments.getComments(req, res)});
+// }
 
 // Retrieves all posts (ObjectId) associated with a Movie Title. 
 app.route('/api/media/:title/posts/').get(function(req, res){getPosts.getPosts(req, res)});
