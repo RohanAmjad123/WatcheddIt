@@ -1,5 +1,7 @@
 
 /backend/test.js
+package-lock.json
+package.json
 
 # mac
 .DS_Store
