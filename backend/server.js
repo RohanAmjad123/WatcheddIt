@@ -35,3 +35,5 @@ app.get('/', function(req, res){
 app.route('/api/:media/:post/').get(function(req, res){getComments.getComments(req, res)});
 
 app.route('/api/:post/').get(function(req, res){getComments.getComments(req, res)});
+
+dbi.connectToServer();
