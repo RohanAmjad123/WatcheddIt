@@ -3,6 +3,9 @@ const bodyParser = require("body-parser");
 const getComments = require("./getComment.js");
 
 const dbi = require("./database.js");
+const  getPosts  = require("./getPosts.js");
+
+var router = express.Router();
 
 const app = express();
 
@@ -35,5 +38,10 @@ app.get('/', function(req, res){
 app.route('/api/:media/:post/').get(function(req, res){getComments.getComments(req, res)});
 
 app.route('/api/:post/').get(function(req, res){getComments.getComments(req, res)});
+
+
+// Retrieves all posts (ObjectId) associated with a Movie Title. 
+app.route('/api/media/:title/').get(function(req, res){getPosts.getPosts(req, res)});
+
 
 dbi.connectToServer();
