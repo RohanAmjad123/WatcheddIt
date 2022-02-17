@@ -1,27 +1,20 @@
 {
-  "name": "backend",
+  "name": "watchedit",
   "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
+  "description": "*Add your name*",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RohanAmjad123/WatchedIt.git"
+    "url": "git+https://github.com/RohanAmjad123/WatcheddIt.git"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/RohanAmjad123/WatchedIt/issues"
+    "url": "https://github.com/RohanAmjad123/WatcheddIt/issues"
   },
-  "homepage": "https://github.com/RohanAmjad123/WatchedIt#readme",
-  "dependencies": {
-    "bcrypt": "^5.0.1",
-    "body-parser": "^1.19.2",
-    "dotenv": "^16.0.0",
-    "express": "^4.17.2",
-    "mongodb": "^4.3.1"
-  }
+  "homepage": "https://github.com/RohanAmjad123/WatcheddIt#readme"
 }
