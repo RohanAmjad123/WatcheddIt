@@ -30,7 +30,7 @@ app.get('/', function(req, res){
       if (err) {
         res.status(400).send("Error fetching listings!");
      } else {
-        res.json(result);
+        res.json(result); 
       }
     });
 });
