@@ -1,15 +1,16 @@
 const express = require("express");
 const {MongoClient} = require("mongodb");
 const bodyParser = require("body-parser");
+const getComments = require("./getComment.js");
 
 const app = express();
-const connection = "mongodb+srv://user2:seng401@cluster0.bgqcz.mongodb.net/test";
+const connection = "mongodb+srv://admin:a@cluster0.pqb5x.mongodb.net/test";
 const client = new MongoClient(connection, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
 
-let dbconnection;
+let dbConnection;
 
 function connectToServer(callback) {
     client.connect(function (err, db) {
@@ -36,10 +37,10 @@ app.get('/', function(req, res){
     
     const dbConnect = getDb();
     const matchDocument = {
-      listing_id: 10006542,
-      last_modified: new Date(),
-      session_id: 1,
-      direction: "req.body.direction"
+    //   listing_id: 10006542,
+    //   last_modified: new Date(),
+    //   session_id: 1,
+    //   direction: "req.body.direction"
     };
   
     dbConnect
@@ -54,4 +55,6 @@ app.get('/', function(req, res){
     });
 });
 
-connectToServer();
+app.route('/api/:media/:post/').get(function(req, res){getComments.getComments(req, res)});
+
+app.route('/api/:post/').get(function(req, res){getComments.getComments(req, res)});
