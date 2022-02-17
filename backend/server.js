@@ -41,7 +41,7 @@ app.get('/', function(req, res){
 
 
 // Retrieves all posts (ObjectId) associated with a Movie Title. 
-app.route('/api/media/:title/').get(function(req, res){getPosts.getPosts(req, res)});
+app.route('/api/media/:title/posts/').get(function(req, res){getPosts.getPosts(req, res)});
 
 
 dbi.connectToServer();
