@@ -2,7 +2,7 @@ const express = require("express");
 
 const dbi = require("./database.js");
 
-const getComments = require("./getComment.js");
+const getComments = require("./getComments.js");
 const getPosts = require("./getPosts.js");
 const getMovies = require("./getMovies.js");
 
