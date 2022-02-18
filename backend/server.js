@@ -7,6 +7,7 @@ const getPosts = require("./getPosts.js");
 const getMovies = require("./getMovies.js");
 
 const app = express();
+app.use(express.json());
 
 dbi.connectToServer();
 
@@ -26,7 +27,7 @@ app.route('/api/:postTitle/:postId/comments/:limit').get(function(req, res){getC
 app.route('/api/:postId/comments/:limit').get(function(req, res){getComments.getComments(req, res)});
 
 app.route('/api/addMedia').post(function(req, res){
-  const dbConnect = connect.getDb();
+  const dbConnect = dbi.getDb();
 
     dbConnect
     .collection("media")
