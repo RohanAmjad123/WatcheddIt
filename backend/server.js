@@ -25,6 +25,16 @@ app.route('/api/:postId/comments').get(function(req, res){getComments.getComment
 app.route('/api/:postTitle/:postId/comments/:limit').get(function(req, res){getComments.getComments(req, res)});
 app.route('/api/:postId/comments/:limit').get(function(req, res){getComments.getComments(req, res)});
 
+app.route('/api/addMedia').post(function(req, res){
+  const dbConnect = connect.getDb();
+
+    dbConnect
+    .collection("media")
+    .insertOne(req.body);
+
+    res.sendStatus(200);
+});
+
 // Retrieves all posts (ObjectId) associated with a Movie Title. 
 app.route('/api/media/:title/posts/').get(function (req, res) {
     getPosts.getPosts(req, res)
