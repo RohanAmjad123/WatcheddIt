@@ -2,7 +2,7 @@ const express = require("express");
 
 const dbi = require("./database.js");
 
-const getComments = require("./getComment.js");
+const getComments = require("./getComments.js");
 const getPosts = require("./getPosts.js");
 const getMovies = require("./getMovies.js");
 
@@ -24,6 +24,16 @@ app.route('/api/:postTitle/:postId/comments').get(function(req, res){getComments
 app.route('/api/:postId/comments').get(function(req, res){getComments.getComments(req, res)});
 app.route('/api/:postTitle/:postId/comments/:limit').get(function(req, res){getComments.getComments(req, res)});
 app.route('/api/:postId/comments/:limit').get(function(req, res){getComments.getComments(req, res)});
+
+app.route('/api/addMedia').post(function(req, res){
+  const dbConnect = connect.getDb();
+
+    dbConnect
+    .collection("media")
+    .insertOne(req.body);
+
+    res.sendStatus(200);
+});
 
 // Retrieves all posts (ObjectId) associated with a Movie Title. 
 app.route('/api/media/:title/posts/').get(function (req, res) {
