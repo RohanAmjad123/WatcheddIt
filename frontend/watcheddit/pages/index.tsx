@@ -1,5 +1,6 @@
 import { Grid } from '@mui/material';
 import Movie from '../components/Movie';
+import { Container } from '@mui/material';
 
 const movies = [
   {
@@ -19,11 +20,11 @@ export default function home() {
   );
   
   return (
-      <div>
+      <Container>
           <Grid container>
             {m}
           </Grid>
-      </div>
+      </Container>
   );
 }
 
