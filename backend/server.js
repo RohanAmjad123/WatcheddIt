@@ -1,15 +1,36 @@
 const express = require("express");
-
+const session = require('express-session');
 const dbi = require("./database.js");
+
+
 
 const getComments = require("./getComments.js");
 const getPosts = require("./getPosts.js");
 const getMovies = require("./getMovies.js");
+const { send } = require("process");
 
 const app = express();
 app.use(express.json());
 
 dbi.connectToServer();
+
+app.use(session({
+    key: "userId",
+    secret: "secret",
+    resave: false,
+    saveUninitialized: false,
+    cookie:{
+      expires: 7 * 24 * 3600 * 1000 // 30 minutes (d * h/d * s/h * ms/s) 
+    }
+}));
+
+  // empty cookies for temporary API before 
+  // login is implemented
+app.get("/", function(req, res){
+    req.session.user = {name:"user"};
+    // req.session.admin = {name:"admin"};
+    res.send("welcome");
+});
 
 // examples:
 // retrieves all comments for a post with a given id:
@@ -21,19 +42,41 @@ dbi.connectToServer();
 //   /api/620da70c1cfcdb12af569d91/comments/105
 
 // title is not used but might be good for clarity for users (limit defaults to inf)
-app.route('/api/:postTitle/:postId/comments').get(function(req, res){getComments.getComments(req, res)});
-app.route('/api/:postId/comments').get(function(req, res){getComments.getComments(req, res)});
-app.route('/api/:postTitle/:postId/comments/:limit').get(function(req, res){getComments.getComments(req, res)});
-app.route('/api/:postId/comments/:limit').get(function(req, res){getComments.getComments(req, res)});
+app.route('/api/:postTitle/:postId/comments').get(function(req, res){
+    getComments.getComments(req, res)
+});
+app.route('/api/:postId/comments').get(function(req, res){
+    getComments.getComments(req, res)
+});
+app.route('/api/:postTitle/:postId/comments/:limit').get(function(req, res){
+    getComments.getComments(req, res)
+});
+app.route('/api/:postId/comments/:limit').get(function(req, res){
+    getComments.getComments(req, res)
+});
+
+app.route('/api/addMedia').get(function(req, res){
+    if(req.session.admin){
+        res.send("admin");
+    }
+    else{
+        res.send("err");
+    }
+});
 
 app.route('/api/addMedia').post(function(req, res){
-  const dbConnect = dbi.getDb();
+    if(req.session.admin){
+        const dbConnect = dbi.getDb();
 
-    dbConnect
-    .collection("media")
-    .insertOne(req.body);
+        dbConnect
+        .collection("media")
+        .insertOne(req.body);
 
-    res.sendStatus(200);
+        res.sendStatus(200);
+    }
+    else{
+        res.send("err");
+    }
 });
 
 // Retrieves all posts (ObjectId) associated with a Movie Title. 
