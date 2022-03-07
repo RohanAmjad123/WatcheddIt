@@ -37,7 +37,7 @@ app.route('/api/addMedia').post(function(req, res){
 });
 
 // Retrieves all posts (ObjectId) associated with a Movie Title. 
-app.route('/api/media/:title/posts/').get(function (req, res) {
+app.route('/api/media/:Title/posts/').get(function (req, res) {
     getPosts.getPosts(req, res)
 });
 

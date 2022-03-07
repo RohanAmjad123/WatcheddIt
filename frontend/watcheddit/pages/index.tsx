@@ -1,35 +1,19 @@
-import { Grid } from '@mui/material';
-import Movie from '../components/Movie';
-import { Container } from '@mui/material';
+import { Grid } from "@mui/material";
+import Media from "../components/Media";
+import { Container } from "@mui/material";
 
-const movies = [
-  {
-    name: 'movie1'
-  }, 
-  {
-    name: 'movie2'
-  }, 
-  {
-    name: 'movie3'
-  },
-]
+export default function home({ media }) {
+  const mediaList = media.map((m) => <Media key={m.id} media={m} />);
 
-export default function home() {
-  const m = movies.map((movie) => 
-    <Movie key={movie.name} data={movie} />
-  );
-  
   return (
-      <Container>
-          <Grid container>
-            {m}
-          </Grid>
-      </Container>
+    <Container>
+      <Grid container>{mediaList}</Grid>
+    </Container>
   );
 }
 
-/*export async function getServerSideProps() {
-  const res = await fetch('https://reqres.in/api/users?page=2');
-  const data = await res.json();
-  return { props: { data } };
-}*/
+export async function getServerSideProps() {
+  const res = await fetch("http://localhost:3000/api/media");
+  const media = await res.json();
+  return { props: { media } };
+}
