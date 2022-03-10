@@ -1,6 +1,6 @@
 const express = require("express");
 const session = require('express-session');
-// const dbi = require("./database.js");
+const connect = require("./database.js");
 
 
 const getComments = require("./get/getComments.js");
@@ -14,7 +14,8 @@ const postPosts = require("./post/postPosts.js");
 const app = express();
 app.use(express.json());
 
-// dbi.connectToServer();
+connect.connectToRead();
+connect.connectToWrite();
 
 app.use(session({
     key: "userId",

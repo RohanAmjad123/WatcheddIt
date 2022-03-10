@@ -17,7 +17,7 @@ module.exports = {
                 return
             }
             dbRead = db.db("read");
-            console.log("Successfully connected to MongoDB.");
+            console.log("Successfully connected to read MongoDB.");
         });
     },
 
@@ -27,8 +27,8 @@ module.exports = {
                 console.log(err)
                 return
             }
-            dbWrite = db.db("read");
-            console.log("Successfully connected to MongoDB.");
+            dbWrite = db.db("write");
+            console.log("Successfully connected to write MongoDB.");
         });
     },
 
