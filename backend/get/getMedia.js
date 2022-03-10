@@ -1,26 +1,43 @@
 const connect = require("./database.js");
+var ObjectId = require('mongodb').ObjectId; 
 
 let pageLimit = 10
 
-exports.getMovies = (req, res) => {
-    const dbConnect = connect.getDb()
+exports.getMedia = (req, res) => {
+    const dbConnect = connect.getReadDb();
+
+    dbConnect
+    .collection("media")
+    .find({"imdbID": ObjectId(req.params.imdbID)})
+    .toArray((err, result) => {
+        if(err){
+            res.status(400).send("Error fetching media");
+        }
+        else{
+            res.json(result);
+        }
+    });
+}
+
+exports.getAllMedia = (req, res) => {
+    const dbConnect = connect.getReadDb()
 
     dbConnect
         .collection("media")
         .find()
         .toArray(function (err, result) {
             if (err) {
-                res.status(400).send("Error fetching movies!");
+                res.status(400).send("Error fetching media!");
             } else {
                 res.json(result);
             }
         });
 }
 
-exports.getMoviePage = (req, res) => {
+exports.getMediaPage = (req, res) => {
     let pageNumber = parseInt(req.params.page) - 1
 
-    const dbConnect = connect.getDb()
+    const dbConnect = connect.getReadDb()
 
     dbConnect
         .collection("media")
@@ -36,8 +53,8 @@ exports.getMoviePage = (req, res) => {
         });
 }
 
-exports.getMovieCount = (req, res) => {
-    const dbConnect = connect.getDb()
+exports.getMediaCount = (req, res) => {
+    const dbConnect = connect.getReadDb()
 
     dbConnect
         .collection("media")

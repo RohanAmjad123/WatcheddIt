@@ -4,10 +4,11 @@ const dbi = require("./database.js");
 
 
 
-const getComments = require("./getComments.js");
-const getPosts = require("./getPosts.js");
-const getMovies = require("./getMovies.js");
-const { send } = require("process");
+const getComments = require("./get/getComments.js");
+const getPosts = require("./get/getPosts.js");
+const getMedia = require("./get/getMedia.js");
+const postMedia = require("./post/postMedia");
+// const { send } = require("process");
 
 const app = express();
 app.use(express.json());
@@ -20,7 +21,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie:{
-      expires: 7 * 24 * 3600 * 1000 // 30 minutes (d * h/d * s/h * ms/s) 
+      expires: 7 * 24 * 3600 * 1000 // 30 minutes (d * h/d * s/h * ms/s) total = 7 days
     }
 }));
 
@@ -32,7 +33,16 @@ app.get("/", function(req, res){
     res.send("welcome");
 });
 
-// examples:
+//
+// COMMENT ENDPOINTS
+//
+
+// POST comment
+app.route('/api/addComment').post((req, res) => {
+    postComments.postComment();
+});
+
+// examples (move examples to documentation later):
 // retrieves all comments for a post with a given id:
 //   /api/Title/620da70c1cfcdb12af569d91/comments/
 //   /api/620da70c1cfcdb12af569d91/comments/
@@ -42,12 +52,14 @@ app.get("/", function(req, res){
 //   /api/620da70c1cfcdb12af569d91/comments/105
 
 // title is not used but might be good for clarity for users (limit defaults to inf)
+// GET comments no limit
 app.route('/api/:postTitle/:postId/comments').get(function(req, res){
     getComments.getComments(req, res)
 });
 app.route('/api/:postId/comments').get(function(req, res){
     getComments.getComments(req, res)
 });
+//GET comments with limit
 app.route('/api/:postTitle/:postId/comments/:limit').get(function(req, res){
     getComments.getComments(req, res)
 });
@@ -55,48 +67,52 @@ app.route('/api/:postId/comments/:limit').get(function(req, res){
     getComments.getComments(req, res)
 });
 
-app.route('/api/addMedia').get(function(req, res){
-    if(req.session.admin){
-        res.send("admin");
-    }
-    else{
-        res.send("err");
-    }
+//
+// POSTS ENDPOINTS
+//
+
+// POST post
+app.route('/api/addPost').post((req, res) => {
+    postPosts.postPost(req, res);
 });
 
+// GET all posts
+app.route('/api/media/:imdbID/posts/').get(function (req, res) {
+    getPosts.getAllPosts(req, res);
+});
+
+// GET Singular Post
+app.route('/api/media/:imdbID/:postID/').get(function (req, res) {
+    getPosts.getPost(req, res);
+});
+
+//
+// MEDIA ENDPOINTS
+//
+
+// POST media
 app.route('/api/addMedia').post(function(req, res){
-    if(req.session.admin){
-        const dbConnect = dbi.getDb();
-
-        dbConnect
-        .collection("media")
-        .insertOne(req.body);
-
-        res.sendStatus(200);
-    }
-    else{
-        res.send("err");
-    }
+    postMedia.postMedia(req, res);
 });
 
-// Retrieves all posts (ObjectId) associated with a Movie Title. 
-app.route('/api/media/:Title/posts/').get(function (req, res) {
-    getPosts.getPosts(req, res)
-});
-
-// Retrieve all movies in the database
+// GET all media
 app.route('/api/media').get(function (req, res) {
-    getMovies.getMovies(req, res)
+    getMedia.getAllMedia(req, res)
+});
+
+// GET single media
+app.route('/api/:imdbID').get(function (req, res) {
+    getMedia.getMedia(req, res)
 });
 
 // Retrieve movies from the database based on page number with limit of 10
 app.route('/api/media/:page').get(function (req, res) {
-    getMovies.getMoviePage(req, res)
+    getMedia.getMoviePage(req, res)
 });
 
 // Retrieve the amount of movies in the database
 app.route('/api/media-count/').get(function (req, res) {
-    getMovies.getMovieCount(req, res)
+    getMedia.getMovieCount(req, res)
 });
 
 app.listen(3000, function () {
