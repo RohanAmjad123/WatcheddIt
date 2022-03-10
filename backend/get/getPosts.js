@@ -8,7 +8,7 @@ exports.getAllPosts = (req, res) => {
     console.log("Get all posts : " + imdbID);
     dbConnect
     .collection("posts")
-    .find({"imdbID": ObjectId(imdbID)}, {projection: { imdbID: 0}})
+    .find({"imdbID": imdbID}, {projection: { imdbID: 0}})
     .limit(100)
     .toArray(function (err, result) {
       if (err) {
@@ -27,7 +27,7 @@ exports.getPost = (req, res) => {
   console.log("posts");
   dbConnect
   .collection("posts")
-  .find({"imdbID": ObjectId(imdbID), "postID": ObjectId(req.params.postID)})
+  .find({"imdbID": imdbID, "postID": ObjectId(req.params.postID)})
   .toArray(function (err, result) {
     if (err) {
       res.status(400).send("Error fetching posts!");
