@@ -1,13 +1,12 @@
 import { Grid } from "@mui/material";
-import Media from "../components/Media";
+import MediaCard from "../components/MediaCard";
 import { Container } from "@mui/material";
 
-export default function home({ media }) {
-  const mediaList = media.map((m) => <Media key={m.id} media={m} />);
-
+export default function home({ media }: {media:any[]}) {
+  const mediaList = media.map((m) => <MediaCard key={m.id} media={m} />);  
   return (
     <Container>
-      <Grid container>{mediaList}</Grid>
+      <Grid container direction='column'>{ mediaList }</Grid>
     </Container>
   );
 }
