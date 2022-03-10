@@ -2,7 +2,7 @@ const connect = require("../database.js");
 
 exports.postPost = (req, res) => {
     if(req.session.user){
-        const dbConnect = dbi.getWriteDb();
+        const dbConnect = connect.getWriteDb();
 
         dbConnect
         .collection("posts")

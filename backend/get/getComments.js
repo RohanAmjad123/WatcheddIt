@@ -1,5 +1,5 @@
 const connect = require("../database.js");
-var ObjectId = require('mongodb').ObjectId; 
+const ObjectId = require('mongodb').ObjectId;
 
 exports.getComments  = (req, res) => {
     const dbConnect = connect.getReadDb();
