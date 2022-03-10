@@ -1,7 +1,7 @@
 const connect = require("../database.js");
 
 exports.postComment = (req, res) => {
-    if(req.session.user){
+    if(req.session.user || req.session.admin){
         const dbConnect = connect.getWriteDb();
 
         dbConnect
