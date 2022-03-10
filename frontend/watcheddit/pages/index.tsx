@@ -1,4 +1,5 @@
 import { Grid } from "@mui/material";
+import MediaCard from "../components/MediaCard";
 import { Container } from "@mui/material";
 
 export default function home({ media }: {media:any[]}) {
