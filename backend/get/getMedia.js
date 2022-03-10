@@ -8,7 +8,7 @@ exports.getMedia = (req, res) => {
 
     dbConnect
     .collection("media")
-    .find({"imdbID": ObjectId(req.params.imdbID)})
+    .find({"imdbID": req.params.imdbID})
     .toArray((err, result) => {
         if(err){
             res.status(400).send("Error fetching media");
