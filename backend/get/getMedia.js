@@ -1,5 +1,4 @@
 const connect = require("../database.js");
-const ObjectId = require('mongodb').ObjectId;
 
 let pageLimit = 10
 
