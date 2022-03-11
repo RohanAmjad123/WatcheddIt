@@ -5,6 +5,7 @@ import { Grid } from '@mui/material';
 import { Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
+import Link from "next/link";
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -51,9 +52,11 @@ export default function Navigation() {
         <AppBar enableColorOnDark sx={{ bgcolor: 'white' }} position='sticky'>
             <Toolbar>
                 <Grid container>
-                    <Grid item justifyContent="center" direction="column" display="flex">
-                        <Typography sx={{ color: 'text.primary' }}>Watcheddit</Typography>
-                    </Grid>
+                    <Link href="/" passHref>
+                        <Grid item justifyContent="center" direction="column" display="flex">
+                            <Typography sx={{ color: 'text.primary' }}>Watcheddit</Typography>
+                        </Grid>
+                    </Link>
                     <Search>
                         <SearchIconWrapper>
                             <SearchIcon />
