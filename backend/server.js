@@ -14,6 +14,11 @@ const postPosts = require("./post/postPosts.js");
 const app = express();
 app.use(express.json());
 
+const cors = require("cors");
+app.use(cors({
+    origin: 'http://localhost:3001'
+}));
+
 connect.connectToRead();
 connect.connectToWrite();
 
