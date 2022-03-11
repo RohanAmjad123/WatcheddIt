@@ -1,20 +1,31 @@
 import MediaCard from "../components/MediaCard";
 import { Container } from "@mui/material";
 import { Grid } from "@mui/material";
-import Typography from '@mui/material/Typography';
+import PostCard from "../components/PostCard";
+import { Button } from "@mui/material";
+import Link from "next/link";
+import { useRouter } from "next/router";
+
 
 export default function MediaPage({ mediaList, postsList }: { mediaList: any[], postsList: any[] }) {
-    const mediaCard = mediaList.map((m) => <MediaCard key={ m.imdbID } media={ m }/>);
-    const postCards = postsList.map((p) => { p.Description });
-    console.log(mediaCard);
+    const mediaCard = mediaList.map((m) => <MediaCard key={m.imdbID} media={m} />);
+    const postCards = postsList.map((p) => <PostCard key={p._id} post={p} />);
+
+    const router = useRouter();
+    const { mediaID } = router.query;
+   
     return (
         <Container>
             <Grid container direction="column">
-                <Grid item>{ mediaCard }</Grid>
-                <Grid item>   
+                <Grid item>{mediaCard}</Grid>
+                <Grid item>
+                    <Link href={`/${mediaID}/post`} passHref>
+                        <Button size="small" variant="contained" color="secondary">Create Post</Button>
+                    </Link>
                 </Grid>
+                {postCards}
             </Grid>
-        </Container>
+        </Container >
     );
 }
 
@@ -25,14 +36,14 @@ export async function getStaticPaths() {
     const paths = mediaList.map((m: any) => ({
         params: { mediaID: m.imdbID },
     }))
-    
+
     return {
-        paths, 
+        paths,
         fallback: false,
     };
 }
 
-export async function getStaticProps({ params } : { params: any }) {
+export async function getStaticProps({ params }: { params: any }) {
     const mediaRes = await fetch(`http://localhost:3000/api/${params.mediaID}`);
     const mediaList = await mediaRes.json();
 
@@ -41,7 +52,7 @@ export async function getStaticProps({ params } : { params: any }) {
 
     return {
         props: {
-            mediaList, 
+            mediaList,
             postsList,
         }
     };
