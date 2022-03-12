@@ -33,7 +33,7 @@ module.exports = {
     // },
 
     getDb: function () {
-        return dbRead;
+        return dbConnect;
     },
 
     // getWriteDb: function () {
