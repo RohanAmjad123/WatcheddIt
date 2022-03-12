@@ -2,10 +2,10 @@ const connect = require("../database.js");
 
 exports.postMedia = (req, res) => {
     if(req.session.admin){
-        const dbConnect = connect.getWriteDb();
+        const dbConnect = connect.getDb();
 
         dbConnect
-        .collection("media")
+        .collection("mediaEvents")
         .insertOne(req.body);
 
         res.sendStatus(200);

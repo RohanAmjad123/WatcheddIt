@@ -2,11 +2,14 @@ const connect = require("../database.js");
 
 exports.postPost = (req, res) => {
     if(req.session.user){
-        const dbConnect = connect.getWriteDb();
+        const dbConnect = connect.getDb();
 
         dbConnect
         .collection("posts")
-        .insertOne(req.body);
+        .insertOne(json({
+            "type":  "post",
+            "data": req.body
+        }));
 
         res.sendStatus(200);
     }
