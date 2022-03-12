@@ -17,6 +17,11 @@ app.use(express.json());
 connect.connect();
 // connect.connectToWrite();
 
+const cors = require("cors");
+app.use(cors({
+    origin: 'http://localhost:3001'
+}));
+
 app.use(session({
     key: "userId",
     secret: "secret",

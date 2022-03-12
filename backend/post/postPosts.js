@@ -10,7 +10,7 @@ exports.postPost = (req, res) => {
             "type":  "post",
             "data": req.body
         }));
-
+      
         res.sendStatus(200);
     }
     else{

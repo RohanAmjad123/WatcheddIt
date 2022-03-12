@@ -2,17 +2,21 @@ import { Grid } from "@mui/material";
 import MediaCard from "../components/MediaCard";
 import { Container } from "@mui/material";
 
-export default function home({ media }: {media:any[]}) {
-  const mediaList = media.map((m) => <MediaCard key={m.id} media={m} />);  
+export default function home({ mediaList }: { mediaList : any[] }) {
+  const mediaCards = mediaList.map((m) => <MediaCard key={ m.imdbID } media={ m } />);  
   return (
     <Container>
-      <Grid container direction='column'>{ mediaList }</Grid>
+      <Grid container direction='column'>{ mediaCards }</Grid>
     </Container>
   );
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const res = await fetch("http://localhost:3000/api/media");
-  const media = await res.json();
-  return { props: { media } };
+  const mediaList = await res.json();
+  return { 
+    props: { 
+      mediaList 
+    } 
+  };
 }
