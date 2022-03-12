@@ -3,7 +3,7 @@ const connect = require("../database.js");
 let pageLimit = 10
 
 exports.getMedia = (req, res) => {
-    const dbConnect = connect.getReadDb();
+    const dbConnect = connect.getDb();
 
     dbConnect
     .collection("media")
@@ -19,7 +19,7 @@ exports.getMedia = (req, res) => {
 }
 
 exports.getAllMedia = (req, res) => {
-    const dbConnect = connect.getReadDb()
+    const dbConnect = connect.getDb()
 
     dbConnect
         .collection("media")
@@ -36,7 +36,7 @@ exports.getAllMedia = (req, res) => {
 exports.getMediaPage = (req, res) => {
     let pageNumber = parseInt(req.params.page) - 1
 
-    const dbConnect = connect.getReadDb()
+    const dbConnect = connect.getDb()
 
     dbConnect
         .collection("media")
@@ -53,7 +53,7 @@ exports.getMediaPage = (req, res) => {
 }
 
 exports.getMediaCount = (req, res) => {
-    const dbConnect = connect.getReadDb()
+    const dbConnect = connect.getDb()
 
     dbConnect
         .collection("media")

@@ -3,7 +3,7 @@ const ObjectId = require('mongodb').ObjectId;
 
 exports.getAllPosts = (req, res) => {
 
-    const dbConnect = connect.getReadDb();
+    const dbConnect = connect.getDb();
     const imdbID = req.params.imdbID;
     console.log("Get all posts : " + imdbID);
     dbConnect
@@ -22,7 +22,7 @@ exports.getAllPosts = (req, res) => {
 
 exports.getPost = (req, res) => {
 
-  const dbConnect = connect.getReadDb();
+  const dbConnect = connect.getDb();
   const imdbID = req.params.imdbID;
   console.log("posts");
   dbConnect

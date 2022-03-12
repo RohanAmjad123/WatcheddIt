@@ -14,13 +14,13 @@ const postPosts = require("./post/postPosts.js");
 const app = express();
 app.use(express.json());
 
+connect.connect();
+// connect.connectToWrite();
+
 const cors = require("cors");
 app.use(cors({
     origin: 'http://localhost:3001'
 }));
-
-connect.connectToRead();
-connect.connectToWrite();
 
 app.use(session({
     key: "userId",
@@ -125,3 +125,11 @@ app.route('/api/media-count/').get(function (req, res) {
 app.listen(3000, function () {
     console.log("server started on http://127.0.0.1:3000");
 });
+
+//rating endpoints
+
+// get movie rating 
+
+// add rating
+
+// get individual rating

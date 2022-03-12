@@ -2,7 +2,7 @@ const connect = require("../database.js");
 const ObjectId = require('mongodb').ObjectId;
 
 exports.getComments  = (req, res) => {
-    const dbConnect = connect.getReadDb();
+    const dbConnect = connect.getDb();
 
     // sets the limit based on whether :limit is defined in the url
     let limit = (parseInt(req.params.limit)) ? parseInt(req.params.limit):0;

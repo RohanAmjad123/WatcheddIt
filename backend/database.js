@@ -6,38 +6,38 @@ const client = new MongoClient(connection, {
     useUnifiedTopology: true
 });
 
-let dbRead;
-let dbWrite;
+let dbConnect;
+// let dbWrite;
 
 module.exports = {
-    connectToRead: function () {
+    connect: function () {
         client.connect(function (err, db) {
             if (err || !db) {
                 console.log(err)
                 return
             }
-            dbRead = db.db("read");
+            dbConnect = db.db("read");
             console.log("Successfully connected to read MongoDB.");
         });
     },
 
-    connectToWrite: function () {
-        client.connect(function (err, db) {
-            if (err || !db) {
-                console.log(err)
-                return
-            }
-            dbWrite = db.db("write");
-            console.log("Successfully connected to write MongoDB.");
-        });
-    },
+    // connectToWrite: function () {
+    //     client.connect(function (err, db) {
+    //         if (err || !db) {
+    //             console.log(err)
+    //             return
+    //         }
+    //         dbConnect = db.db("write");
+    //         console.log("Successfully connected to write MongoDB.");
+    //     });
+    // },
 
-    getReadDb: function () {
+    getDb: function () {
         return dbRead;
     },
 
-    getWriteDb: function () {
-        return dbWrite;
-    }
+    // getWriteDb: function () {
+    //     return dbWrite;
+    // }
 
 };
