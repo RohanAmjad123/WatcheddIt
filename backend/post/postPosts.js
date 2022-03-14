@@ -1,15 +1,21 @@
+const { ObjectId } = require("mongodb");
 const connect = require("../database.js");
 
 exports.postPost = (req, res) => {
     if(req.session.user){
         const dbConnect = connect.getDb();
 
+        let postEvent = {
+            "type": "post",
+            "postID": ObjectId(),
+            "data": req.body,
+            "user": null,
+            "timestamp": new Date()
+        };
+        
         dbConnect
         .collection("PostEvents")
-        .insertOne(json({
-            "type":  "post",
-            "data": req.body
-        }));
+        .insertOne(postEvent);
       
         res.sendStatus(200);
     }
