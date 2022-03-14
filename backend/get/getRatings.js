@@ -4,7 +4,7 @@ const ObjectId = require('mongodb').ObjectId;
 exports.getAvgRatings = (req, res) => {
     const dbConnect = connect.getDb();
     console.log("getAvgRatings " + req.params.imdbID)
-    dbConnect.collection("ratings").aggregate([{
+    dbConnect.collection("Ratings").aggregate([{
         '$group': {
             '_id': '$imdbID', 'avg': {
                 '$avg': '$rating'
@@ -32,13 +32,12 @@ exports.getUserRatings = (req, res) => {
     const imdbID = req.params.imdbID;
     const userID = req.params.userID;
     dbConnect
-        .collection("ratings")
+        .collection("Ratings")
         .find({"imdbID": imdbID, "userID": ObjectId(userID)}, {projection: {_id: 0, rating: 1}})
         .toArray()
         .then(items => {
             res.json(items);
         })
         .catch(err => console.error(`Failed to find documents: ${err}`))
-
 }
 
