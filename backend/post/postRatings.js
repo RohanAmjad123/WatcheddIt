@@ -6,7 +6,7 @@ exports.postRating = (req, res) => {
         const dbConnect = connect.getDb();
         req.body.userID = ObjectId(req.body.userID)
         dbConnect
-            .collection("ratings")
+            .collection("Ratings")
             .insertOne(req.body);
 
         res.sendStatus(200);

@@ -5,7 +5,7 @@ exports.postComment = (req, res) => {
         const dbConnect = connect.getDb();
 
         dbConnect
-        .collection("commentEvents")
+        .collection("CommentEvents")
         .insertOne(req.body);
 
         res.sendStatus(200);

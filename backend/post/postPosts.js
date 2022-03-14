@@ -5,7 +5,7 @@ exports.postPost = (req, res) => {
         const dbConnect = connect.getDb();
 
         dbConnect
-        .collection("posts")
+        .collection("PostEvents")
         .insertOne(json({
             "type":  "post",
             "data": req.body
