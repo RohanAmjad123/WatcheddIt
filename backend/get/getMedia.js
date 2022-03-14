@@ -5,32 +5,94 @@ let pageLimit = 10
 exports.getMedia = (req, res) => {
     const dbConnect = connect.getDb();
 
-    dbConnect
-    .collection("Media")
-    .find({"imdbID": req.params.imdbID})
-    .toArray((err, result) => {
-        if(err){
-            res.status(400).send("Error fetching media");
+    // dbConnect
+    //     .collection("Media")
+    //     .find({"imdbID": req.params.imdbID})
+    //     .toArray((err, result) => {
+    //         if (err) {
+    //             res.status(400).send("Error fetching media");
+    //         } else {
+    //             res.json(result);
+    //         }
+    //     });
+    dbConnect.collection("Media").aggregate([{
+        '$match': {
+            'imdbID': req.params.imdbID
         }
-        else{
-            res.json(result);
+    }, {
+        '$lookup': {
+            'from': 'Ratings', 'localField': 'imdbID', 'foreignField': 'imdbID', 'let': {
+                'rating': '$rating'
+            }, 'pipeline': [{
+                '$group': {
+                    '_id': '$imdbID', 'avg': {
+                        '$avg': '$rating'
+                    }, 'count': {
+                        '$sum': 1
+                    }
+                }
+            }, {
+                '$project': {
+                    '_id': 0
+                }
+            }], 'as': 'ratings'
         }
-    });
+    }, {
+        '$unwind': {
+            'path': '$ratings', 'preserveNullAndEmptyArrays': true
+        }
+    }])
+        .toArray()
+        .then(items => {
+            console.log(items)
+            res.json(items);
+        })
+        .catch(err => console.error(`Failed to find documents: ${err}`))
 }
 
 exports.getAllMedia = (req, res) => {
     const dbConnect = connect.getDb()
+    console.log("Get All Media")
+    // dbConnect
+    //     .collection("Media")
+    //     .find()
+    //     .toArray(function (err, result) {
+    //         if (err) {
+    //             res.status(400).send("Error fetching media!");
+    //         } else {
+    //             res.json(result);
+    //         }
+    //     });
+    dbConnect.collection("Media").aggregate([{
+        '$lookup': {
+            'from': 'Ratings', 'localField': 'imdbID', 'foreignField': 'imdbID', 'let': {
+                'rating': '$rating'
+            }, 'pipeline': [{
+                '$group': {
+                    '_id': '$imdbID', 'avg': {
+                        '$avg': '$rating'
+                    }, 'count': {
+                        '$sum': 1
+                    }
+                }
+            }, {
+                '$project': {
+                    '_id': 0
+                }
+            }], 'as': 'ratings'
+        }
+    }, {
+        '$unwind': {
+            'path': '$ratings', 'preserveNullAndEmptyArrays': true
+        }
+    }])
+        .toArray()
+        .then(items => {
+            console.log(items)
+            res.json(items);
+        })
+        .catch(err => console.error(`Failed to find documents: ${err}`))
 
-    dbConnect
-        .collection("media")
-        .find()
-        .toArray(function (err, result) {
-            if (err) {
-                res.status(400).send("Error fetching media!");
-            } else {
-                res.json(result);
-            }
-        });
 }
 
 exports.getMediaPage = (req, res) => {
