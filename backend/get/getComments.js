@@ -8,7 +8,7 @@ exports.getComments  = (req, res) => {
     let limit = (parseInt(req.params.limit)) ? parseInt(req.params.limit):0;
 
     dbConnect
-    .collection("comments")
+    .collection("Comments")
     .find({"postId": ObjectId(req.params.postId)}, {projection: {_id: 0}})
     .limit(limit)
     .toArray(function (err, result) {

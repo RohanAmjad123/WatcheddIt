@@ -7,7 +7,7 @@ exports.getAllPosts = (req, res) => {
     const imdbID = req.params.imdbID;
     console.log("Get all posts : " + imdbID);
     dbConnect
-    .collection("posts")
+    .collection("Posts")
     .find({"imdbID": imdbID}, {projection: { imdbID: 0}})
     .limit(100)
     .toArray(function (err, result) {

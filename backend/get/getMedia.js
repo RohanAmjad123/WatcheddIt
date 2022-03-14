@@ -6,7 +6,7 @@ exports.getMedia = (req, res) => {
     const dbConnect = connect.getDb();
 
     dbConnect
-    .collection("media")
+    .collection("Media")
     .find({"imdbID": req.params.imdbID})
     .toArray((err, result) => {
         if(err){
