@@ -1,13 +1,14 @@
 const connect = require("../database.js");
+const ISODate = require('mongodb').ISODate;
 
-exports.postComment = (req, res) => {
-    if(req.session.user || req.session.admin){
+exports.postPost = (req, res) => {
+    if(req.session.user){
         const dbConnect = connect.getDb();
 
         dbConnect
-        .collection("commentEvents")
+        .collection("postEvents")
         .insertOne(json({
-            "type":  "post",
+            "type":  "update",
             "data": req.body,
             'user': req.session.user.username,
             'timestamp': new Date().toISOString()
@@ -16,6 +17,6 @@ exports.postComment = (req, res) => {
         res.sendStatus(200);
     }
     else{
-        res.status(400).send("Can't POST comment, not logged in");
+        res.status(400).send("Can't POST post, not logged in");
     }
 }
