@@ -1,6 +1,6 @@
 const {MongoClient} = require("mongodb");
 
-const connection = "mongodb+srv://user2:seng401@cluster0.pqb5x.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const connection = "mongodb+srv://WatchedditApp:SENG401@watchedditcluster.j2xln.mongodb.net/Watcheddit?retryWrites=true&w=majority";
 const client = new MongoClient(connection, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -16,8 +16,8 @@ module.exports = {
                 console.log(err)
                 return
             }
-            dbConnect = db.db("read");
-            console.log("Successfully connected to read MongoDB.");
+            dbConnect = db.db("Watcheddit");
+            console.log("Successfully connected to Watcheddit MongoDB.");
         });
     },
 
@@ -33,7 +33,7 @@ module.exports = {
     // },
 
     getDb: function () {
-        return dbRead;
+        return dbConnect;
     },
 
     // getWriteDb: function () {

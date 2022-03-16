@@ -6,9 +6,11 @@ const connect = require("./database.js");
 const getComments = require("./get/getComments.js");
 const getPosts = require("./get/getPosts.js");
 const getMedia = require("./get/getMedia.js");
+const getRatings = require("./get/getRatings.js");
 const postMedia = require("./post/postMedia");
 const postComments = require("./post/postComments.js");
 const postPosts = require("./post/postPosts.js");
+const postRatings = require("./post/postRatings.js");
 // const { send } = require("process");
 
 const app = express();
@@ -16,6 +18,11 @@ app.use(express.json());
 
 connect.connect();
 // connect.connectToWrite();
+
+const cors = require("cors");
+app.use(cors({
+    origin: 'http://localhost:3001'
+}));
 
 app.use(session({
     key: "userId",
@@ -115,6 +122,22 @@ app.route('/api/media/:page').get(function (req, res) {
 // Retrieve the amount of movies in the database
 app.route('/api/media-count/').get(function (req, res) {
     getMedia.getMediaCount(req, res)
+});
+
+//
+// Ratings ENDPOINTS
+//
+
+app.route('/api/:imdbID/ratings').get(function (req, res) {
+    getRatings.getAvgRatings(req, res)
+});
+
+app.route('/api/:imdbID/ratings/:userID').get(function (req, res) {
+    getRatings.getUserRatings(req, res)
+});
+
+app.route('/api/addRating').post(function (req, res) {
+    postRatings.postRating(req, res)
 });
 
 app.listen(3000, function () {

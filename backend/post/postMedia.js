@@ -5,7 +5,7 @@ exports.postMedia = (req, res) => {
         const dbConnect = connect.getDb();
 
         dbConnect
-        .collection("mediaEvents")
+        .collection("Media")
         .insertOne(req.body);
 
         res.sendStatus(200);
