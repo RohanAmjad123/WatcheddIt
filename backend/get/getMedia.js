@@ -4,7 +4,8 @@ let pageLimit = 10
 
 exports.getMedia = (req, res) => {
     const dbConnect = connect.getDb();
-
+    console.log("Get Media: " + req.params.imdbID)
+    console.log(req.session.user)
     // dbConnect
     //     .collection("Media")
     //     .find({"imdbID": req.params.imdbID})
@@ -44,7 +45,7 @@ exports.getMedia = (req, res) => {
     }])
         .toArray()
         .then(items => {
-            console.log(items)
+            // console.log(items)
             res.json(items);
         })
         .catch(err => console.error(`Failed to find documents: ${err}`))
@@ -88,7 +89,7 @@ exports.getAllMedia = (req, res) => {
     }])
         .toArray()
         .then(items => {
-            console.log(items)
+            // console.log(items)
             res.json(items);
         })
         .catch(err => console.error(`Failed to find documents: ${err}`))

@@ -30,7 +30,7 @@ exports.getUserRatings = (req, res) => {
     console.log('getUserRatings')
     const dbConnect = connect.getDb();
     const imdbID = req.params.imdbID;
-    const userID = req.params.userID;
+    const userID = req.session.user._id;
     dbConnect
         .collection("Ratings")
         .find({"imdbID": imdbID, "userID": ObjectId(userID)}, {projection: {_id: 0, rating: 1}})
