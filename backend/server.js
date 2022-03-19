@@ -10,8 +10,8 @@ const postComments = require("./post/postComments.js");
 const postPosts = require("./post/postPosts.js");
 const postRatings = require("./post/postRatings.js");
 const signup = require("./post/postAccount.js");
-const login = require("./get/createSession.js");
-const login2 = require("./get/getAccount.js");
+const login = require("./get/getAccount.js");
+const store = new session.MemoryStore();
 
 // const { send } = require("process");
 
@@ -39,7 +39,8 @@ app.use(session({
     saveUninitialized: false,
     cookie: {
         expires: 7 * 24 * 3600 * 1000 // 30 minutes (d * h/d * s/h * ms/s) total = 7 days
-    }
+    },
+    store: store
 }));
 
 app.use('/',function(req, res, next){
@@ -120,12 +121,12 @@ app.route('/api/addMedia').post(function (req, res) {
 
 // GET all media
 app.route('/api/media').get(function (req, res) {
-    console.log("Pizza dog")
     getMedia.getAllMedia(req, res)
 });
 
 // GET single media
-app.route('/api/:imdbID').get(function (req, res) {
+// *Sajid: This messed my routers up so I appended it with /media.
+app.route('/api/:imdbID/media').get(function (req, res) {
     getMedia.getMedia(req, res)
 });
 
@@ -155,26 +156,20 @@ app.route('/api/addRating').post(function (req, res) {
     postRatings.postRating(req, res)
 });
 
-
 // SIGN UP & LOGIN APIS
 
 //sign up api
 // Req body parameters:
 // username
 // password
-app.post('/api/signup', jsonParser, function (req, res) {
+app.route('/api/signup').post(function (req, res) {
     console.log("Attempting signup")
     signup.postAccount(req, res)
 })
 
-//login api
-// Req body parameters:
-// username
-// password
 app.route('/api/login').get(function (req, res) {
-    console.log(req)
-    res.send(req.body)
-    //login2.getAccount(req, res)
+    console.log("Attempting login")
+    login.getAccount(req, res)
 })
 
 // logout api
@@ -183,7 +178,6 @@ app.route('/api/logout').get(function (req, res) {
     req.session.destroy()
     res.redirect('/')
 })
-
 
 app.listen(3000, function () {
     console.log("server started on http://127.0.0.1:3000");

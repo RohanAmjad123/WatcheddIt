@@ -2,6 +2,6 @@ POST http://127.0.0.1:3000/api/signup
 Content-Type: application/json
 
 {
-    "username": "jaisaza",
+    "username": "2jaissaza",
     "password": "choco"
 }
