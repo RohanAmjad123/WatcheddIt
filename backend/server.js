@@ -62,7 +62,7 @@ app.get("/", function (req, res) {
 //
 
 // POST comment
-app.route('/api/addComment').post((req, res) => {
+app.route('/api/comment/add').post((req, res) => {
     postComments.postComment(req, res);
 });
 
@@ -77,17 +77,17 @@ app.route('/api/addComment').post((req, res) => {
 
 // title is not used but might be good for clarity for users (limit defaults to inf)
 // GET comments no limit
-app.route('/api/:postTitle/:postId/comments').get(function (req, res) {
+app.route('/api/comment/:postTitle/:postId/').get(function (req, res) {
     getComments.getComments(req, res)
 });
 app.route('/api/:postId/comments').get(function (req, res) {
     getComments.getComments(req, res)
 });
 //GET comments with limit
-app.route('/api/:postTitle/:postId/comments/:limit').get(function (req, res) {
+app.route('/api/comment/:postTitle/:postId/:limit').get(function (req, res) {
     getComments.getComments(req, res)
 });
-app.route('/api/:postId/comments/:limit').get(function (req, res) {
+app.route('/api/comment/:postId/:limit').get(function (req, res) {
     getComments.getComments(req, res)
 });
 
@@ -96,17 +96,17 @@ app.route('/api/:postId/comments/:limit').get(function (req, res) {
 //
 
 // POST posts
-app.route('/api/addPost').post((req, res) => {
+app.route('/api/post/add').post((req, res) => {
     postPosts.postPost(req, res);
 });
 
 // GET all posts
-app.route('/api/media/:imdbID/posts/').get(function (req, res) {
+app.route('/api/posts/:imdbID/').get(function (req, res) {
     getPosts.getAllPosts(req, res);
 });
 
 // GET Singular Post
-app.route('/api/media/:imdbID/:postID/').get(function (req, res) {
+app.route('/api/post/:imdbID/:postID/').get(function (req, res) {
     getPosts.getPost(req, res);
 });
 
@@ -115,7 +115,7 @@ app.route('/api/media/:imdbID/:postID/').get(function (req, res) {
 //
 
 // POST media
-app.route('/api/addMedia').post(function (req, res) {
+app.route('/api/media/add').post(function (req, res) {
     postMedia.postMedia(req, res);
 });
 
