@@ -96,17 +96,29 @@ app.route('/api/comment/:postId/:limit').get(function (req, res) {
 //
 
 // POST posts
+<<<<<<< Updated upstream
 app.route('/api/post/add').post((req, res) => {
+=======
+app.route('/api/media/:imdbID/posts/add').post((req, res) => {
+>>>>>>> Stashed changes
     postPosts.postPost(req, res);
 });
 
 // GET all posts
+<<<<<<< Updated upstream
 app.route('/api/posts/:imdbID/').get(function (req, res) {
+=======
+app.route('/api/media/:imdbID/posts').get(function (req, res) {
+>>>>>>> Stashed changes
     getPosts.getAllPosts(req, res);
 });
 
 // GET Singular Post
+<<<<<<< Updated upstream
 app.route('/api/post/:imdbID/:postID/').get(function (req, res) {
+=======
+app.route('/api/media/:imdbID/posts/:postID/').get(function (req, res) {
+>>>>>>> Stashed changes
     getPosts.getPost(req, res);
 });
 
@@ -131,12 +143,12 @@ app.route('/api/media/:imdbID').get(function (req, res) {
 });
 
 // Retrieve movies from the database based on page number with limit of 10
-app.route('/api/media/:page').get(function (req, res) {
+app.route('/api/media/page/:page').get(function (req, res) {
     getMedia.getMediaPage(req, res)
 });
 
 // Retrieve the amount of movies in the database
-app.route('/api/media-count/').get(function (req, res) {
+app.route('/api/media/count').get(function (req, res) {
     getMedia.getMediaCount(req, res)
 });
 
@@ -144,15 +156,15 @@ app.route('/api/media-count/').get(function (req, res) {
 // Ratings ENDPOINTS
 //
 
-app.route('/api/:imdbID/ratings').get(function (req, res) {
+app.route('/api/media/:imdbID/ratings').get(function (req, res) {
     getRatings.getAvgRatings(req, res)
 });
 
-app.route('/api/:imdbID/userRatings').get(function (req, res) {
+app.route('/api/media/:imdbID/ratings/user').get(function (req, res) {
     getRatings.getUserRatings(req, res)
 });
 
-app.route('/api/:imdbID/addRating').post(function (req, res) {
+app.route('/api/media/:imdbID/ratings/add').post(function (req, res) {
     postRatings.postRating(req, res)
 });
 
