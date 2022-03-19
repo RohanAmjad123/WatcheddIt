@@ -126,7 +126,7 @@ app.route('/api/media').get(function (req, res) {
 
 // GET single media
 // *Sajid: This messed my routers up so I appended it with /media.
-app.route('/api/:imdbID/media').get(function (req, res) {
+app.route('/api/media/:imdbID').get(function (req, res) {
     getMedia.getMedia(req, res)
 });
 
@@ -148,11 +148,11 @@ app.route('/api/:imdbID/ratings').get(function (req, res) {
     getRatings.getAvgRatings(req, res)
 });
 
-app.route('/api/:imdbID/ratings/:userID').get(function (req, res) {
+app.route('/api/:imdbID/userRatings').get(function (req, res) {
     getRatings.getUserRatings(req, res)
 });
 
-app.route('/api/addRating').post(function (req, res) {
+app.route('/api/:imdbID/addRating').post(function (req, res) {
     postRatings.postRating(req, res)
 });
 

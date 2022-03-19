@@ -8,10 +8,10 @@ exports.getAccount = (req, res) => {
             password: req.body.password
         }, function(err, result) {
             if (err) throw err;
-            user = result;
+            console.log(result)
             if (result == null) {
                 console.log("User not found")
-            } else if (result.type == "admin") {
+            } else if (result.type === "admin") {
                 console.log("user is admin")
                 req.session.admin = result;
             } else {
