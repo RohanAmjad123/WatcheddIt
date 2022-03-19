@@ -137,3 +137,5 @@ dist
 .pnp.*
 
 mine
+backend/package-lock.json
+backend/package.json
