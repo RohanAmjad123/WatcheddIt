@@ -1,8 +1,6 @@
 const express = require("express");
 const session = require('express-session');
 const connect = require("./database.js");
-
-
 const getComments = require("./get/getComments.js");
 const getPosts = require("./get/getPosts.js");
 const getMedia = require("./get/getMedia.js");
@@ -11,15 +9,25 @@ const postMedia = require("./post/postMedia");
 const postComments = require("./post/postComments.js");
 const postPosts = require("./post/postPosts.js");
 const postRatings = require("./post/postRatings.js");
+const signup = require("./post/postAccount.js");
+const login = require("./get/getAccount.js");
+const store = new session.MemoryStore();
+
 // const { send } = require("process");
 
+const bp = require('body-parser')
 const app = express();
-app.use(express.json());
+var jsonParser = bp.json()
 
+app.use(bp.json())
+app.use(bp.urlencoded({ extended: true }))
 connect.connect();
 // connect.connectToWrite();
 
 const cors = require("cors");
+const { request, response } = require("express");
+const { createSession } = require("./get/createSession.js");
+const bodyParser = require("body-parser");
 app.use(cors({
     origin: 'http://localhost:3001'
 }));
@@ -31,8 +39,15 @@ app.use(session({
     saveUninitialized: false,
     cookie: {
         expires: 7 * 24 * 3600 * 1000 // 30 minutes (d * h/d * s/h * ms/s) total = 7 days
-    }
+    },
+    store: store
 }));
+
+app.use('/',function(req, res, next){
+    console.log("A new request received at " + Date.now());
+    next();
+ });
+
 
 // empty cookies for temporary API before
 // login is implemented
@@ -110,7 +125,8 @@ app.route('/api/media').get(function (req, res) {
 });
 
 // GET single media
-app.route('/api/:imdbID').get(function (req, res) {
+// *Sajid: This messed my routers up so I appended it with /media.
+app.route('/api/:imdbID/media').get(function (req, res) {
     getMedia.getMedia(req, res)
 });
 
@@ -140,9 +156,33 @@ app.route('/api/addRating').post(function (req, res) {
     postRatings.postRating(req, res)
 });
 
+// SIGN UP & LOGIN APIS
+
+//sign up api
+// Req body parameters:
+// username
+// password
+app.route('/api/signup').post(function (req, res) {
+    console.log("Attempting signup")
+    signup.postAccount(req, res)
+})
+
+app.route('/api/login').get(function (req, res) {
+    console.log("Attempting login")
+    login.getAccount(req, res)
+})
+
+// logout api
+app.route('/api/logout').get(function (req, res) {
+    console.log("Logging user out")
+    req.session.destroy()
+    res.redirect('/')
+})
+
 app.listen(3000, function () {
     console.log("server started on http://127.0.0.1:3000");
 });
+
 
 //rating endpoints:
 
