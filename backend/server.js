@@ -9,8 +9,16 @@ const postMedia = require("./post/postMedia");
 const postComments = require("./post/postComments.js");
 const postPosts = require("./post/postPosts.js");
 const postRatings = require("./post/postRatings.js");
-const signup = require("./post/postAccount.js");
-const login = require("./get/getAccount.js");
+const postAccount = require("./post/postAccount.js");
+const getAccount = require("./get/getAccount.js");
+const putComment = require("./put/putComment");
+const putPost = require("./put/putPost");
+const putMedia = require("./put/putMedia");
+const putAccount = require("./put/putAccount");
+const deleteComment = require("./delete/deleteComment.js");
+const deletePost = require("./delete/deletePost.js");
+const deleteMedia = require("./delete/deleteMedia.js");
+const deleteAccount = require("./delete/deleteAccount.js");
 const store = new session.MemoryStore();
 
 // const { send } = require("process");
@@ -91,6 +99,16 @@ app.route('/api/comment/:postId/:limit').get(function (req, res) {
     getComments.getComments(req, res)
 });
 
+// PUT comment 
+app.route('/api/post/update/:commentId').put((req, res) => {
+    putComment.putComment(req, res);
+});
+
+// DELETE comment
+app.route('/api/comment/delete/:commentId').delete((req, res) => {
+    deleteComment.deleteComment(req, res);
+});
+
 //
 // POSTS ENDPOINTS
 //
@@ -108,6 +126,17 @@ app.route('/api/posts/:imdbID/').get(function (req, res) {
 // GET Singular Post
 app.route('/api/post/:imdbID/:postID/').get(function (req, res) {
     getPosts.getPost(req, res);
+});
+
+// PUT post 
+app.route('/api/post/update/:postId').put((req, res) => {
+    putPost.putPost(req, res);
+});
+
+
+// DELETE post
+app.route('/api/post/delete/:postId').delete((req, res) => {
+    deletePost.deletePost(req, res);
 });
 
 //
@@ -140,6 +169,17 @@ app.route('/api/media-count/').get(function (req, res) {
     getMedia.getMediaCount(req, res)
 });
 
+// PUT media 
+app.route('/api/post/update/:media').put((req, res) => {
+    putMedia.putMedia(req, res);
+});
+
+// DELETE media
+app.route('/api/post/delete/:mediaId').delete((req, res) => {
+    deleteMedia.deleteMedia(req, res);
+});
+
+
 //
 // Ratings ENDPOINTS
 //
@@ -164,30 +204,33 @@ app.route('/api/:imdbID/addRating').post(function (req, res) {
 // password
 app.route('/api/signup').post(function (req, res) {
     console.log("Attempting signup")
-    signup.postAccount(req, res)
-})
+    postAccount.signup(req, res)
+});
 
 app.route('/api/login').post(function (req, res) {
     console.log("Attempting login")
-    login.getAccount(req, res)
-})
+    getAccount.login(req, res)
+});
 
 // logout api
 app.route('/api/logout').post(function (req, res) {
     console.log("Logging user out")
     req.session.destroy()
     res.redirect('/')
-})
+});
+
+// PUT account 
+app.route('/api/post/update/:accountId').put((req, res) => {
+    putAccount.putAccount(req, res);
+});
+
+
+// remove account
+app.route('/api/post/delete/:accountId').delete((req, res) => {
+    deleteAccount.deleteAccount(req, res);
+});
+
 
 app.listen(3000, function () {
     console.log("server started on http://127.0.0.1:3000");
 });
-
-
-//rating endpoints:
-
-// get movie rating 
-
-// add rating
-
-// get individual rating
