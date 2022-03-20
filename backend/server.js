@@ -96,29 +96,17 @@ app.route('/api/comment/:postId/:limit').get(function (req, res) {
 //
 
 // POST posts
-<<<<<<< Updated upstream
-app.route('/api/post/add').post((req, res) => {
-=======
 app.route('/api/media/:imdbID/posts/add').post((req, res) => {
->>>>>>> Stashed changes
     postPosts.postPost(req, res);
 });
 
 // GET all posts
-<<<<<<< Updated upstream
-app.route('/api/posts/:imdbID/').get(function (req, res) {
-=======
 app.route('/api/media/:imdbID/posts').get(function (req, res) {
->>>>>>> Stashed changes
     getPosts.getAllPosts(req, res);
 });
 
 // GET Singular Post
-<<<<<<< Updated upstream
-app.route('/api/post/:imdbID/:postID/').get(function (req, res) {
-=======
 app.route('/api/media/:imdbID/posts/:postID/').get(function (req, res) {
->>>>>>> Stashed changes
     getPosts.getPost(req, res);
 });
 

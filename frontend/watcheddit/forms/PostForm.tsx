@@ -8,7 +8,7 @@ import axios from "axios";
 const defaultPostValues = {
     title: "",
     description: "",
-    user: 1,
+    user: null,
     imdbID: "",
 }
 
@@ -29,7 +29,7 @@ export default function PostForm({ mediaID }: { mediaID: any }) {
     const handleClick = (event: object) => {
         formValues.imdbID = mediaID;
         console.log(formValues);
-        axios.post('http://localhost:3000/api/addPost', formValues)
+        axios.post(`http://localhost:3000/api/media/${imdbID}/posts/add`, formValues)
         .then((response) => {
             console.log(response);
             router.push(`/${imdbID}`);
