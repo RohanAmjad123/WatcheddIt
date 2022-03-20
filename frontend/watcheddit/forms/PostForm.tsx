@@ -26,7 +26,7 @@ export default function PostForm({ mediaID }: { mediaID: any }) {
         });
     };  
 
-    const handleClick = (event: object) => {
+    const handleClick = (event: any) => {
         formValues.imdbID = mediaID;
         console.log(formValues);
         axios.post('http://localhost:3000/api/post/add', formValues)
