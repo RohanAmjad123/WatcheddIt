@@ -1,6 +1,6 @@
 const connect = require("../database.js");
 
-exports.getAccount = (req, res) => {
+exports.login = (req, res) => {
     const dbConnect = connect.getDb();
     dbConnect.collection("users").findOne(
         {
@@ -18,8 +18,6 @@ exports.getAccount = (req, res) => {
                 console.log("User is regular user")
                 req.session.user = result;
             }
-            res.send(result)
         }
     )
-    
 }
