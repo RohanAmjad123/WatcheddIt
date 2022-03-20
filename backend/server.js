@@ -96,17 +96,17 @@ app.route('/api/comment/:postId/:limit').get(function (req, res) {
 //
 
 // POST posts
-app.route('/api/media/:imdbID/posts/add').post((req, res) => {
+app.route('/api/post/add').post((req, res) => {
     postPosts.postPost(req, res);
 });
 
 // GET all posts
-app.route('/api/media/:imdbID/posts').get(function (req, res) {
+app.route('/api/posts/:imdbID/').get(function (req, res) {
     getPosts.getAllPosts(req, res);
 });
 
 // GET Singular Post
-app.route('/api/media/:imdbID/posts/:postID/').get(function (req, res) {
+app.route('/api/post/:imdbID/:postID/').get(function (req, res) {
     getPosts.getPost(req, res);
 });
 
