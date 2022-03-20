@@ -91,7 +91,6 @@ app.route('/api/comment/:postId/:limit').get(function (req, res) {
     getComments.getComments(req, res)
 });
 
-app.route()
 //
 // POSTS ENDPOINTS
 //
