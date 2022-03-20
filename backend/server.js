@@ -91,6 +91,7 @@ app.route('/api/comment/:postId/:limit').get(function (req, res) {
     getComments.getComments(req, res)
 });
 
+app.route()
 //
 // POSTS ENDPOINTS
 //
@@ -175,13 +176,13 @@ app.route('/api/signup').post(function (req, res) {
     signup.postAccount(req, res)
 })
 
-app.route('/api/login').get(function (req, res) {
+app.route('/api/login').post(function (req, res) {
     console.log("Attempting login")
     login.getAccount(req, res)
 })
 
 // logout api
-app.route('/api/logout').get(function (req, res) {
+app.route('/api/logout').post(function (req, res) {
     console.log("Logging user out")
     req.session.destroy()
     res.redirect('/')
