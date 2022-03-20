@@ -36,10 +36,10 @@ export default function SignupForm () {
         <FormControl>
             <Grid container direction="column" spacing={3}>
                 <Grid item>
-                    <TextField name="username" label="Username" />
+                    <TextField name="username" onChange={handleChange} label="Username" />
                 </Grid>
                 <Grid item>
-                    <TextField name="password" label="Password" />
+                    <TextField name="password" onChange={handleChange} label="Password" />
                 </Grid>
                 <Grid item>
                     <Button variant="contained" onClick={handleClick}>Sign Up</Button>
