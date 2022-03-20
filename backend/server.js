@@ -136,8 +136,16 @@ app.route('/api/media/page/:page').get(function (req, res) {
 });
 
 // Retrieve the amount of movies in the database
-app.route('/api/media/count').get(function (req, res) {
+app.route('/api/media-count').get(function (req, res) {
     getMedia.getMediaCount(req, res)
+});
+
+app.route('/api/media-categories').get(function (req, res) {
+    getMedia.getMediaCategories(req, res)
+});
+
+app.route('/api/media-categories/:category').get(function (req, res) {
+    getMedia.getMediaByCategory(req, res)
 });
 
 //
