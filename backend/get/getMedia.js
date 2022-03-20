@@ -119,7 +119,7 @@ exports.getMediaCount = (req, res) => {
     const dbConnect = connect.getDb()
 
     dbConnect
-        .collection("media")
+        .collection("Media")
         .find()
         .count(function (err, result) {
             if (err) {
@@ -128,4 +128,54 @@ exports.getMediaCount = (req, res) => {
                 res.json(result);
             }
         })
+}
+
+exports.getMediaByCategory = (req, res) => {
+    const dbConnect = connect.getDb()
+    dbConnect
+        .collection("Media")
+        // .find({"Genre":{$regex : req.params.category}})
+        .find({"Genre": new RegExp(req.params.category,'i')})
+        .toArray(function (err, result) {
+            if (err) {
+                res.status(400).send("Error fetching movies!");
+            } else {
+                res.json(result);
+            }
+        });
+}
+
+exports.getMediaCategories = (req, res) => {
+    const dbConnect = connect.getDb()
+    dbConnect.collection("Media").aggregate([
+        {
+            '$project': {
+                '_id': 0,
+                'imdbID': 1,
+                'Genre': {
+                    '$split': [
+                        '$Genre', ', '
+                    ]
+                }
+            }
+        }, {
+            '$unwind': {
+                'path': '$Genre',
+                'preserveNullAndEmptyArrays': true
+            }
+        }, {
+            '$group': {
+                '_id': '$Genre',
+                'Titles': {
+                    '$addToSet': '$imdbID'
+                }
+            }
+        }
+    ])
+        .toArray()
+        .then(items => {
+            // console.log(items)
+            res.json(items);
+        })
+        .catch(err => console.error(`Failed to find documents: ${err}`))
 }

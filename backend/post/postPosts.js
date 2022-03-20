@@ -3,9 +3,9 @@ const connect = require("../database.js");
 const ISODate = require('mongodb').ISODate;
 
 exports.postPost = (req, res) => {
-    if(req.session.user){
+    if(req.session.user || true){
         const dbConnect = connect.getDb();
-
+console.log(req.body)
         let postEvent = {
             "type": "post",
             "postID": ObjectId(),
@@ -15,13 +15,15 @@ exports.postPost = (req, res) => {
         };
         
         dbConnect
-        .collection("postEvents")
-        .insertOne(json({
-            "type":  "post",
-            "data": req.body,
-            'user': req.session.user.username,
-            'timestamp': new Date().toISOString()
-        }));
+        .collection("PostEvents")
+        .insertOne({
+            type:  "post",
+            postID: ObjectId(),
+            data: req.body,
+            // 'user': req.session.user.username,
+            user: null,
+            timestamp: new Date()
+        });
 
         res.sendStatus(200);
     }
