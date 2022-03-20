@@ -38,7 +38,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: { params: any }) {
-    const mediaRes = await fetch(`http://localhost:3000/api/${params.mediaID}`);
+    const mediaRes = await fetch(`http://localhost:3000/api/media/${params.mediaID}`);
     const mediaList = await mediaRes.json();
 
     return {

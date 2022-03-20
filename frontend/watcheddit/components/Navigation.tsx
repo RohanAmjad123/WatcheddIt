@@ -6,14 +6,11 @@ import { Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import Link from "next/link";
+import { Button } from "@mui/material";
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
     marginRight: theme.spacing(2),
     marginLeft: 0,
     width: '100%',
@@ -49,23 +46,36 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function Navigation() {
     return (
-        <AppBar enableColorOnDark sx={{ bgcolor: 'white' }} position='sticky'>
+        <AppBar sx={{ bgcolor: 'black' }} position='sticky'>
             <Toolbar>
-                <Grid container>
+                <Grid container direction="row">
                     <Link href="/" passHref>
                         <Grid item justifyContent="center" direction="column" display="flex">
                             <Typography sx={{ color: 'text.primary' }}>Watcheddit</Typography>
                         </Grid>
                     </Link>
-                    <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search"
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search>
+                    <Grid item>
+                        <Search>
+                            <SearchIconWrapper>
+                                <SearchIcon />
+                            </SearchIconWrapper>
+                            <StyledInputBase
+                                placeholder="Search"
+                                inputProps={{ 'aria-label': 'search' }}
+                            />
+                        </Search>
+                    </Grid>
+                    <Grid sm item></Grid>
+                    <Link href="/login" passHref>
+                        <Grid item mx={1}>
+                            <Button variant="outlined">Log In</Button>
+                        </Grid>
+                    </Link>
+                    <Link href="/signup" passHref>
+                        <Grid item mx={1}>
+                            <Button variant="outlined">Sign Up</Button>
+                        </Grid>
+                    </Link>
                 </Grid>
             </Toolbar>
         </AppBar>

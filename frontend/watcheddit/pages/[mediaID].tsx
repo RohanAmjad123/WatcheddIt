@@ -47,7 +47,7 @@ export async function getStaticProps({params}: { params: any }) {
     const mediaRes = await fetch(`http://localhost:3000/api/media/${params.mediaID}`);
     const mediaList = await mediaRes.json();
 
-    const postRes = await fetch(`http://localhost:3000/api/media/${params.mediaID}/posts/`);
+    const postRes = await fetch(`http://localhost:3000/api/posts/${params.mediaID}/`);
     const postsList = await postRes.json();
 
     return {
