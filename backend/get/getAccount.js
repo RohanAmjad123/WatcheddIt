@@ -11,14 +11,16 @@ exports.getAccount = (req, res) => {
             console.log(result)
             if (result == null) {
                 console.log("User not found")
+                res.status(401);
             } else if (result.type === "admin") {
                 console.log("user is admin")
                 req.session.admin = result;
+                res.send(result)
             } else {
                 console.log("User is regular user")
                 req.session.user = result;
+                res.send(result)
             }
-            res.send(result)
         }
     )
     
