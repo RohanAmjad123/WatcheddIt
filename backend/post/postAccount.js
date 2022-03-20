@@ -1,7 +1,7 @@
 const { response } = require("express");
 const connect = require("../database.js");
 
-exports.postAccount = (req, res) => {
+exports.signup = (req, res) => {
     console.log("Registering an account");
     const dbConnect = connect.getDb();
     dbConnect.collection("users").insertOne(
