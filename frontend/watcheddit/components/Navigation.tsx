@@ -65,7 +65,7 @@ export default function Navigation() {
                             />
                         </Search>
                     </Grid>
-                    <Grid sm item></Grid>
+                    <Grid sm item/>
                     <Link href="/login" passHref>
                         <Grid item mx={1}>
                             <Button variant="outlined">Log In</Button>
