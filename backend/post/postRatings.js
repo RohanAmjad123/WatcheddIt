@@ -13,7 +13,11 @@ exports.postRating = (req, res) => {
                 userID: ObjectId(req.session.user._id),
             }, {
                 $set:{rating: req.body.rating},
-            }, {upsert: true});
+            }, {upsert: true}, function(err, res) {
+                if (err) throw err;
+                console.log("1 document updated");
+            });
+
 
         res.sendStatus(200);
     } else {
