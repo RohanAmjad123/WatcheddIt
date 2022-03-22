@@ -5,20 +5,26 @@ const getComments = require("./get/getComments.js");
 const getPosts = require("./get/getPosts.js");
 const getMedia = require("./get/getMedia.js");
 const getRatings = require("./get/getRatings.js");
+const getAccount = require("./get/getAccount.js");
+const getPostVote = require("./get/getPostVotes.js");
+
 const postMedia = require("./post/postMedia");
 const postComments = require("./post/postComments.js");
 const postPosts = require("./post/postPosts.js");
 const postRatings = require("./post/postRatings.js");
 const postAccount = require("./post/postAccount.js");
-const getAccount = require("./get/getAccount.js");
+const postPostVote = require("./post/postPostVotes.js");
+
 const putComment = require("./put/putComment");
 const putPost = require("./put/putPost");
 const putMedia = require("./put/putMedia");
 const putAccount = require("./put/putAccount");
+
 const deleteComment = require("./delete/deleteComment.js");
 const deletePost = require("./delete/deletePost.js");
 const deleteMedia = require("./delete/deleteMedia.js");
 const deleteAccount = require("./delete/deleteAccount.js");
+
 const store = new session.MemoryStore();
 
 // const { send } = require("process");
@@ -124,7 +130,7 @@ app.route('/api/posts/:imdbID/').get(function (req, res) {
 });
 
 // GET Singular Post
-app.route('/api/post/:imdbID/:postID/').get(function (req, res) {
+app.route('/api/media/:imdbID/post/:postID/').get(function (req, res) {
     getPosts.getPost(req, res);
 });
 
@@ -199,8 +205,24 @@ app.route('/api/media/:imdbID/ratings/user').get(function (req, res) {
     getRatings.getUserRatings(req, res)
 });
 
-app.route('/api/media/:imdbID/ratings/add').post(function (req, res) {
+app.route('/api/media/:imdbID/ratings/user').post(function (req, res) {
     postRatings.postRating(req, res)
+});
+
+//
+// Post Voting ENDPOINTS
+//
+
+app.route('/api/post/:postID/voting').get(function (req, res) {
+    getPostVote.getPostVotes(req, res)
+});
+
+app.route('/api/post/:postID/voting/user').get(function (req, res) {
+    getPostVote.getUserPostVotes(req, res)
+});
+
+app.route('/api/post/:postID/voting/user').post(function (req, res) {
+    postPostVote.postPostVote(req, res)
 });
 
 // SIGN UP & LOGIN APIS
