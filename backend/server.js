@@ -19,11 +19,13 @@ const putComment = require("./put/putComment");
 const putPost = require("./put/putPost");
 const putMedia = require("./put/putMedia");
 const putAccount = require("./put/putAccount");
+const putRating = require("./put/putRatings.js");
 
 const deleteComment = require("./delete/deleteComment.js");
 const deletePost = require("./delete/deletePost.js");
 const deleteMedia = require("./delete/deleteMedia.js");
 const deleteAccount = require("./delete/deleteAccount.js");
+const deleteRating = require("./delete/deleteRatings.js");
 
 const store = new session.MemoryStore();
 
@@ -209,6 +211,14 @@ app.route('/api/media/:imdbID/ratings/user').get(function (req, res) {
 
 app.route('/api/media/:imdbID/ratings/user').post(function (req, res) {
     postRatings.postRating(req, res)
+});
+
+app.route('/api/media/:imdbID/ratings/user').put(function (req, res) {
+    putRating.putRating(req, res)
+});
+
+app.route('/api/media/:imdbID/ratings/user').delete(function (req, res) {
+    deleteRating.deleteRating(req, res)
 });
 
 //

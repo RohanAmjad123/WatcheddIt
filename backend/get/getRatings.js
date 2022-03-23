@@ -6,14 +6,16 @@ exports.getAvgRatings = (req, res) => {
     const dbConnect = connect.getDb();
     dbConnect.collection("Ratings")
         .aggregate([{
+            '$match': {
+                '_id': req.params.imdbID.toString()
+            }
+        }, {
             '$group': {
                 '_id': '$imdbID', 'avg': {
                     '$avg': '$rating'
+                }, 'count': {
+                    '$sum': 1
                 }
-            }
-        }, {
-            '$match': {
-                '_id': req.params.imdbID.toString()
             }
         }, {
             '$project': {
@@ -36,17 +38,15 @@ exports.getUserRatings = (req, res) => {
         console.log('getUserRatings')
         const dbConnect = connect.getDb();
         const imdbID = req.params.imdbID;
-        const userID = req.session.user._id;
+        const username = req.session.user.username;
         dbConnect.collection("Ratings")
-            .find({"imdbID": imdbID, "userID": ObjectId(userID)}, {projection: {_id: 0, rating: 1}})
-            .toArray()
-            .then(items => {
-                res.json(items);
-                res.sendStatus(200);
-            })
-            .catch(err => {
-                console.error(`Failed to find documents: ${err}`)
-                res.sendStatus(400);
+            .findOne({"imdbID": imdbID, "username": username}, {projection: {_id: 0, rating: 1}}, (err, result) => {
+                if (err) {
+                    res.status(400).send(`Error updating Media with id ${req.params.imdbID}!`);
+                } else {
+                    console.log("1 document updated");
+                    res.status(200).send(result);
+                }
             })
     } else {
         res.status(401).send("Can't get ratings, no user privileges");

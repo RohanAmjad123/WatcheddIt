@@ -5,69 +5,78 @@ exports.getMedia = (req, res) => {
     console.log("Get Media: " + req.params.imdbID)
     console.log(req.session.user)
     dbConnect.collection("Media")
-        .aggregate([{
-            '$match': {
-                'imdbID': req.params.imdbID
+        .findOne({'imdbID': req.params.imdbID}, (err, result) => {
+            if (err) {
+                res.status(400).send(`Error updating Media with id ${req.params.imdbID}!`);
+            } else {
+                console.log("1 document updated");
+                res.status(200).send(result);
             }
-        }, {
-            '$lookup': {
-                'from': 'Ratings', 'localField': 'imdbID', 'foreignField': 'imdbID', 'let': {
-                    'rating': '$rating'
-                }, 'pipeline': [{
-                    '$group': {
-                        '_id': '$imdbID', 'avg': {
-                            '$avg': '$rating'
-                        }, 'count': {
-                            '$sum': 1
-                        }
-                    }
-                }, {
-                    '$project': {
-                        '_id': 0
-                    }
-                }], 'as': 'ratings'
-            }
-        }, {
-            '$unwind': {
-                'path': '$ratings', 'preserveNullAndEmptyArrays': true
-            }
-        }])
-        .toArray()
-        .then(items => {
-            res.json(items);
         })
-        .catch(err => {
-            console.error(`Failed to find documents: ${err}`)
-        })
+        // .aggregate([{
+        //     '$match': {
+        //         'imdbID': req.params.imdbID
+        //     }
+        // }, {
+        //     '$lookup': {
+        //         'from': 'Ratings', 'localField': 'imdbID', 'foreignField': 'imdbID', 'let': {
+        //             'rating': '$rating'
+        //         }, 'pipeline': [{
+        //             '$group': {
+        //                 '_id': '$imdbID', 'avg': {
+        //                     '$avg': '$rating'
+        //                 }, 'count': {
+        //                     '$sum': 1
+        //                 }
+        //             }
+        //         }, {
+        //             '$project': {
+        //                 '_id': 0
+        //             }
+        //         }], 'as': 'ratings'
+        //     }
+        // }, {
+        //     '$unwind': {
+        //         'path': '$ratings', 'preserveNullAndEmptyArrays': true
+        //     }
+        // }])
+        // .toArray()
+        // .then(items => {
+        //     res.json(items);
+        // })
+        // .catch(err => {
+        //     console.error(`Failed to find documents: ${err}`)
+        // })
 }
 
 exports.getAllMedia = (req, res) => {
     console.log("Get All Media")
     const dbConnect = connect.getDb()
     dbConnect.collection("Media")
-        .aggregate([{
-            '$lookup': {
-                'from': 'Ratings', 'localField': 'imdbID', 'foreignField': 'imdbID', 'let': {
-                    'rating': '$rating'
-                }, 'pipeline': [{
-                    '$group': {
-                        '_id': '$imdbID', 'avg': {
-                            '$avg': '$rating'
-                        }, 'count': {
-                            '$sum': 1
-                        }
-                    }
-                }, {
-                    '$project': {
-                        '_id': 0
-                    }
-                }], 'as': 'ratings'
-            }
-        }, {
-            '$unwind': {
-                'path': '$ratings', 'preserveNullAndEmptyArrays': true
-            }
-        }])
+        .find()
+        // .aggregate([{
+        //     '$lookup': {
+        //         'from': 'Ratings', 'localField': 'imdbID', 'foreignField': 'imdbID', 'let': {
+        //             'rating': '$rating'
+        //         }, 'pipeline': [{
+        //             '$group': {
+        //                 '_id': '$imdbID', 'avg': {
+        //                     '$avg': '$rating'
+        //                 }, 'count': {
+        //                     '$sum': 1
+        //                 }
+        //             }
+        //         }, {
+        //             '$project': {
+        //                 '_id': 0
+        //             }
+        //         }], 'as': 'ratings'
+        //     }
+        // }, {
+        //     '$unwind': {
+        //         'path': '$ratings', 'preserveNullAndEmptyArrays': true
+        //     }
+        // }])
         .toArray()
         .then(items => {
             res.json(items);
