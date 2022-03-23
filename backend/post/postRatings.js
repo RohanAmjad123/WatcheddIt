@@ -5,15 +5,26 @@ exports.postRating = (req, res) => {
     if (req.session.user) {
         console.log("Add Ratings")
         const dbConnect = connect.getDb();
+
+        // adding rating to the Ratings collection
         dbConnect.collection("Ratings")
-            .updateOne({
+            .insertOne({
                 imdbID: req.params.imdbID,
                 userID: ObjectId(req.session.user.username),
-            }, {
-                $set:{rating: req.body.rating},
-            }, {upsert: true}, function(err, res) {
+                rating: req.body.rating
+            });
+            
+        // updating the specific medias avg and total
+        dbConnect.collection("Media")
+            .updateOne({
+                imdbID: req.params.imdbID
+            },
+            {
+                $inc: {'Ratings.total': 1},
+                $set: {'Ratings.avg': 0} // find a way to update the avg
+            }, (err, res) => {
                 if (err) {
-                    res.status(400).send(`Error deleting listing with id ${req.params.imdbID}!`);
+                    res.status(400).send(`Error updating Media with id ${req.params.imdbID}!`);
                 } else {
                     console.log("1 document updated");
                     res.sendStatus(200);
