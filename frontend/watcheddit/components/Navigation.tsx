@@ -10,7 +10,6 @@ import { Button } from "@mui/material";
 import { useAppSelector } from "../app/hooks";
 import { useAppDispatch } from "../app/hooks";
 import { logoutUser } from "../app/actions/logoutUser"
-import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import LogoutIcon from "@mui/icons-material/Logout"
 import { Menu, MenuItem, ListItemIcon, ListItemText, Tooltip, IconButton, Avatar } from '@mui/material'
 import React from 'react';

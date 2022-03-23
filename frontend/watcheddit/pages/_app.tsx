@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <Provider store={store}>
       <CssBaseline />
       <Navigation />
-      <div style={{ backgroundColor: '#EEEEEE' }}>
+      <div style={{ backgroundColor: '#EEEEEE', height: "100vh" }}>
         <Container sx={{ paddingTop: 3 }}>
           <Component {...pageProps} />
         </Container>

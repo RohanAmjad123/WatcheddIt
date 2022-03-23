@@ -1,11 +1,8 @@
-interface UserData {
-    username: string,
-    type: string
-}
+import { User } from '../../interfaces/index'
 
-export function loginUser (userData: UserData) {
+export function loginUser (user: User) {
     return {
         type: "user/loginUser",
-        payload: userData
+        payload: user
     }
 }

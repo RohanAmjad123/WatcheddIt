@@ -2,13 +2,11 @@ import MediaCard from "../../components/MediaCard";
 import { Container } from "@mui/material";
 import { Grid } from "@mui/material";
 import { useRouter } from "next/router";
-import { Button } from "@mui/material";
-import { TextField } from "@mui/material";
 import PostForm from "../../forms/PostForm";
+import { Media } from '../../interfaces/index'
 
-
-export default function Post({ mediaList }: { mediaList: any[] }) {
-    const mediaCard = mediaList.map((m) => <MediaCard key={m.imdbID} media={m} />);
+export default function Post({ mediaList }: { mediaList: Media[] }) {
+    const mediaCard = mediaList.map((media) => <MediaCard key={media.imdbID} media={media} />);
 
     const router = useRouter();
     const { mediaID } = router.query;
@@ -17,7 +15,9 @@ export default function Post({ mediaList }: { mediaList: any[] }) {
         <Container>
             <Grid container direction="column">
                 <Grid item>{mediaCard}</Grid>
-                <Grid item><PostForm mediaID={ mediaID } /></Grid>
+                <Grid item>
+                    <PostForm mediaID={ mediaID } />
+                </Grid>
             </Grid>
         </Container >
     );
@@ -27,8 +27,8 @@ export async function getStaticPaths() {
     const res = await fetch(`http://localhost:3000/api/media`);
     const mediaList = await res.json();
 
-    const paths = mediaList.map((m: any) => ({
-        params: { mediaID: m.imdbID },
+    const paths = mediaList.map((media: Media) => ({
+        params: { mediaID: media.imdbID },
     }))
 
     return {

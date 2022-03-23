@@ -6,11 +6,12 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { useAppDispatch } from '../app/hooks'
 import { logoutUser } from "../app/actions/logoutUser";
+import { useAppSelector } from '../app/hooks'
 
 const defaultPostValues = {
     title: "",
     description: "",
-    user: null,
+    user: "",
     imdbID: "",
 }
 
@@ -18,6 +19,8 @@ export default function PostForm({ mediaID }: { mediaID: any }) {
     const imdbID = mediaID;
     const router = useRouter();
     const dispatch = useAppDispatch();
+    const username = useAppSelector((state) => state.username);
+
     const [formValues, setFormValues] = useState(defaultPostValues);
 
     const handleChange = (event: any) => {
@@ -28,10 +31,14 @@ export default function PostForm({ mediaID }: { mediaID: any }) {
         });
     };  
 
-    const handleClick = (event: any) => {
+    const handleClick = () => {
         formValues.imdbID = mediaID;
+        formValues.user = username;
+
         console.log(formValues);
+
         axios.post('http://localhost:3000/api/post/add', formValues, { withCredentials: true })
+        
         .then((response) => {
             router.push(`/${imdbID}`);
         }, (error) => {
