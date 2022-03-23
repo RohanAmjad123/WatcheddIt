@@ -179,3 +179,31 @@ exports.getMediaCategories = (req, res) => {
         })
         .catch(err => console.error(`Failed to find documents: ${err}`))
 }
+
+exports.search = (req, res) => {
+    const dbConnect = connect.getDb()
+    dbConnect.collection("Media").aggregate([
+        {
+            '$search': {
+                'index': 'SearchMedia',
+                'text': {
+                    'query': 'The',
+                    'path': {
+                        'wildcard': '*'
+                    }
+                }
+            }
+        }, {
+            '$project': {
+                '_id': 0,
+                'imdbID': 1
+            }
+        }
+    ])
+        .toArray()
+        .then(items => {
+            // console.log(items)
+            res.json(items);
+        })
+        .catch(err => console.error(`Failed to find documents: ${err}`))
+}

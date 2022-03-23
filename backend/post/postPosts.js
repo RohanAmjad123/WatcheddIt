@@ -20,7 +20,7 @@ exports.postPost = (req, res) => {
                 postID: ObjectId(),
                 data: req.body,
                 // 'user': req.session.user.username,
-                user: null,
+                user: ObjectId(req.session.user._id),
                 timestamp: new Date()
             });
 

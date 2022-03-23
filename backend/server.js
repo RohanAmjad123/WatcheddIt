@@ -74,7 +74,7 @@ app.get("/", function (req, res) {
 //
 
 // POST comment
-app.route('/api/comment/add').post((req, res) => {
+app.route('/api/comment/:postId/add').post((req, res) => {
     postComments.postComment(req, res);
 });
 
