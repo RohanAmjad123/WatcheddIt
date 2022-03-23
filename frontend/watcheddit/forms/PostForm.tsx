@@ -4,6 +4,8 @@ import { useState } from "react";
 import { FormControl } from "@mui/material";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { useAppDispatch } from '../app/hooks'
+import { logoutUser } from "../app/actions/logoutUser";
 
 const defaultPostValues = {
     title: "",
@@ -15,7 +17,7 @@ const defaultPostValues = {
 export default function PostForm({ mediaID }: { mediaID: any }) {
     const imdbID = mediaID;
     const router = useRouter();
-
+    const dispatch = useAppDispatch();
     const [formValues, setFormValues] = useState(defaultPostValues);
 
     const handleChange = (event: any) => {
@@ -29,11 +31,14 @@ export default function PostForm({ mediaID }: { mediaID: any }) {
     const handleClick = (event: any) => {
         formValues.imdbID = mediaID;
         console.log(formValues);
-        axios.post('http://localhost:3000/api/post/add', formValues)
+        axios.post('http://localhost:3000/api/post/add', formValues, { withCredentials: true })
         .then((response) => {
-            console.log(response);
             router.push(`/${imdbID}`);
         }, (error) => {
+            if (error.response.status === 401) {
+                dispatch(logoutUser());
+                router.push('/login')
+            }
             console.log(error);
         }) 
     };

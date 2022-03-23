@@ -9,7 +9,7 @@ import { store } from "../app/store";
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
-  }
+  },
 });
 
 import '../styles/globals.css'
@@ -18,13 +18,11 @@ import type { AppProps } from 'next/app'
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
-      <ThemeProvider theme={darkTheme}>
-        <CssBaseline />
-        <Navigation />
-        <Container>
-          <Component {...pageProps} />
-        </Container>
-      </ThemeProvider>
+      <CssBaseline />
+      <Navigation />
+      <Container sx={{ paddingTop: 3 }}>
+        <Component {...pageProps} />
+      </Container>
     </Provider>
   );
 }

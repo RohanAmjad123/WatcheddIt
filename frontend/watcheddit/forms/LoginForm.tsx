@@ -2,6 +2,8 @@ import { FormControl, Grid, TextField, Button } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { useAppDispatch } from "../app/hooks"
+import { loginUser } from "../app/actions/loginUser"
 
 const defaultLoginValues = {
     username: "",
@@ -10,7 +12,7 @@ const defaultLoginValues = {
 
 export default function LoginForm () {
     const router = useRouter();
-
+    const dispatch = useAppDispatch()
     const [formValues, setFormValues] = useState(defaultLoginValues);
 
     const handleChange = (event: any) => {
@@ -23,9 +25,12 @@ export default function LoginForm () {
 
     const handleClick = (event: any) => {
         console.log(formValues);
-        axios.post('http://localhost:3000/api/login', formValues)
+        axios.post('http://localhost:3000/api/login', formValues, { withCredentials: true })
         .then((response) => {
-            console.log('Successful login, cookie stored')
+            dispatch(loginUser({
+                username: response.data.username,
+                type: response.data.type
+            }))
             router.push('/')
         }, (error) => {
             console.log(error)

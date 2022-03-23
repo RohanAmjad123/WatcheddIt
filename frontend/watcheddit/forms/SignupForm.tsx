@@ -10,7 +10,6 @@ const defaultSignupValues = {
 
 export default function SignupForm () {
     const router = useRouter();
-
     const [formValues, setFormValues] = useState(defaultSignupValues);
 
     const handleChange = (event: any) => {
@@ -25,7 +24,6 @@ export default function SignupForm () {
         console.log(formValues);
         axios.post('http://localhost:3000/api/signup', formValues)
         .then((response) => {
-            console.log('Successful signup')
             router.push('/login')
         }, (error) => {
             console.log(error)
