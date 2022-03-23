@@ -16,6 +16,7 @@ export interface Media {
     Year: string,
     Genre: string,
     Ratings: {
+        count: number;
         avg: number,
         total: number
     },
