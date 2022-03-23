@@ -41,10 +41,10 @@ export default function LoginForm () {
         <FormControl>
             <Grid container direction="column" spacing={3}>
                 <Grid item>
-                    <TextField required name="username" onChange={handleChange} label="Username" />
+                    <TextField required name="username" onChange={handleChange} label="Username" autoComplete="username" autoFocus/>
                 </Grid>
                 <Grid item>
-                    <TextField required type="password" name="password" onChange={handleChange} label="Password" />
+                    <TextField required type="password" name="password" onChange={handleChange} label="Password" autoComplete="current-password"/>
                 </Grid>
                 <Grid item>
                     <Button variant="contained" onClick={handleClick} color="success">Log in</Button>

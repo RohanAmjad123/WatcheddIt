@@ -3,23 +3,23 @@ const ObjectId = require('mongodb').ObjectId;
 
 exports.postRating = (req, res) => {
     if (req.session.user) {
-        const dbConnect = connect.getDb();
-        // req.body.userID = ObjectId(req.session.user._id)
         console.log("Add Ratings")
-        dbConnect
-            .collection("Ratings")
+        const dbConnect = connect.getDb();
+        dbConnect.collection("Ratings")
             .updateOne({
                 imdbID: req.params.imdbID,
-                userID: ObjectId(req.session.user._id),
+                userID: ObjectId(req.session.user.username),
             }, {
                 $set:{rating: req.body.rating},
             }, {upsert: true}, function(err, res) {
-                if (err) throw err;
-                console.log("1 document updated");
+                if (err) {
+                    res.status(400).send(`Error deleting listing with id ${req.params.imdbID}!`);
+                } else {
+                    console.log("1 document updated");
+                    res.sendStatus(200);
+                }
             });
 
-
-        res.sendStatus(200);
     } else {
         res.status(401).send("Can't POST ratings, not logged in");
     }

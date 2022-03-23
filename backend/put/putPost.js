@@ -6,12 +6,12 @@ exports.postPost = (req, res) => {
         const dbConnect = connect.getDb();
 
         dbConnect
-        .collection("postEvents")
+        .collection("PostEvents")
         .insertOne(json({
             "type":  "update",
             "data": req.body,
             'user': req.session.user.username,
-            'timestamp': new Date().toISOString()
+            'timestamp': new Date()
         }));
 
         res.sendStatus(200);

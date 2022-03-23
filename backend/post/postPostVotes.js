@@ -5,11 +5,10 @@ exports.postPostVote = (req, res) => {
     if (req.session.user) {
         const dbConnect = connect.getDb();
         console.log("Add Post Vote")
-        dbConnect
-            .collection("PostVotes")
+        dbConnect.collection("PostVotes")
             .updateOne({
                 postID: ObjectId(req.params.postID),
-                userID: ObjectId(req.session.user._id),
+                userID: ObjectId(req.session.user.username),
             }, {
                 $set: {vote: req.body.vote},
             }, {upsert: true})
