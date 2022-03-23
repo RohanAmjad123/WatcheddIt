@@ -11,7 +11,7 @@ export interface Media {
     Plot: string,
     Year: string,
     Genre: string,
-    ratings: {
+    Ratings: {
         avg: number,
         total: number
     },

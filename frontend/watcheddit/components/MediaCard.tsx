@@ -28,12 +28,10 @@ export default function MediaCard({ media }: { media: Media }) {
                             <Grid item>
                                 <Typography variant="caption">{media.Year}</Typography>
                             </Grid>
-                            {media.ratings != undefined &&
-                                <Grid container direction="row">
-                                    <Grid item><Rating sx={{ paddingTop: 0.3 }} name="half-rating-read" defaultValue={media.ratings.avg} precision={0.1} readOnly /></Grid>
-                                    <Grid item><Typography sx={{ paddingLeft: 1 }} variant="overline">{media.ratings.total}</Typography></Grid>
-                                </Grid>
-                            }
+                            <Grid container direction="row">
+                                <Grid item><Rating sx={{ paddingTop: 0.3 }} name="half-rating-read" defaultValue={media.Ratings.avg} precision={0.1} readOnly /></Grid>
+                                <Grid item><Typography sx={{ paddingLeft: 1 }} variant="overline">{media.Ratings.total}</Typography></Grid>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
