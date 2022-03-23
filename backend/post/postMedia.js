@@ -6,7 +6,18 @@ exports.postMedia = (req, res) => {
 
         dbConnect
         .collection("Media")
-        .insertOne(req.body);
+        .insertOne({
+            Title: req.body.Title,
+            Poster: req.body.Poster,
+            Plot: req.body.Plot,
+            Year: req.body.Year,
+            Genre: req.body.Genre,
+            Ratings: {
+                avg: 0,
+                total: 0
+            },
+            imdbID: req.body.imdbID
+        });
 
         res.sendStatus(200);
     }
