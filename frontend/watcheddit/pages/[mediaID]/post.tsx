@@ -13,7 +13,7 @@ export default function Post({ mediaList }: { mediaList: Media[] }) {
 
     return (
         <Container>
-            <Grid container direction="column">
+            <Grid container direction="column" rowSpacing={3}>
                 <Grid item>{mediaCard}</Grid>
                 <Grid item>
                     <PostForm mediaID={ mediaID } />
