@@ -181,6 +181,10 @@ app.route('/api/media-categories/:category').get(function (req, res) {
     getMedia.getMediaByCategory(req, res)
 });
 
+app.route('/api/media-search/:search').get(function (req, res) {
+    getMedia.search(req, res)
+});
+
 // PUT media 
 app.route('/api/post/update/:media').put((req, res) => {
     putMedia.putMedia(req, res);
