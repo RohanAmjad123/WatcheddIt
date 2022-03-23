@@ -8,7 +8,7 @@ exports.postPostVote = (req, res) => {
         dbConnect.collection("PostVotes")
             .updateOne({
                 postID: ObjectId(req.params.postID),
-                userID: ObjectId(req.session.user._id),
+                userID: ObjectId(req.session.user.username),
             }, {
                 $set: {vote: req.body.vote},
             }, {upsert: true})
