@@ -2,7 +2,7 @@ const {ObjectId} = require("mongodb");
 const connect = require("../database.js");
 
 exports.postPost = (req, res) => {
-    if (req.session.user || true) {
+    if (req.session.user) {
         const dbConnect = connect.getDb();
         console.log(req.body)
         let postEvent = {
@@ -26,6 +26,6 @@ exports.postPost = (req, res) => {
 
         res.sendStatus(200);
     } else {
-        res.status(400).send("Can't POST post, not logged in");
+        res.status(401).send("Can't POST post, not logged in");
     }
 }

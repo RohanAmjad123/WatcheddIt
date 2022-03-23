@@ -12,7 +12,7 @@ exports.signup = (req, res) => {
             date: Date.now
         }, function(err, response) {
             if (err) {
-                res.send(response)
+                res.status(400).send(response)
             } else {
                 res.send(response)
             }

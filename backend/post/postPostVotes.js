@@ -22,6 +22,6 @@ exports.postPostVote = (req, res) => {
                 res.status(400);
             })
     } else {
-        res.status(400).send("Can't POST ratings, not logged in");
+        res.status(401).send("Can't POST ratings, not logged in");
     }
 }

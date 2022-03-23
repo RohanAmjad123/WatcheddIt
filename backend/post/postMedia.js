@@ -11,6 +11,6 @@ exports.postMedia = (req, res) => {
         res.sendStatus(200);
     }
     else{
-        res.send("Can't POST media, no admin privileges");
+        res.status(401).send("Can't POST media, no admin privileges");
     }
 }
