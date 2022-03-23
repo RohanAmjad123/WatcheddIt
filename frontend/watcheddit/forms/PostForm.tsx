@@ -13,6 +13,10 @@ const defaultPostValues = {
     description: "",
     user: "",
     imdbID: "",
+    votes: {
+        upvotes: 0,
+        downvotes: 0
+    }
 }
 
 export default function PostForm({ mediaID }: { mediaID: any }) {

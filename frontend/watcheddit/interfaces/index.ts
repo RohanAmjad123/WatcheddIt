@@ -2,7 +2,11 @@ export interface Post {
     _id: string,
     title: string,
     description: string,
-    user: string
+    user: string,
+    votes: {
+        upvotes: number,
+        downvotes: number
+    }
 }
 
 export interface Media {
