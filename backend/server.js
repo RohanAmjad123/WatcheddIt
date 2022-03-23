@@ -31,7 +31,6 @@ const store = new session.MemoryStore();
 
 const bp = require('body-parser')
 const app = express();
-var jsonParser = bp.json()
 
 app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
@@ -39,11 +38,10 @@ connect.connect();
 // connect.connectToWrite();
 
 const cors = require("cors");
-const { request, response } = require("express");
-const { createSession } = require("./get/createSession.js");
-const bodyParser = require("body-parser");
+
 app.use(cors({
-    origin: 'http://localhost:3001'
+    origin: 'http://localhost:3001',
+    credentials: true
 }));
 
 app.use(session({
@@ -52,7 +50,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        expires: 7 * 24 * 3600 * 1000 // 30 minutes (d * h/d * s/h * ms/s) total = 7 days
+        maxAge: 1000 * 3600 * 24, // 1 hour
     },
     store: store
 }));
