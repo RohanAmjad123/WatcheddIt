@@ -1,31 +1,29 @@
 import MediaCard from "../components/MediaCard";
-import {Container} from "@mui/material";
-import {Grid} from "@mui/material";
+import { Container } from "@mui/material";
+import { Grid } from "@mui/material";
 import PostCard from "../components/PostCard";
-import {Button} from "@mui/material";
+import { Button } from "@mui/material";
 import Link from "next/link";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 
 
-export default function MediaPage({mediaList, postsList}: { mediaList: any[], postsList: any[] }) {
-    const mediaCard = mediaList.map((m) => <MediaCard key={m.imdbID} media={m}/>);
-    const postCards = postsList.map((p) => <PostCard key={p._id} post={p}/>);
+export default function MediaPage({ mediaList, postsList }: { mediaList: any[], postsList: any[] }) {
+    const mediaCard = mediaList.map((m) => <MediaCard key={m.imdbID} media={m} />);
+    const postCards = postsList.map((p) => <PostCard key={p._id} post={p} />);
 
     const router = useRouter();
-    const {mediaID} = router.query;
+    const { mediaID } = router.query;
 
     return (
-        <Container>
-            <Grid container direction="column">
-                <Grid item>{mediaCard}</Grid>
-                <Grid item>
-                    <Link href={`/${mediaID}/post`} passHref>
-                        <Button size="small" variant="contained" color="secondary">Create Post</Button>
-                    </Link>
-                </Grid>
-                {postCards}
+        <Grid container direction="column" rowSpacing={3}>
+            <Grid item >{mediaCard}</Grid>
+            <Grid item>
+                <Link href={`/${mediaID}/post`} passHref>
+                    <Button size="small" variant="contained" color="success">Create Post</Button>
+                </Link>
             </Grid>
-        </Container>
+            { postCards }
+        </Grid>
     );
 }
 
@@ -34,7 +32,7 @@ export async function getStaticPaths() {
     const mediaList = await res.json();
 
     const paths = mediaList.map((m: any) => ({
-        params: {mediaID: m.imdbID},
+        params: { mediaID: m.imdbID },
     }))
 
     return {
@@ -43,7 +41,7 @@ export async function getStaticPaths() {
     };
 }
 
-export async function getStaticProps({params}: { params: any }) {
+export async function getStaticProps({ params }: { params: any }) {
     const mediaRes = await fetch(`http://localhost:3000/api/media/${params.mediaID}`);
     const mediaList = await mediaRes.json();
 

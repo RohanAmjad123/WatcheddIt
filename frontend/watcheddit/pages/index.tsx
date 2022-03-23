@@ -5,14 +5,7 @@ import { Container } from "@mui/material";
 export default function home({ mediaList, categories}: { mediaList : any[], categories: any[] }) {
   const mediaCards = mediaList.map((m) => <MediaCard key={ m.imdbID } media={ m } />);  
   return (
-    <Container>
-      {/*{categories.map((value,index)=>{*/}
-      {/*  return(*/}
-      {/*      <div key={index}>{value._id}</div>*/}
-      {/*  )*/}
-      {/*})}*/}
-      <Grid container direction='column'>{ mediaCards }</Grid>
-    </Container>
+      <Grid container direction='column' rowSpacing={3}>{ mediaCards }</Grid>
   );
 }
 

@@ -83,7 +83,7 @@ export default function Navigation() {
                     </Grid>
                     <Grid item mx={1}>
                         <Link href="/signup" passHref>
-                            <Button variant="outlined" color="secondary">Sign Up</Button>
+                            <Button variant="outlined" color="success">Sign Up</Button>
                         </Link>
                     </Grid>
                 </React.Fragment>
@@ -128,12 +128,12 @@ export default function Navigation() {
     }
 
     return (
-        <AppBar sx={{ bgcolor: 'black' }} position='sticky'>
+        <AppBar sx={{ backgroundColor: 'white' }} position='sticky'>
             <Toolbar>
                 <Grid container direction="row">
                     <Grid item justifyContent="center" direction="column" display="flex">
                         <Link href="/" passHref>
-                            <Typography>Watcheddit</Typography>
+                            <Typography sx={{ color: 'black' }}>Watcheddit</Typography>
                         </Link>
                     </Grid>
                     <Grid item justifyContent="center" direction="column" display="flex">

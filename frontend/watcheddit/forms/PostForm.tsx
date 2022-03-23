@@ -53,7 +53,7 @@ export default function PostForm({ mediaID }: { mediaID: any }) {
                     <TextField name="description" label="Description" value={formValues.description} onChange={handleChange} />
                 </Grid>
                 <Grid item>
-                    <Button variant="contained" onClick={handleClick}>Post</Button>
+                    <Button variant="contained" onClick={handleClick} color="success">Post</Button>
                 </Grid>
             </Grid>
         </FormControl>

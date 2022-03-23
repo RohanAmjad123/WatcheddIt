@@ -40,7 +40,7 @@ export default function SignupForm () {
                     <TextField required type="password" name="password" onChange={handleChange} label="Password" />
                 </Grid>
                 <Grid item>
-                    <Button variant="contained" onClick={handleClick}>Sign Up</Button>
+                    <Button variant="contained" onClick={handleClick} color="success">Sign Up</Button>
                 </Grid>
             </Grid>
         </FormControl>

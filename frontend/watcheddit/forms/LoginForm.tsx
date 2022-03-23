@@ -47,7 +47,7 @@ export default function LoginForm () {
                     <TextField required type="password" name="password" onChange={handleChange} label="Password" />
                 </Grid>
                 <Grid item>
-                    <Button variant="contained" onClick={handleClick}>Log in</Button>
+                    <Button variant="contained" onClick={handleClick} color="success">Log in</Button>
                 </Grid>
             </Grid>
         </FormControl>
