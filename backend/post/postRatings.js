@@ -8,7 +8,7 @@ exports.postRating = (req, res) => {
         dbConnect.collection("Ratings")
             .updateOne({
                 imdbID: req.params.imdbID,
-                userID: ObjectId(req.session.user._id),
+                userID: ObjectId(req.session.user.username),
             }, {
                 $set:{rating: req.body.rating},
             }, {upsert: true}, function(err, res) {

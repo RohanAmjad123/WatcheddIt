@@ -5,13 +5,6 @@ exports.postPost = (req, res) => {
     if (req.session.user) {
         const dbConnect = connect.getDb();
         console.log(req.body)
-        let postEvent = {
-            "type": "post",
-            "postID": ObjectId(),
-            "data": req.body,
-            "user": null,
-            "timestamp": new Date()
-        };
 
         dbConnect
             .collection("PostEvents")
@@ -19,8 +12,7 @@ exports.postPost = (req, res) => {
                 type: "post",
                 postID: ObjectId(),
                 data: req.body,
-                // 'user': req.session.user.username,
-                user: ObjectId(req.session.user._id),
+                user: req.session.user.username,
                 timestamp: new Date()
             });
 
