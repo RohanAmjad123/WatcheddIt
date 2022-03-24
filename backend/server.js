@@ -1,5 +1,6 @@
 const express = require("express");
 const session = require('express-session');
+const bcrypt = require('bcrypt');
 const connect = require("./database.js");
 const getComments = require("./get/getComments.js");
 const getPosts = require("./get/getPosts.js");
