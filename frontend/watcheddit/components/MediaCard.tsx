@@ -30,7 +30,7 @@ export default function MediaCard({ media }: { media: Media }) {
                             </Grid>
                             <Grid container direction="row">
                                 <Grid item><Rating sx={{ paddingTop: 0.3 }} name="half-rating-read" defaultValue={media.Ratings.avg} precision={0.1} readOnly /></Grid>
-                                <Grid item><Typography sx={{ paddingLeft: 1 }} variant="overline">{media.Ratings.count}</Typography></Grid>
+                                <Grid item><Typography sx={{ paddingLeft: 1 }} variant="overline">{media.Ratings.total}</Typography></Grid>
                             </Grid>
                         </Grid>
                     </Grid>
