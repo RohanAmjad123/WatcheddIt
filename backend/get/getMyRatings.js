@@ -22,11 +22,10 @@ exports.getMyRatings = (req, res) => {
     }])
     .toArray()
     .then(items => {
-        res.json(items);
-        res.sendStatus(200);
+        console.log(items)
+        res.send(items);
     })
     .catch(err => {
         console.error(`Failed to find documents: ${err}`)
-        res.send();
     })
 }
