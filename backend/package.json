@@ -16,5 +16,8 @@
     "express-session": "^1.17.2",
     "mongodb": "^4.4.0",
     "mongoose": "^6.2.7"
+  },
+  "devDependencies": {
+    "mocha": "^9.2.2"
   }
 }
