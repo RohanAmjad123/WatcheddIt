@@ -48,17 +48,16 @@ exports.getUserPostVotes = (req, res) => {
         console.log('getUserPostVotes')
         const dbConnect = connect.getDb();
         const postID = req.params.postID;
-        const userID = req.session.user._id;
+        const username = req.session.user.username;
         dbConnect.collection("PostVotes")
-            .findOne({"postID": ObjectId(postID), "userID": ObjectId(userID)}, {projection: {_id: 0, vote: 1}})
-            .then(items => {
-                res.json(items);
-                res.sendStatus(200);
-            })
-            .catch(err => {
-                console.error(`Failed to find documents: ${err}`)
-                res.sendStatus(400);
-            })
+            .findOne({"postID": ObjectId(postID), "username": username}, {projection: {_id: 0, vote: 1}}, (err, result) => {
+            if (err) {
+                res.status(400).send(`Error updating Media with id ${req.params.imdbID}!`);
+            } else {
+                console.log("1 document updated");
+                res.status(200).send(result);
+            }
+        })
     } else {
         res.status(401).send("Can't get ratings, no user privileges");
     }

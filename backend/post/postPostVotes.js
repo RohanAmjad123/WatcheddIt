@@ -8,7 +8,7 @@ exports.postPostVote = (req, res) => {
         dbConnect.collection("PostVotes")
             .updateOne({
                 postID: ObjectId(req.params.postID),
-                userID: ObjectId(req.session.user.username),
+                username: req.session.user.username,
             }, {
                 $set: {vote: req.body.vote},
             }, {upsert: true})
@@ -20,6 +20,27 @@ exports.postPostVote = (req, res) => {
                 console.log('Error: ' + err);
                 res.status(400);
             })
+        // dbConnect.collection("PostEvents")
+        //     .insertOne({
+        //         type: "update",
+        //         postID: ObjectId(req.params.postID),
+        //         data: {
+        //         votes: {
+        //         upvotes:0,
+        //         downvotes:0
+        //         }
+        //         },
+        //         user: req.session.user.username,
+        //         timestamp: new Date()
+        //     })
+        //     .then((obj) => {
+        //         console.log('Updated: ' + obj);
+        //         res.sendStatus(200);
+        //     })
+        //     .catch((err) => {
+        //         console.log('Error: ' + err);
+        //         res.status(400);
+        //     })
     } else {
         res.status(401).send("Can't POST ratings, not logged in");
     }
