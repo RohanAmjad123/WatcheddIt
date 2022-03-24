@@ -79,8 +79,8 @@ exports.postRating = (req, res) => {
                                         imdbID: req.params.imdbID
                                     }, {
                                         $set: {
-                                            'Ratings.avg': Double((result.Ratings.avg * result.Ratings.count + req.body.rating) / (result.Ratings.count + 1)),
-                                            'Ratings.count': result.Ratings.count + 1
+                                            'Ratings.avg': Double((result.Ratings.avg * result.Ratings.total + req.body.rating) / (result.Ratings.total + 1)),
+                                            'Ratings.total': result.Ratings.total + 1
                                         },
                                     }, (err, result) => {
                                         if (err) {
