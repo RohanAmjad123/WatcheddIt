@@ -3,10 +3,10 @@ import { Container } from "@mui/material";
 import { Grid } from "@mui/material";
 import { useRouter } from "next/router";
 import PostForm from "../../forms/PostForm";
-import { Media } from '../../interfaces/index'
+import { Media } from '../../interfaces'
 
-export default function Post({ mediaList }: { mediaList: Media[] }) {
-    const mediaCard = mediaList.map((media) => <MediaCard key={media.imdbID} media={media} />);
+export default function Post({ media }: { media: Media }) {
+    const mediaCard = <MediaCard key={media.imdbID} media={media} />
 
     const router = useRouter();
     const { mediaID } = router.query;
@@ -39,11 +39,11 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: { params: any }) {
     const mediaRes = await fetch(`http://localhost:3000/api/media/${params.mediaID}`);
-    const mediaList = await mediaRes.json();
+    const media = await mediaRes.json();
 
     return {
         props: {
-            mediaList,
+            media,
         }
     };
 }
