@@ -8,6 +8,7 @@ const getMedia = require("./get/getMedia.js");
 const getRatings = require("./get/getRatings.js");
 const getAccount = require("./get/getAccount.js");
 const getPostVote = require("./get/getPostVotes.js");
+const getMyVotes = require("./get/getUserVotes.js")
 
 const postMedia = require("./post/postMedia");
 const postComments = require("./post/postComments.js");
@@ -220,6 +221,12 @@ app.route('/api/media/:imdbID/ratings/user').put(function (req, res) {
 
 app.route('/api/media/:imdbID/ratings/user').delete(function (req, res) {
     deleteRating.deleteRating(req, res)
+});
+
+
+// response: [ { imdbID1, imdbID2, ...}]
+app.route('/api/myratings/').get(function (req, res) {
+    getMyVotes.getUserVotes(req, res)
 });
 
 //
