@@ -23,13 +23,13 @@ exports.login = (req, res) => {
                     res.status(400).send("An error has occured while trying to login")
                     throw err1;
                 }
-                if (res2 == false) {
+                if (res2 === false) {
                     console.log("Wrong password!")
                     res.status(400).send("Wrong password")
                     return;
                 }
                 // A valid password hash match has been found
-                if (result.type == "admin") {
+                if (result.type === "admin") {
                     console.log("user is admin")
                     req.session.admin = result;
                     res.send(result)

@@ -39,12 +39,18 @@ exports.deleteRating = (req, res) => {
                             } else {
                                 console.log("1 document updated");
                                 console.log(result)
+                                let finalRating
+                                if (media.Ratings.count - 1 === 0) {
+                                    finalRating = 0
+                                } else {
+                                    finalRating = (media.Ratings.avg * media.Ratings.count - result.value.rating) / (media.Ratings.count - 1)
+                                }
                                 dbConnect.collection("Media")
                                     .updateOne({
                                         imdbID: req.params.imdbID
                                     }, {
                                         $set: {
-                                            'Ratings.avg': Double((media.Ratings.avg * media.Ratings.count - result.value.rating) / (media.Ratings.count - 1)),
+                                            'Ratings.avg': Double(finalRating),
                                             'Ratings.count': media.Ratings.count - 1
                                         },
                                     }, (err, result) => {
