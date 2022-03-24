@@ -6,7 +6,7 @@ const saltRounds = 10;
 exports.signup = (req, res) => {
     console.log("Registering an account");
     const dbConnect = connect.getDb();
-    bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
+    bcrypt.hash(req.body.password, saltRounds, function (err1, hash) {
         dbConnect.collection("users").insertOne(
             {
                 username: req.body.username,
@@ -15,11 +15,13 @@ exports.signup = (req, res) => {
                 date: Date.now
             }, function(err, response) {
                 if (err) {
-                    res.status(400).send(response)
+                    console.log("Failed to register an account")
+                    res.status(400).send("Failure trying to register an account")
                 } else {
                     res.send(response)
                 }
             }
-        )    
+        )
+        if (err1) throw err1;    
     })
 }
