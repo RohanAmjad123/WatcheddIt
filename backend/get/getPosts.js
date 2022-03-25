@@ -36,9 +36,8 @@ exports.getAllPosts = (req, res) => {
 exports.getPost = (req, res) => {
     const dbConnect = connect.getDb();
     const imdbID = req.params.imdbID;
-    console.log("posts");
-    dbConnect.collection("posts")
-        .find({"imdbID": imdbID, "postID": ObjectId(req.params.postID)})
+    dbConnect.collection("Posts")
+        .find({"imdbID": imdbID, "_id": ObjectId(req.params.postID)})
         .toArray(function (err, result) {
             if (err) {
                 res.status(400).send("Error fetching posts!");
