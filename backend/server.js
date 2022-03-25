@@ -126,8 +126,13 @@ app.route('/api/post/add').post((req, res) => {
     postPosts.postPost(req, res);
 });
 
-// GET all posts
+// GET media posts
 app.route('/api/posts/:imdbID/').get(function (req, res) {
+    getPosts.getMediaPosts(req, res);
+});
+
+// GET all posts
+app.route('/api/posts/').get(function (req, res) {
     getPosts.getAllPosts(req, res);
 });
 
