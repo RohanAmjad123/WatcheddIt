@@ -7,7 +7,7 @@ exports.getMediaPosts = (req, res) => {
     const imdbID = req.params.imdbID;
     console.log("Get media posts : " + imdbID);
     dbConnect.collection("Posts")
-        .find({"imdbID": imdbID}, {projection: {imdbID: 0}})
+        .find({"imdbID": imdbID})
         .limit(100)
         .toArray(function (err, result) {
             if (err) {
