@@ -25,5 +25,9 @@ export interface Media {
 
 export interface User {
     username: string,
-    type: string
+    type: string,
+    ratings: {
+        imdbID: string,
+        rating: number
+    }[]
 }
