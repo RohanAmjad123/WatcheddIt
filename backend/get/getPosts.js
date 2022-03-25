@@ -37,13 +37,11 @@ exports.getPost = (req, res) => {
     const dbConnect = connect.getDb();
     const imdbID = req.params.imdbID;
     dbConnect.collection("Posts")
-        .find({"imdbID": imdbID, "_id": ObjectId(req.params.postID)})
-        .toArray(function (err, result) {
+        .findOne({"imdbID": imdbID, "_id": ObjectId(req.params.postID)}, (err, result) => {
             if (err) {
                 res.status(400).send("Error fetching posts!");
             } else {
                 res.json(result);
             }
-        });
-    // console.log(req.params.Title);
+        })
 }
