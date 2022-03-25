@@ -18,6 +18,7 @@ exports.getMyRatings = (req, res) => {
         '$project': {
             '_id': 0,
             'imdbID': 1,
+            'rating': 1
         }
     }])
     .toArray()
