@@ -6,7 +6,7 @@ const getComments = require("./get/getComments.js");
 const getPosts = require("./get/getPosts.js");
 const getMedia = require("./get/getMedia.js");
 const getRatings = require("./get/getRatings.js");
-const getAccount = require("./get/getAccount.js");
+const login = require("./post/login.js");
 const getPostVote = require("./get/getPostVotes.js");
 const getMyRatings = require("./get/getMyRatings.js")
 
@@ -264,7 +264,7 @@ app.route('/api/signup').post(function (req, res) {
 
 app.route('/api/login').post(function (req, res) {
     console.log("Attempting login")
-    getAccount.login(req, res)
+    login.login(req, res)
 });
 
 // logout api
