@@ -1,3 +1,4 @@
+import React from 'react'
 import MediaCard from "../components/MediaCard";
 import { Container } from "@mui/material";
 import { Grid } from "@mui/material";
@@ -7,17 +8,17 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Post, Media } from '../interfaces/index'
 import { useAppSelector } from '../app/hooks'
+import Rate from '../components/Rate'
 
 
 export default function MediaPage({ media, postsList }: { media: Media, postsList: Post[] }) {
-    const mediaCard = <MediaCard key={media.imdbID} media={media} />
-    const postCards = postsList.map((p) => <PostCard key={p._id} post={p} />);
+    const postCards = postsList.map((post) => <PostCard key={post._id} post={post} />);
     const userLoggedIn = useAppSelector((state) => state.loggedIn)
 
     const router = useRouter();
     const { mediaID } = router.query;
 
-    const createPostButton = () => {
+    const userButtons = () => {
         if (userLoggedIn) {
             return (
                 <Grid item>
@@ -31,8 +32,10 @@ export default function MediaPage({ media, postsList }: { media: Media, postsLis
 
     return (
         <Grid container direction="column" rowSpacing={3}>
-            <Grid item >{mediaCard}</Grid>
-            {createPostButton()}
+            <Grid item >
+                <MediaCard key={media.imdbID} media={media} />
+            </Grid>
+            {userButtons()}
             {postCards}
         </Grid>
     );

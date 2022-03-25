@@ -6,20 +6,18 @@ import PostForm from "../../forms/PostForm";
 import { Media } from '../../interfaces'
 
 export default function Post({ media }: { media: Media }) {
-    const mediaCard = <MediaCard key={media.imdbID} media={media} />
-
     const router = useRouter();
     const { mediaID } = router.query;
 
     return (
-        <Container>
-            <Grid container direction="column" rowSpacing={3}>
-                <Grid item>{mediaCard}</Grid>
-                <Grid item>
-                    <PostForm mediaID={ mediaID } />
-                </Grid>
+        <Grid container direction="column" rowSpacing={3}>
+            <Grid item>
+                <MediaCard key={media.imdbID} media={media} />
             </Grid>
-        </Container >
+            <Grid item>
+                <PostForm mediaID={mediaID} />
+            </Grid>
+        </Grid>
     );
 }
 
