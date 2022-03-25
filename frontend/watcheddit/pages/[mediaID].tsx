@@ -1,6 +1,6 @@
 import React from 'react'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import MediaCard from "../components/MediaCard";
-import { Container } from "@mui/material";
 import { Grid } from "@mui/material";
 import PostCard from "../components/PostCard";
 import { Button } from "@mui/material";
@@ -8,8 +8,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Post, Media } from '../interfaces/index'
 import { useAppSelector } from '../app/hooks'
-import Rate from '../components/Rate'
-
 
 export default function MediaPage({ media, postsList }: { media: Media, postsList: Post[] }) {
     const postCards = postsList.map((post) => <PostCard key={post._id} post={post} />);
@@ -41,7 +39,7 @@ export default function MediaPage({ media, postsList }: { media: Media, postsLis
     );
 }
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
     const res = await fetch(`http://localhost:3000/api/media`);
     const mediaList = await res.json();
 
@@ -55,7 +53,8 @@ export async function getStaticPaths() {
     };
 }
 
-export async function getStaticProps({ params }: { params: any }) {
+export const getStaticProps: GetStaticProps = async (context) => {
+    const params = context.params!
     const mediaRes = await fetch(`http://localhost:3000/api/media/${params.mediaID}`);
     const media = await mediaRes.json();
 

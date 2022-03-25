@@ -1,5 +1,5 @@
 import MediaCard from "../../components/MediaCard";
-import { Container } from "@mui/material";
+import { GetStaticProps, GetStaticPaths } from 'next'
 import { Grid } from "@mui/material";
 import { useRouter } from "next/router";
 import PostForm from "../../forms/PostForm";
@@ -21,7 +21,7 @@ export default function Post({ media }: { media: Media }) {
     );
 }
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
     const res = await fetch(`http://localhost:3000/api/media`);
     const mediaList = await res.json();
 
@@ -35,7 +35,8 @@ export async function getStaticPaths() {
     };
 }
 
-export async function getStaticProps({ params }: { params: any }) {
+export const getStaticProps: GetStaticProps = async (context) => {
+    const params = context.params!
     const mediaRes = await fetch(`http://localhost:3000/api/media/${params.mediaID}`);
     const media = await mediaRes.json();
 
