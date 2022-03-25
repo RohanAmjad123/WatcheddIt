@@ -2,6 +2,7 @@ import { Grid, Box } from "@mui/material";
 import { Typography, CardMedia, Rating, Paper } from "@mui/material";
 import Link from "next/link";
 import { Media } from '../interfaces/index'
+import Rate from './Rate'
 
 
 export default function MediaCard({ media }: { media: Media }) {
@@ -28,9 +29,8 @@ export default function MediaCard({ media }: { media: Media }) {
                             <Grid item>
                                 <Typography variant="caption">{media.Year}</Typography>
                             </Grid>
-                            <Grid container direction="row">
-                                <Grid item><Rating sx={{ paddingTop: 0.3 }} name="half-rating-read" defaultValue={media.Ratings.avg} precision={0.1} readOnly /></Grid>
-                                <Grid item><Typography sx={{ paddingLeft: 1 }} variant="overline">{media.Ratings.total}</Typography></Grid>
+                            <Grid item container columnSpacing={3} direction="row">
+                                <Rate media={media} />
                             </Grid>
                         </Grid>
                     </Grid>
