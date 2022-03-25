@@ -130,6 +130,9 @@ export default function Navigation() {
     const [data, setData] = useState([]);
     const [searchVisible, setSearchVisibility] = useState<boolean>(true);
     let inputHandler = (e: any) => {
+    if(e.target.value.length===0){
+    return
+    }
         axios.get('http://localhost:3000/api/media-search/' + e.target.value)
             .then((res) => {
                 console.log(res)
@@ -167,7 +170,7 @@ export default function Navigation() {
                                     <SearchIcon/>
                                 </SearchIconWrapper>
                                 <StyledInputBase
-                                    sx={{color: 'white'}}
+                                    sx={{color: 'black'}}
                                     placeholder="Search"
                                     inputProps={{'aria-label': 'search'}}
                                 />
