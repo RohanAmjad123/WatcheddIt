@@ -49,7 +49,7 @@ exports.putRating = (req, res) => {
                                         .updateOne({
                                             imdbID: req.params.imdbID
                                         }, {
-                                            $set: {'Ratings.avg': media.Ratings.avg + (req.body.rating-result.value.rating)  / media.Ratings.count},
+                                            $set: {'Ratings.avg': media.Ratings.avg + (req.body.rating-result.value.rating)  / media.Ratings.total},
                                         }, (err, result) => {
                                             if (err) {
                                                 res.status(400).send(`Error updating Media with id ${req.params.imdbID}!`);
