@@ -3,10 +3,18 @@ export interface Post {
     title: string,
     description: string,
     user: string,
+    imdbID: string
     votes: {
         upvotes: number,
         downvotes: number
-    }
+    },
+}
+
+export interface Comment {
+    _id: string
+    postID: string,
+    text: string,
+    user: string
 }
 
 export interface Media {
@@ -16,7 +24,6 @@ export interface Media {
     Year: string,
     Genre: string,
     Ratings: {
-        count: number;
         avg: number,
         total: number
     },
