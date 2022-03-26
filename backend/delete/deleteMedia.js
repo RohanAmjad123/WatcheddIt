@@ -1,12 +1,12 @@
 const connect = require("../database.js");
 const ISODate = require('mongodb').ISODate;
 
-exports.postPost = (req, res) => {
+exports.deleteMedia = (req, res) => {
     if(req.session.user){
         const dbConnect = connect.getDb();
 
         dbConnect
-        .collection("postEvents")
+        .collection("media")
         .deleteOne({imdbID: req.params.imdbID}, function (err, result){
             if (err) {
                 res.status(400).send(`Error deleting listing with id ${req.params.imdbID}!`);
@@ -18,6 +18,6 @@ exports.postPost = (req, res) => {
         res.sendStatus(200);
     }
     else{
-        res.status(400).send("Can't DELETE post, not logged in");
+        res.status(400).send("Can't DELETE media, not logged in");
     }
 }
