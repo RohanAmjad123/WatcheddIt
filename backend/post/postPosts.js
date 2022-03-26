@@ -20,7 +20,7 @@ exports.postPost = (req, res) => {
             }, function(err, result)
             {
                 if (err) throw err;
-                else res.sendStatus(200);
+                res.sendStatus(200)
             });
     } else {
         res.status(401).send("Can't POST post, not logged in");

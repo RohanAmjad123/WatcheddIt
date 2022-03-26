@@ -7,6 +7,7 @@ const url = 'http://127.0.0.1:3000/api'
 var session_key
 const connect = require("../database.js")
 var dbConnect
+var documentId
 
 // Retrieves the cookie
 before(async() => {
@@ -24,7 +25,6 @@ before(async() => {
 
 // Removes inserted documents
 after(function(done) {
-    console.log("Deleting...")
     dbConnect = connect.getDb()
     dbConnect.collection("PostEvents").deleteMany(
         {
@@ -32,7 +32,6 @@ after(function(done) {
         }, function (err, result)
         {
             if (err) throw err;
-            console.log(result)
             connect.closeConnection();
             done();
         }
@@ -86,13 +85,58 @@ describe('/POST posts', function () {
 
 describe('/GET posts', function () {
     // Test Case 10
-    it('Retrieve posts', async function () {
+    it('Retrieve all posts', async function () {
         let res =  await chai.request(url)
-        .get('/api/posts/')
+        .get('/posts/')
         expect(res).to.have.status(200);   
     },
     // Test Case 11
-    it('Retrieve a singular post', async function () {
+    it('Retrieve a singular valid post', async function () {
         let res =  await chai.request(url)
-    } )
+        .get('/media/tt0816692/post/623aef7010ebb643f5d9c272')
+        expect(res).to.have.status(200);
+        expect(res.text).to.not.equal(null)
+    } ),
+    // Test Case 12
+    it('Retrieve a singular invalid post with invalid IMDB id and valid postID', async function () {
+        let res =  await chai.request(url)
+        .get('/media/abc/post/623aef7010ebb643f5d9c272')
+        expect(res).to.not.have.status(200);
+        expect(res.body).to.be.empty;
+    } ),
+
+    // Test Case 13
+    it('Retrieve a singular invalid post with valid IMDB id and invalid postID', async function () {
+        let res =  await chai.request(url)
+        .get('/media/tt0816692/post/abc')
+        expect(res).to.not.have.status(200);
+        expect(res.body).to.be.empty;
+    } )    
+    
 )})
+
+describe('/PUT posts', function () {
+    // Test Case 14
+    it('Edit a valid post', async function () {
+      let res = await chai.request(url)
+      .put("/post/update/623aef7010ebb643f5d9c272")
+      .set('Content-Type', 'application/json')
+      .set({'Cookie': session_key})
+      .send({
+        "data": {
+            "title": "The ending was insane!",
+            "description": "The ending of the movie was such a plot twist!",
+            "user": "RohanAmjad123",
+            "imdbID": "tt0816692",
+            "votes": {
+                "upvotes": 0,
+                "downvotes": 0
+            }
+        },
+        "user": "RohanAmjad123",
+    
+    })
+    expect(res).to.have.status(200)
+
+})})
+    

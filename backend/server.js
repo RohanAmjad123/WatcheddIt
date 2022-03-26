@@ -109,7 +109,7 @@ app.route('/api/comment/:postId/:limit').get(function (req, res) {
 
 // PUT comment 
 app.route('/api/post/update/:commentId').put((req, res) => {
-    putComment.putComment(req, res);
+    putComment.postPost(req, res);
 });
 
 // DELETE comment
@@ -143,7 +143,7 @@ app.route('/api/media/:imdbID/post/:postID/').get(function (req, res) {
 
 // PUT post 
 app.route('/api/post/update/:postId').put((req, res) => {
-    putPost.putPost(req, res);
+    putPost.postPost(req, res);
 });
 
 
