@@ -6,7 +6,6 @@ const saltRounds = 10;
 exports.signup = (req, res) => {
     console.log("Registering an account");
     const dbConnect = connect.getDb();
-    console.log("dbconnect: " + dbConnect)
     bcrypt.hash(req.body.password, saltRounds, function (err1, hash) {
         dbConnect.collection("users").insertOne(
             {
