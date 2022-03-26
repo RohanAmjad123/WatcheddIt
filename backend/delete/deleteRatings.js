@@ -40,10 +40,10 @@ exports.deleteRating = (req, res) => {
                                 console.log("1 document updated");
                                 console.log(result)
                                 let finalRating
-                                if (media.Ratings.count - 1 === 0) {
+                                if (media.Ratings.total - 1 === 0) {
                                     finalRating = 0
                                 } else {
-                                    finalRating = (media.Ratings.avg * media.Ratings.count - result.value.rating) / (media.Ratings.count - 1)
+                                    finalRating = (media.Ratings.avg * media.Ratings.total - result.value.rating) / (media.Ratings.total - 1)
                                 }
                                 dbConnect.collection("Media")
                                     .updateOne({
@@ -51,7 +51,7 @@ exports.deleteRating = (req, res) => {
                                     }, {
                                         $set: {
                                             'Ratings.avg': Double(finalRating),
-                                            'Ratings.count': media.Ratings.count - 1
+                                            'Ratings.total': media.Ratings.total - 1
                                         },
                                     }, (err, result) => {
                                         if (err) {

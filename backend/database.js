@@ -1,24 +1,38 @@
 const {MongoClient} = require("mongodb");
 
+const env = process.env.NODE_ENV || "development";
+
+let databaseName;
+if (env === "test") {
+    databaseName = 'Watcheddit'
+} else {
+    databaseName = 'Watcheddit'
+}
+
 const connection = "mongodb+srv://WatchedditApp:SENG401@watchedditcluster.j2xln.mongodb.net/Watcheddit?retryWrites=true&w=majority";
+
 const client = new MongoClient(connection, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
 });
 
 let dbConnect;
 // let dbWrite;
 
 module.exports = {
-    connect: function () {
-        client.connect(function (err, db) {
-            if (err || !db) {
-                console.log(err)
-                return
-            }
-            dbConnect = db.db("Watcheddit");
-            console.log("Successfully connected to Watcheddit MongoDB.");
-        });
+    connect: async function () {
+        console.log("Connecting....");
+        await client.connect();
+        dbConnect = await client.db(databaseName);
+        console.log(`connected to ${databaseName}`);
+    },
+
+    isDbConnected: function () {
+        return client.isConnected();
+    },
+
+    closeConnection: async function () {
+        await client.close();
     },
 
     // connectToWrite: function () {
@@ -39,5 +53,4 @@ module.exports = {
     // getWriteDb: function () {
     //     return dbWrite;
     // }
-
 };

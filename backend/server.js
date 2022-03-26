@@ -33,6 +33,7 @@ const deleteAccount = require("./delete/deleteAccount.js");
 const deleteRating = require("./delete/deleteRatings.js");
 
 const store = new session.MemoryStore();
+const cors = require("cors");
 
 // const { send } = require("process");
 
@@ -40,11 +41,17 @@ const bp = require('body-parser')
 const app = express();
 
 app.use(bp.json())
-app.use(bp.urlencoded({ extended: true }))
-connect.connect();
+app.use(bp.urlencoded({extended: true}))
+
+connect.connect().then(r => {
+    app.listen(3000, function () {
+        console.log("server started on http://127.0.0.1:3000");
+        app.emit("app_started")
+    });
+});
+
 // connect.connectToWrite();
 
-const cors = require("cors");
 
 app.use(cors({
     origin: 'http://localhost:3001',
@@ -62,10 +69,10 @@ app.use(session({
     store: store
 }));
 
-app.use('/',function(req, res, next){
+app.use('/', function (req, res, next) {
     console.log("A new request received at " + Date.now());
     next();
- });
+});
 
 
 // empty cookies for temporary API before
@@ -112,7 +119,7 @@ app.route('/api/comment/:postId/:limit').get(function (req, res) {
 
 // PUT comment 
 app.route('/api/post/update/:commentId').put((req, res) => {
-    putComment.putComment(req, res);
+    putComment.postPost(req, res);
 });
 
 // DELETE comment
@@ -146,7 +153,7 @@ app.route('/api/media/:imdbID/post/:postID/').get(function (req, res) {
 
 // PUT post 
 app.route('/api/post/update/:postId').put((req, res) => {
-    putPost.putPost(req, res);
+    putPost.postPost(req, res);
 });
 
 
@@ -289,6 +296,7 @@ app.route('/api/logout').post(function (req, res) {
 // });
 
 
+module.exports = app
 app.listen(3000, function () {
     console.log("server started on http://127.0.0.1:3000");
 });

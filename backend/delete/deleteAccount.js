@@ -1,12 +1,12 @@
 const connect = require("../database.js");
 const ISODate = require('mongodb').ISODate;
 
-exports.postPost = (req, res) => {
+exports.deleteAccount = (req, res) => {
     if(req.session.user){
         const dbConnect = connect.getDb();
 
         dbConnect
-        .collection("postEvents")
+        .collection("users")
         .deleteOne({imdbID: req.params.accountId}, function (err){
             if (err) {
                 res.status(400).send(`Error deleting listing with id ${req.params.imdbID}!`);

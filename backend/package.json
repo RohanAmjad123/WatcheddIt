@@ -4,8 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "mocha ./test/**/*.js",
-    "start": "node server.js"
+    "test": "mocha ./test/**/*.js --exit",
+    "start": "node server.js",
+    "debug": "nodemon --inspect=0.0.0.0:3002 server.js"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +21,7 @@
     "jsonpath": "^1.1.1",
     "mongodb": "^4.4.0",
     "mongoose": "^6.2.7",
+    "nodemon": "^2.0.15"
     "swagger-autogen": "^2.20.3",
     "swagger-ui-express": "^4.1.4"
   },
