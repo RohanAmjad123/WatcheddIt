@@ -1,77 +1,93 @@
-const chai = require('chai');
-let {expect, assert} = require('chai');
-var jp = require('jsonpath');
-var mongoose = require('mongoose');
-let chaiHttp = require('chai-http');
+process.env.NODE_ENV = 'test'
+
+const chai = require("chai");
+let { expect, assert } = require("chai");
+var jp = require("jsonpath");
+var mongoose = require("mongoose");
+let chaiHttp = require("chai-http");
 chai.use(chaiHttp);
-const url = 'http://127.0.0.1:3000/api'
-const connect = require("../database.js")
+const server = require("../server");
+const connect = require("../database.js");
+var dbConnect;
 
-var dbConnect
+before(async () => {
+    await connect.connect();
+});
 
-    before(async() => {
-        await connect.connect();
-    })
+after(() => connect.closeConnection());
 
-    after(() => connect.closeConnection());
-
-describe('/POST signup', function() {
-
+describe("/POST signup", () => {
     // Test Case 04
-    it('Signup with valid details', async function() {
-      let res = await chai.request(url)
-      .post('/signup/')
-      .send({
-        "username": "testuser",
-        "password": "testpassword"
-      })
-      .set('Content-Type', 'application/json')
-      expect(res).to.have.status(200);
-      assert.equal(res.body.acknowledged, true, 'The document should have been inserted')
-      assert.exists(res.body.insertedId, 'The document should have had an inserted ID')
-    })
+    it("should signup with valid details", (done) => {
+        chai.request(server)
+            .post("/api/signup/")
+            .send({
+                username: "testuser",
+                password: "testpassword",
+            })
+            .set('Content-Type', 'application/json')
+            .end((err, res) => {
+                expect(res).to.have.status(200);
+                assert.equal(
+                    res.body.acknowledged,
+                    true,
+                    'The document should be inserted'
+                );
+                assert.exists(
+                    res.body.insertedId,
+                    'The document should have an inserted ID'
+                );
+                done();
+            });
+    });
 
     // Test Case 05
-    it('The new signup detail passwords should be obfuscated',  function(done) {
+    it('should assert that the inserted users password is obfuscated', (done) => {
         dbConnect = connect.getDb()
         dbConnect.collection("users").findOne(
             {
                 username: "testuser"
-            }, function(err, result) 
-            {
+            },
+            (err, res) => {
                 if (err) throw err;
-                assert.notEqual(result.password, "testpassword", 'The password should be obfuscated')
+                assert.notEqual(
+                    res.password,
+                    "testpassword",
+                    'The password should be obfuscated'
+                );
             }
         )
 
         // Remove the newly created user from the database
-         dbConnect.collection("users").deleteOne(
+        dbConnect.collection("users").deleteOne(
             {
                 username: "testuser"
-            }, function (err, result)
-            {
+            }, 
+            (err, res) => {
                 if (err) throw err;
                 done();
             }
         )
-    })
+    });
 
     // Test Case 06
-    it('Attempting to sign up with an already existing username', async function() {
-     let res = await chai.request(url)
-      .post('/signup/')
-      .send({
-        "username": "RohanAmjad123",
-        "password": "testpassword"
-      })
-      .set('Content-Type', 'application/json')
-      expect(res).to.have.status(400);
-      assert(res.text, 'Failure trying to register an account', "The body message should display that it failed trying to register for an account")
-    })
+    it('should attempt to sign up with an already existing username', (done) => {
+        chai.request(server)
+            .post('/api/signup/')
+            .send({
+                "username": "RohanAmjad123",
+                "password": "testpassword"
+            })
+            .set('Content-Type', 'application/json')
+            .end((err, res) => {
+                expect(res).to.have.status(409);
+                assert(
+                    res.text, 
+                    'Failure trying to register an account', 
+                    "The body message should display that it failed trying to register for an account"
+                );
+                done();
+            })
+    });
 
-  })
-
-
-
-
-
+});
