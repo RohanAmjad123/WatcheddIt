@@ -17,7 +17,7 @@ exports.signup = (req, res) => {
             }, function(err, response) {
                 if (err) {
                     console.log("Failed to register an account")
-                    res.status(400).send("Failure trying to register an account")
+                    res.status(409).send("Failure trying to register an account")
                 } else {
                     res.send(response)
                 }

@@ -13,7 +13,7 @@ exports.login = (req, res) => {
             console.log(result)
             if (result == null) {
                 console.log("No matching email-address")
-                res.status(400).send("No matching username found")
+                res.status(401).send("No matching username found")
                 return
             }
             bcrypt.compare(req.body.password, result.password, function (err1, res2) 
@@ -25,7 +25,7 @@ exports.login = (req, res) => {
                 }
                 if (res2 === false) {
                     console.log("Wrong password!")
-                    res.status(400).send("Wrong password")
+                    res.status(401).send("Wrong password")
                     return;
                 }
                 // A valid password hash match has been found
