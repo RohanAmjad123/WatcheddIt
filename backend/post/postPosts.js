@@ -21,7 +21,7 @@ console.log(req.body)
             postID: ObjectId(),
             data: req.body,
             // 'user': req.session.user.username,
-            user: null,
+            user: req.session.user.username,
             timestamp: new Date()
         });
 

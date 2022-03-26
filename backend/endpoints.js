@@ -1,6 +1,4 @@
-const express = require("express");
-const session = require('express-session');
-const connect = require("./database.js");
+
 const getComments = require("./get/getComments.js");
 const getPosts = require("./get/getPosts.js");
 const getMedia = require("./get/getMedia.js");
@@ -21,49 +19,6 @@ const deleteMedia = require("./delete/deleteMedia.js");
 const deleteAccount = require("./delete/deleteAccount.js");
 const store = new session.MemoryStore();
 
-// const { send } = require("process");
-
-const bp = require('body-parser')
-const app = express();
-var jsonParser = bp.json()
-
-app.use(bp.json())
-app.use(bp.urlencoded({ extended: true }))
-connect.connect();
-// connect.connectToWrite();
-
-const cors = require("cors");
-const { request, response } = require("express");
-const { createSession } = require("./get/createSession.js");
-const bodyParser = require("body-parser");
-app.use(cors({
-    origin: 'http://localhost:3001'
-}));
-
-app.use(session({
-    key: "userId",
-    secret: "secret",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        expires: 7 * 24 * 3600 * 1000 // 30 minutes (d * h/d * s/h * ms/s) total = 7 days
-    },
-    store: store
-}));
-
-app.use('/',function(req, res, next){
-    console.log("A new request received at " + Date.now());
-    next();
- });
-
-
-// empty cookies for temporary API before
-// login is implemented
-app.get("/", function (req, res) {
-    req.session.user = {name: "user"};
-    // req.session.admin = {name:"admin"};
-    res.send("welcome");
-});
 
 //
 // COMMENT ENDPOINTS
