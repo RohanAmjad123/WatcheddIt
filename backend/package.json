@@ -19,7 +19,9 @@
     "express-session": "^1.17.2",
     "jsonpath": "^1.1.1",
     "mongodb": "^4.4.0",
-    "mongoose": "^6.2.7"
+    "mongoose": "^6.2.7",
+    "swagger-autogen": "^2.20.3",
+    "swagger-ui-express": "^4.1.4"
   },
   "devDependencies": {
     "chai": "^4.3.6",
