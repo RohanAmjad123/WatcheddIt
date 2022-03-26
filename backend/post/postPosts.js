@@ -3,9 +3,12 @@ const connect = require("../database.js");
 
 exports.postPost = (req, res) => {
     if (req.session.user) {
-        const dbConnect = connect.getDb();
-        console.log(req.body)
 
+
+
+        const dbConnect = connect.getDb();
+        console.log("data payload is: " + JSON.stringify(req.body))
+        console.log("user is: " + req.session.user.username)
         dbConnect
             .collection("PostEvents")
             .insertOne({
@@ -14,9 +17,11 @@ exports.postPost = (req, res) => {
                 data: req.body,
                 user: req.session.user.username,
                 timestamp: new Date()
+            }, function(err, result)
+            {
+                if (err) throw err;
+                else res.sendStatus(200);
             });
-
-        res.sendStatus(200);
     } else {
         res.status(401).send("Can't POST post, not logged in");
     }
