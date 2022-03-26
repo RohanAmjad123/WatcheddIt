@@ -2,6 +2,10 @@ const connect = require("../database.js");
 
 exports.putRating = (req, res) => {
     if (req.session.user) {
+        if (req.body.rating < 1 || req.body.rating > 5) {
+            res.status(400).send('Error - Invalid Rating Value');
+            return
+        }
         console.log("Update Rating")
         const dbConnect = connect.getDb();
         dbConnect.collection("Ratings")
@@ -64,6 +68,6 @@ exports.putRating = (req, res) => {
                 })
 
     } else {
-        res.status(401).send("Can't POST ratings, not logged in");
+        res.status(401).send("Can't PUT rating, not logged in");
     }
 }

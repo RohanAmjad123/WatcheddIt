@@ -67,6 +67,6 @@ exports.deleteRating = (req, res) => {
             })
 
     } else {
-        res.status(400).send("Can't DELETE post, not logged in");
+        res.status(401).send("Can't DELETE rating, not logged in");
     }
 }

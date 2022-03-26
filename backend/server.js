@@ -43,7 +43,7 @@ const app = express();
 app.use(bp.json())
 app.use(bp.urlencoded({extended: true}))
 
-connect.connect().then(r => {
+connect.connect().then(() => {
     app.listen(3000, function () {
         console.log("server started on http://127.0.0.1:3000");
         app.emit("app_started")
@@ -297,8 +297,8 @@ app.route('/api/logout').post(function (req, res) {
 
 
 module.exports = app
-app.listen(3000, function () {
-    console.log("server started on http://127.0.0.1:3000");
-});
+// app.listen(3000, function () {
+//     console.log("server started on http://127.0.0.1:3000");
+// });
 
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))

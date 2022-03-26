@@ -49,7 +49,7 @@ exports.getUserRatings = (req, res) => {
                 }
             })
     } else {
-        res.status(401).send("Can't get ratings, no user privileges");
+        res.status(401).send("Can't GET rating, not logged in");
     }
 }
 

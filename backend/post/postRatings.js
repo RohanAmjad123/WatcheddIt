@@ -4,6 +4,10 @@ const ObjectId = require('mongodb').ObjectId;
 
 exports.postRating = (req, res) => {
     if (req.session.user) {
+        if (req.body.rating < 1 || req.body.rating > 5) {
+            res.status(400).send('Error - Invalid Rating Value');
+            return
+        }
         console.log("Add Ratings")
         const dbConnect = connect.getDb();
 
@@ -95,6 +99,6 @@ exports.postRating = (req, res) => {
                 }
             })
     } else {
-        res.status(401).send("Can't POST ratings, not logged in");
+        res.status(401).send("Can't POST rating, not logged in");
     }
 }
