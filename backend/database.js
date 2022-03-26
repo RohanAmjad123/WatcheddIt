@@ -10,15 +10,20 @@ let dbConnect;
 // let dbWrite;
 
 module.exports = {
-    connect: function () {
-        client.connect(function (err, db) {
-            if (err || !db) {
-                console.log(err)
-                return
-            }
-            dbConnect = db.db("Watcheddit");
-            console.log("Successfully connected to Watcheddit MongoDB.");
-        });
+    connect: async function ( callback ) {
+        console.log("Connecting....")
+
+        await client.connect();
+        dbConnect = client.db("Watcheddit")
+        console.log("connected to Watcheddit")
+    },
+
+    isDbConnected: function() {
+        return client.isConnected();
+    },
+
+    closeConnection: function () {
+        client.close();
     },
 
     // connectToWrite: function () {
