@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "mocha ./test/**/*.js",
+    "test": "mocha ./test/**",
     "start": "node server.js",
     "debug": "nodemon --inspect=0.0.0.0:3002 server.js"
   },
