@@ -7,17 +7,6 @@ exports.postPost = (req, res) => {
         console.log(req.body)
 
         dbConnect
-<<<<<<< HEAD
-        .collection("PostEvents")
-        .insertOne({
-            type:  "post",
-            postID: ObjectId(),
-            data: req.body,
-            // 'user': req.session.user.username,
-            user: req.session.user.username,
-            timestamp: new Date()
-        });
-=======
             .collection("PostEvents")
             .insertOne({
                 type: "post",
@@ -26,7 +15,6 @@ exports.postPost = (req, res) => {
                 user: req.session.user.username,
                 timestamp: new Date()
             });
->>>>>>> ed1fe164150a9cf107f8c7897429cbea07aa09cb
 
         res.sendStatus(200);
     } else {
