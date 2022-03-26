@@ -22,6 +22,8 @@
     "mongodb": "^4.4.0",
     "mongoose": "^6.2.7",
     "nodemon": "^2.0.15"
+    "swagger-autogen": "^2.20.3",
+    "swagger-ui-express": "^4.1.4"
   },
   "devDependencies": {
     "chai": "^4.3.6",
