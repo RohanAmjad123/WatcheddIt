@@ -32,7 +32,6 @@ describe('/POST signup', function() {
 
     // Test Case 05
     it('The new signup detail passwords should be obfuscated',  function(done) {
-        console.log("dbconnect: " + dbConnect)
         dbConnect = connect.getDb()
         dbConnect.collection("users").findOne(
             {
@@ -54,6 +53,19 @@ describe('/POST signup', function() {
                 done();
             }
         )
+    })
+
+    // Test Case 06
+    it('Attempting to sign up with an already existing username', async function() {
+     let res = await chai.request(url)
+      .post('/signup/')
+      .send({
+        "username": "RohanAmjad123",
+        "password": "testpassword"
+      })
+      .set('Content-Type', 'application/json')
+      expect(res).to.have.status(400);
+      assert(res.text, 'Failure trying to register an account', "The body message should display that it failed trying to register for an account")
     })
 
   })
