@@ -2,9 +2,12 @@ version: '3.0'
 services: 
   backend: 
     image: watcheddit-api
-    build: .
+    build: 
+      context: .
     ports:
       - 3000:3000
+      - 3002:3002
     volumes:
       - ./:/app
+      - /app/node_modules
     command: npm run debug
