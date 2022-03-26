@@ -17,9 +17,9 @@ describe('/POST Login', function() {
     .set('Content-Type', 'application/json')
     expect(res).to.have.status(200);
     expect(res).to.have.a.cookie
-    assert.equal(res.body.username,'johnnyman', 'The entered username should be the same')
-    assert.notEqual(res.body.password,'papadog', 'The password should be hashed')
-    assert.equal(res.body.type, 'user', 'The user should be a regular user')
+    assert.equal(res.body.user.username,'johnnyman', 'The entered username should be the same')
+    assert.notEqual(res.body.user.password,'papadog', 'The password should be hashed')
+    assert.equal(res.body.user.type, 'user', 'The user should be a regular user')
   })
   it('Login with correct username but incorrect password', async function() {
     // Test Case 02

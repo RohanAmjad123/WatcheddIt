@@ -32,11 +32,11 @@ exports.login = (req, res) => {
                 if (result.type === "admin") {
                     console.log("user is admin")
                     req.session.admin = result;
-                    res.send(result)
+                    res.json(req.session)
                 } else {
                     console.log("user is regular user")
                     req.session.user = result
-                    res.send(result)
+                    res.json(req.session)
                 }
             })
         }
