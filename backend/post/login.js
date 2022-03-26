@@ -13,7 +13,7 @@ exports.login = (req, res) => {
             console.log(result)
             if (result == null) {
                 console.log("No matching email-address")
-                res.status(400).send("No matching email-address found")
+                res.status(400).send("No matching username found")
                 return
             }
             bcrypt.compare(req.body.password, result.password, function (err1, res2) 
