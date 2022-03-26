@@ -31,7 +31,7 @@ describe('/POST signup', function() {
     })
 
     // Test Case 05
-    it('The new signup detail password should be obfuscated',  function(done) {
+    it('The new signup detail passwords should be obfuscated',  function(done) {
         console.log("dbconnect: " + dbConnect)
         dbConnect = connect.getDb()
         dbConnect.collection("users").findOne(
