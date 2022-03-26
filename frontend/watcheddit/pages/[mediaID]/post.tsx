@@ -1,34 +1,32 @@
 import MediaCard from "../../components/MediaCard";
-import { Container } from "@mui/material";
+import { GetStaticProps, GetStaticPaths } from 'next'
 import { Grid } from "@mui/material";
 import { useRouter } from "next/router";
-import { Button } from "@mui/material";
-import { TextField } from "@mui/material";
 import PostForm from "../../forms/PostForm";
+import { Media } from '../../interfaces'
 
-
-export default function Post({ mediaList }: { mediaList: any[] }) {
-    const mediaCard = mediaList.map((m) => <MediaCard key={m.imdbID} media={m} />);
-
+export default function Post({ media }: { media: Media }) {
     const router = useRouter();
     const { mediaID } = router.query;
 
     return (
-        <Container>
-            <Grid container direction="column">
-                <Grid item>{mediaCard}</Grid>
-                <Grid item><PostForm mediaID={ mediaID } /></Grid>
+        <Grid container direction="column" rowSpacing={3}>
+            <Grid item>
+                <MediaCard key={media.imdbID} media={media} />
             </Grid>
-        </Container >
+            <Grid item>
+                <PostForm mediaID={mediaID} />
+            </Grid>
+        </Grid>
     );
 }
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
     const res = await fetch(`http://localhost:3000/api/media`);
     const mediaList = await res.json();
 
-    const paths = mediaList.map((m: any) => ({
-        params: { mediaID: m.imdbID },
+    const paths = mediaList.map((media: Media) => ({
+        params: { mediaID: media.imdbID },
     }))
 
     return {
@@ -37,13 +35,14 @@ export async function getStaticPaths() {
     };
 }
 
-export async function getStaticProps({ params }: { params: any }) {
+export const getStaticProps: GetStaticProps = async (context) => {
+    const params = context.params!
     const mediaRes = await fetch(`http://localhost:3000/api/media/${params.mediaID}`);
-    const mediaList = await mediaRes.json();
+    const media = await mediaRes.json();
 
     return {
         props: {
-            mediaList,
+            media,
         }
     };
 }

@@ -3,10 +3,13 @@ import Navigation from '../components/Navigation';
 import { ThemeProvider, createTheme } from '@mui/material';
 import { Container } from "@mui/material";
 
+import { Provider } from "react-redux";
+import { store } from "../app/store";
+
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
-  }
+  },
 });
 
 import '../styles/globals.css'
@@ -14,13 +17,15 @@ import type { AppProps } from 'next/app'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider theme={darkTheme}>
+    <Provider store={store}>
       <CssBaseline />
       <Navigation />
-      <Container>
-        <Component {...pageProps} />
-      </Container>
-    </ThemeProvider>
+      <div style={{ backgroundColor: '#EEEEEE', height: "100vh" }}>
+        <Container sx={{ paddingTop: 3 }}>
+          <Component {...pageProps} />
+        </Container>
+      </div>
+    </Provider>
   );
 }
 

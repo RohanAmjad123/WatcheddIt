@@ -1,31 +1,40 @@
 const express = require("express");
 const session = require('express-session');
+const bcrypt = require('bcrypt');
 const connect = require("./database.js");
 const getComments = require("./get/getComments.js");
 const getPosts = require("./get/getPosts.js");
 const getMedia = require("./get/getMedia.js");
 const getRatings = require("./get/getRatings.js");
+const login = require("./post/login.js");
+const getPostVote = require("./get/getPostVotes.js");
+const getMyRatings = require("./get/getMyRatings.js")
+
 const postMedia = require("./post/postMedia");
 const postComments = require("./post/postComments.js");
 const postPosts = require("./post/postPosts.js");
 const postRatings = require("./post/postRatings.js");
 const postAccount = require("./post/postAccount.js");
-const getAccount = require("./get/getAccount.js");
+const postPostVote = require("./post/postPostVotes.js");
+
 const putComment = require("./put/putComment");
 const putPost = require("./put/putPost");
 const putMedia = require("./put/putMedia");
 const putAccount = require("./put/putAccount");
+const putRating = require("./put/putRatings.js");
+
 const deleteComment = require("./delete/deleteComment.js");
 const deletePost = require("./delete/deletePost.js");
 const deleteMedia = require("./delete/deleteMedia.js");
 const deleteAccount = require("./delete/deleteAccount.js");
+const deleteRating = require("./delete/deleteRatings.js");
+
 const store = new session.MemoryStore();
 
 // const { send } = require("process");
 
 const bp = require('body-parser')
 const app = express();
-var jsonParser = bp.json()
 
 app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
@@ -33,11 +42,10 @@ connect.connect();
 // connect.connectToWrite();
 
 const cors = require("cors");
-const { request, response } = require("express");
-const { createSession } = require("./get/createSession.js");
-const bodyParser = require("body-parser");
+
 app.use(cors({
-    origin: 'http://localhost:3001'
+    origin: 'http://localhost:3001',
+    credentials: true
 }));
 
 app.use(session({
@@ -46,7 +54,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        expires: 7 * 24 * 3600 * 1000 // 30 minutes (d * h/d * s/h * ms/s) total = 7 days
+        maxAge: 1000 * 3600 // 1 hour
     },
     store: store
 }));
@@ -70,7 +78,7 @@ app.get("/", function (req, res) {
 //
 
 // POST comment
-app.route('/api/comment/add').post((req, res) => {
+app.route('/api/comment/:postId/add').post((req, res) => {
     postComments.postComment(req, res);
 });
 
@@ -118,13 +126,18 @@ app.route('/api/post/add').post((req, res) => {
     postPosts.postPost(req, res);
 });
 
-// GET all posts
+// GET media posts
 app.route('/api/posts/:imdbID/').get(function (req, res) {
+    getPosts.getMediaPosts(req, res);
+});
+
+// GET all posts
+app.route('/api/posts/').get(function (req, res) {
     getPosts.getAllPosts(req, res);
 });
 
 // GET Singular Post
-app.route('/api/post/:imdbID/:postID/').get(function (req, res) {
+app.route('/api/media/:imdbID/post/:postID/').get(function (req, res) {
     getPosts.getPost(req, res);
 });
 
@@ -177,6 +190,10 @@ app.route('/api/media-categories/:category').get(function (req, res) {
     getMedia.getMediaByCategory(req, res)
 });
 
+app.route('/api/media-search/:search').get(function (req, res) {
+    getMedia.search(req, res)
+});
+
 // PUT media 
 app.route('/api/post/update/:media').put((req, res) => {
     putMedia.putMedia(req, res);
@@ -199,8 +216,39 @@ app.route('/api/media/:imdbID/ratings/user').get(function (req, res) {
     getRatings.getUserRatings(req, res)
 });
 
-app.route('/api/media/:imdbID/ratings/add').post(function (req, res) {
+app.route('/api/media/:imdbID/ratings/user').post(function (req, res) {
     postRatings.postRating(req, res)
+});
+
+app.route('/api/media/:imdbID/ratings/user').put(function (req, res) {
+    putRating.putRating(req, res)
+});
+
+app.route('/api/media/:imdbID/ratings/user').delete(function (req, res) {
+    deleteRating.deleteRating(req, res)
+});
+
+
+// response: [ { imdbID1, imdbID2, ...}]
+// Gets all of the IMDB ID's that a user has voted on
+app.route('/api/myratings/').get(function (req, res) {
+    getMyRatings.getMyRatings(req, res)
+});
+
+//
+// Post Voting ENDPOINTS
+//
+
+app.route('/api/post/:postID/voting').get(function (req, res) {
+    getPostVote.getPostVotes(req, res)
+});
+
+app.route('/api/post/:postID/voting/user').get(function (req, res) {
+    getPostVote.getUserPostVotes(req, res)
+});
+
+app.route('/api/post/:postID/voting/user').post(function (req, res) {
+    postPostVote.postPostVote(req, res)
 });
 
 // SIGN UP & LOGIN APIS
@@ -216,7 +264,7 @@ app.route('/api/signup').post(function (req, res) {
 
 app.route('/api/login').post(function (req, res) {
     console.log("Attempting login")
-    getAccount.login(req, res)
+    login.login(req, res)
 });
 
 // logout api

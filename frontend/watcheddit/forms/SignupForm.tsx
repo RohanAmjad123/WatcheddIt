@@ -10,7 +10,6 @@ const defaultSignupValues = {
 
 export default function SignupForm () {
     const router = useRouter();
-
     const [formValues, setFormValues] = useState(defaultSignupValues);
 
     const handleChange = (event: any) => {
@@ -25,7 +24,6 @@ export default function SignupForm () {
         console.log(formValues);
         axios.post('http://localhost:3000/api/signup', formValues)
         .then((response) => {
-            console.log('Successful signup')
             router.push('/login')
         }, (error) => {
             console.log(error)
@@ -36,13 +34,13 @@ export default function SignupForm () {
         <FormControl>
             <Grid container direction="column" spacing={3}>
                 <Grid item>
-                    <TextField name="username" onChange={handleChange} label="Username" />
+                    <TextField required name="username" onChange={handleChange} label="Username" />
                 </Grid>
                 <Grid item>
-                    <TextField name="password" onChange={handleChange} label="Password" />
+                    <TextField required type="password" name="password" onChange={handleChange} label="Password" />
                 </Grid>
                 <Grid item>
-                    <Button variant="contained" onClick={handleClick}>Sign Up</Button>
+                    <Button variant="contained" onClick={handleClick} color="success">Sign Up</Button>
                 </Grid>
             </Grid>
         </FormControl>

@@ -4,17 +4,26 @@ import { useState } from "react";
 import { FormControl } from "@mui/material";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { useAppDispatch } from '../app/hooks'
+import { logoutUser } from "../app/actions/logoutUser";
+import { useAppSelector } from '../app/hooks'
 
 const defaultPostValues = {
     title: "",
     description: "",
-    user: null,
+    user: "",
     imdbID: "",
+    votes: {
+        upvotes: 0,
+        downvotes: 0
+    }
 }
 
 export default function PostForm({ mediaID }: { mediaID: any }) {
     const imdbID = mediaID;
     const router = useRouter();
+    const dispatch = useAppDispatch();
+    const username = useAppSelector((state) => state.username);
 
     const [formValues, setFormValues] = useState(defaultPostValues);
 
@@ -26,14 +35,21 @@ export default function PostForm({ mediaID }: { mediaID: any }) {
         });
     };  
 
-    const handleClick = (event: any) => {
+    const handleClick = () => {
         formValues.imdbID = mediaID;
+        formValues.user = username;
+
         console.log(formValues);
-        axios.post('http://localhost:3000/api/post/add', formValues)
+
+        axios.post('http://localhost:3000/api/post/add', formValues, { withCredentials: true })
+        
         .then((response) => {
-            console.log(response);
             router.push(`/${imdbID}`);
         }, (error) => {
+            if (error.response.status === 401) {
+                dispatch(logoutUser());
+                router.push('/login')
+            }
             console.log(error);
         }) 
     };
@@ -48,7 +64,7 @@ export default function PostForm({ mediaID }: { mediaID: any }) {
                     <TextField name="description" label="Description" value={formValues.description} onChange={handleChange} />
                 </Grid>
                 <Grid item>
-                    <Button variant="contained" onClick={handleClick}>Post</Button>
+                    <Button variant="contained" onClick={handleClick} color="success">Post</Button>
                 </Grid>
             </Grid>
         </FormControl>
