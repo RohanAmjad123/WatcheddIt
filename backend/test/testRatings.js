@@ -39,6 +39,26 @@ describe('Ratings Tests', function () {
 //         })
 // })
 
+    describe('/GET avg rating', function () {
+        it('get avg rating', function (done) {
+            chai.request(server)
+                .get('/api/media/tt5180504/ratings')
+                .end((err, res) => {
+                    expect(res.status).to.equal(200);
+                    done()
+                })
+        })
+        it('get avg rating with invalid imdbID', function (done) {
+            chai.request(server)
+                .get('/api/media/DoesNotExist/ratings')
+                .end((err, res) => {
+                    expect(res.status).to.equal(200);
+                    expect(res.body).to.deep.equal([]);
+                    done()
+                })
+        })
+    })
+
     describe('/GET user rating', function () {
         it('get user rating', function (done) {
             chai.request(server)

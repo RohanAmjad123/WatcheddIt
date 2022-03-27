@@ -22,14 +22,12 @@ exports.getAvgRatings = (req, res) => {
                 '_id': 0
             }
         }])
-        .toArray()
-        .then(items => {
-            res.json(items);
-            res.sendStatus(200);
-        })
-        .catch(err => {
-            console.error(`Failed to find documents: ${err}`)
-            res.sendStatus(400);
+        .toArray((err, result) => {
+            if (err) {
+                res.status(400).send(`Failed to find documents: ${err}`);
+            } else {
+                res.status(200).send(result);
+            }
         })
 }
 
