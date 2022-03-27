@@ -8,11 +8,11 @@ chai.use(chaiHttp);
 const server = require('../server');
 
 describe('Login tests', () => {
-  before((done) => {
-    server.on('app_started', () => {
-      done();
-    });
-  });
+  // before((done) => {
+  //   server.on('app_started', () => {
+  //     done();
+  //   });
+  // });
 
   describe('/POST Login with valid credentials', () => {
     it('should get a valid userId cookie', (done) => {

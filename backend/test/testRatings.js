@@ -10,20 +10,20 @@ const agent = chai.request.agent(server);
 
 describe('Ratings Tests', () => {
   // Retrieve cookie
-  before((done) => {
-    server.on('app_started', () => {
-      agent.post('/api/login')
-          .send({
-            username: 'johnnyman',
-            password: 'papadog',
-          })
-          .set('Content-Type', 'application/json')
-          .end((err, res) => {
-            expect(res).to.have.cookie('userId');
-            done();
-          });
-    });
-  });
+  // before((done) => {
+  //   server.on('app_started', () => {
+  //     agent.post('/api/login')
+  //       .send({
+  //         username: 'johnnyman',
+  //         password: 'papadog',
+  //       })
+  //       .set('Content-Type', 'application/json')
+  //       .end((err, res) => {
+  //         expect(res).to.have.cookie('userId');
+  //         done();
+  //       });
+  //   });
+  // });
 
   after((done) => {
     agent.close();
@@ -41,6 +41,18 @@ describe('Ratings Tests', () => {
   //             done();
   //         })
   // })
+
+  describe('/GET userId cookie', () => {
+    it('should get a userId cookie', async () => {
+      const res = await agent.post('/api/login')
+        .send({
+          username: 'johnnyman',
+          password: 'papadog',
+        })
+        .set('Content-Type', 'application/json');
+      expect(res).to.have.cookie('userId');
+    });
+  });
 
   describe('/GET valid avg rating', () => {
     it('should get avg rating', (done) => {
