@@ -16,7 +16,7 @@ let session_key
 before((done) => {
     server.on('app_started', () => {
         done();
-})
+    })
 })
 
 describe('Media tests', () => {
@@ -52,7 +52,7 @@ describe('Media tests', () => {
         .end((err, res) => {
             expect(res).to.have.status(200);
             done();
-          });
+        });
     })
 
     it('Get a single media with valid imdbID', (done) => {

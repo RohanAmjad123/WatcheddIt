@@ -11,28 +11,6 @@ const agent = chai.request.agent(server);
 
 let dbConnect;
 
-<<<<<<< HEAD
-// Retrieves the cookie
-before(async () => {
-  let res = await chai.request(url)
-    .post('/login/')
-    .send({
-      username: 'johnnyman',
-      password: 'papadog'
-    })
-    .set('Content-Type', 'application/json');
-  var responseCookies = res.header['set-cookie'].pop().split(';')[0];
-  session_key = responseCookies;
-  await connect.connect();
-});
-
-// Removes inserted documents
-after((done) => {
-  dbConnect = connect.getDb();
-  dbConnect.collection('PostEvents').deleteMany({
-      user: 'johnnyman'
-    }, (err, result) => {
-=======
 describe('Post tests', () => {
   before((done) => {
     server.on('app_started', () => {
@@ -57,11 +35,10 @@ describe('Post tests', () => {
     dbConnect.collection('PostEvents').deleteMany({
       user: 'johnnyman',
     }, (err) => {
->>>>>>> ecf4a9a2dee9b5db015cbcca6b8766ad564be89f
       if (err) throw err;
       connect.closeConnection();
     });
-    agent.close();
+    // agent.close();
     done();
   });
 

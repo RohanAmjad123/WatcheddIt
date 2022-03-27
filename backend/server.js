@@ -97,7 +97,6 @@ app.route('/api/comment/:postId/add').post((req, res) => {
 // (limit defaults to inf)
 // GET comments no limit
 app.route('/api/comment/:postId').get((req, res) => {
-  console.log("93");
   getComments.getComments(req, res);
 });
 
@@ -106,7 +105,7 @@ app.route('/api/comment/:postId/:limit').get((req, res) => {
 });
 
 // PUT comment
-app.route('/api/post/update/:commentId').put((req, res) => {
+app.route('/api/comment/update/:commentId').put((req, res) => {
   putComment.postPost(req, res);
 });
 
