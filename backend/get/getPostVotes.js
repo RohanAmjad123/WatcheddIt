@@ -34,8 +34,8 @@ exports.getPostVotes = (req, res) => {
     }])
     .toArray()
     .then((items) => {
+      res.status(200)
       res.json(items);
-      res.sendStatus(200);
     })
     .catch((err) => {
       console.error(`Failed to find documents: ${err}`);
