@@ -291,8 +291,5 @@ app.route('/api/logout').post((req, res) => {
 // });
 
 module.exports = app;
-// app.listen(3000, function () {
-//     console.log("server started on http://127.0.0.1:3000");
-// });
-
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+

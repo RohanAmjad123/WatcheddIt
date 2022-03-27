@@ -6,3 +6,4 @@ exports.putMedia = (req, res) => {
   const dbConnect = connect.getDb();
   dbConnect.collection('media').updateOne(req.body);
 };
+
