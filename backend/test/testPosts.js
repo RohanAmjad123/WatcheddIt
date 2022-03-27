@@ -19,7 +19,7 @@ before(async () => {
       password: 'papadog'
     })
     .set('Content-Type', 'application/json');
-  var responseCookies = res.headers['set-cookie'].pop().split(';')[0];
+  var responseCookies = res.header['set-cookie'].pop().split(';')[0];
   session_key = responseCookies;
   await connect.connect();
 });
@@ -29,8 +29,7 @@ after((done) => {
   dbConnect = connect.getDb();
   dbConnect.collection('PostEvents').deleteMany({
       user: 'johnnyman'
-    }, (err, result)
-        => {
+    }, (err, result) => {
       if (err) throw err;
       connect.closeConnection();
       done();
