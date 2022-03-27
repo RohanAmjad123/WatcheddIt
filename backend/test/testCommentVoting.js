@@ -59,7 +59,7 @@ describe('Comment Voting Tests', () => {
   describe('/GET total votes of invalid postID', () => {
     it('should get nothing', (done) => {
       chai.request(server)
-        .get('/api/comments/623d71eb0af2e4f21b42a701/voting')
+        .get('/api/comments/DoesNotExist/voting')
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.deep.equal('');

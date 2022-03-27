@@ -68,7 +68,7 @@ describe('Post Voting Tests', () => {
   describe('/GET total votes of invalid postID', () => {
     it('should get nothing', (done) => {
       chai.request(server)
-        .get('/api/post/623ae6a310ebb643f5d9c26e/voting')
+        .get('/api/post/DoesNotExist/voting')
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.deep.equal('');
