@@ -12,27 +12,27 @@ const agent = chai.request.agent(server);
 let dbConnect;
 
 //connecto to server
-before((done) => {
-  server.on('app_started', () => {
-    done();
-  });
-});
+// before((done) => {
+//   server.on('app_started', () => {
+//     done();
+//   });
+// });
 
 describe('comment test', () => {
 
   // create session
-  before((done) => {
-    agent.post('/api/login')
-      .send({
-        username: 'johnnyman',
-        password: 'papadog',
-      })
-      .set('Content-Type', 'application/json')
-      .end((err, res) => {
-        expect(res).to.have.cookie('userId');
-        done();
-      });
-  });
+  // before((done) => {
+  //   agent.post('/api/login')
+  //     .send({
+  //       username: 'johnnyman',
+  //       password: 'papadog',
+  //     })
+  //     .set('Content-Type', 'application/json')
+  //     .end((err, res) => {
+  //       expect(res).to.have.cookie('userId');
+  //       done();
+  //     });
+  // });
 
   // Removes inserted documents
   after((done) => {
@@ -42,7 +42,7 @@ describe('comment test', () => {
       }, function (err, result)
            {
         if (err) throw err;
-        connect.closeConnection();
+        // connect.closeConnection();
         done();
       });
   });
@@ -132,7 +132,7 @@ describe('comment test', () => {
   });
 
   it("PUT on a valid comment", (done) => {
-    agent.put('/api/comment/update/623ae75910ebb643f5d9c270')
+    agent.put('/api/comment/update/623d71eb0af2e4f21b42a701')
     .set('ContentType', 'application/json')
     .send({
       "text": "testing for update comment"
@@ -144,15 +144,17 @@ describe('comment test', () => {
   });
 
   it("PUT on an invalid comment", (done) => {
-    agent.put('/api/comment/update/623ae75910ebb643f5d9c270')
+    agent.put('/api/comment/update/')
     .set('ContentType', 'application/json')
     .send({
       "text": "testing for update comment"
     })
     .end((err, res) => {
-      expect(res).to.have.status(200);
+      expect(res).to.have.status(400);
       done();
     });
   });
+
+
 
 });
