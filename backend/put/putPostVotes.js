@@ -9,9 +9,9 @@ exports.putPostVote = (req, res) => {
         }
         console.log('Update vote');
         const dbConnect = connect.getDb();
-        dbConnect.collection('CommentVotes')
+        dbConnect.collection('PostVotes')
             .updateOne({
-                commentID: ObjectId(req.params.commentID),
+                postID: ObjectId(req.params.postID),
                 username: req.session.user.username,
             }, {
                 $set: {vote: req.body.vote},
