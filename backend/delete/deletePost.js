@@ -1,22 +1,21 @@
-const connect = require("../database.js");
-const ISODate = require('mongodb').ISODate;
+const { ISODate } = require('mongodb');
+const connect = require('../database.js');
 
 exports.postPost = (req, res) => {
-    if(req.session.user){
-        const dbConnect = connect.getDb();
+  if (req.session.user) {
+    const dbConnect = connect.getDb();
 
-        dbConnect
-        .collection("postEvents")
-        .insertOne(json({
-            "type": "delete",
-            "data": req.body,
-            'user': req.session.user.username,
-            'timestamp': new Date().toISOString()
-        }));
+    dbConnect
+      .collection('postEvents')
+      .insertOne(json({
+        type: 'delete',
+        data: req.body,
+        user: req.session.user.username,
+        timestamp: new Date().toISOString(),
+      }));
 
-        res.sendStatus(200);
-    }
-    else{
-        res.status(400).send("Can't DELETE post, not logged in");
-    }
-}
+    res.sendStatus(200);
+  } else {
+    res.status(400).send("Can't DELETE post, not logged in");
+  }
+};
