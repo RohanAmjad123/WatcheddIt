@@ -8,6 +8,8 @@ exports.getMedia = (req, res) => {
     .findOne({ imdbID: req.params.imdbID }, (err, result) => {
       if (err) {
         res.status(400).send(`Error updating Media with id ${req.params.imdbID}!`);
+      } else if (result == null) {
+        res.status(400).send('No such requested imdbID was found')
       } else {
         console.log('1 document updated');
         res.status(200).send(result);
