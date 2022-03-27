@@ -6,24 +6,30 @@ chai.use(chaiHttp);
 
 const server = require('../server');
 
-let session_key;
+const agent = chai.request.agent(server);
 
 describe('Ratings Tests', () => {
   // Retrieve cookie
   before((done) => {
     server.on('app_started', () => {
-      chai.request(server)
-        .post('/api/login')
-        .send({
-          username: 'johnnyman',
-          password: 'papadog',
-        })
-        .set('Content-Type', 'application/json')
-        .end((err, res) => {
-          session_key = res.header['set-cookie'].pop().split(';')[0];
-          done();
-        });
+      done();
     });
+
+    agent.post('/api/login')
+      .send({
+        username: 'johnnyman',
+        password: 'papadog',
+      })
+      .set('Content-Type', 'application/json')
+      .end((err, res) => {
+        expect(res).to.have.cookie('userId');
+        done();
+      });
+  });
+
+  after((done) => {
+    agent.close();
+    done();
   });
 
   // // Remove inserted documents
@@ -38,8 +44,8 @@ describe('Ratings Tests', () => {
   //         })
   // })
 
-  describe('/GET avg rating', () => {
-    it('get avg rating', (done) => {
+  describe('/GET valid avg rating', () => {
+    it('should get avg rating', (done) => {
       chai.request(server)
         .get('/api/media/tt5180504/ratings')
         .end((err, res) => {
@@ -47,7 +53,10 @@ describe('Ratings Tests', () => {
           done();
         });
     });
-    it('get avg rating with invalid imdbID', (done) => {
+  });
+
+  describe('/GET avg rating of invalid imdbID', () => {
+    it('should get nothing', (done) => {
       chai.request(server)
         .get('/api/media/DoesNotExist/ratings')
         .end((err, res) => {
@@ -58,17 +67,18 @@ describe('Ratings Tests', () => {
     });
   });
 
-  describe('/GET user rating', () => {
-    it('get user rating', (done) => {
-      chai.request(server)
-        .get('/api/media/tt5180504/ratings/user')
-        .set({ Cookie: session_key })
+  describe('/GET a users rating for a media with valid credentials', () => {
+    it('should get the users rating', (done) => {
+      agent.get('/api/media/tt5180504/ratings/user')
         .end((err, res) => {
           expect(res.status).to.equal(200);
           done();
         });
     });
-    it('get user rating without valid credentials', (done) => {
+  });
+
+  describe('/GET a users rating for a media with invalid credentials', () => {
+    it('should not return a rating and return code 401', (done) => {
       chai.request(server)
         .get('/api/media/tt5180504/ratings/user')
         .end((err, res) => {
@@ -79,34 +89,10 @@ describe('Ratings Tests', () => {
     });
   });
 
-  describe('/DELETE user rating', () => {
-    it('delete user rating', (done) => {
-      chai.request(server)
-        .delete('/api/media/tt5180504/ratings/user')
+  describe('/POST a user rating with valid credentials', () => {
+    it('should post a user rating', (done) => {
+      agent.post('/api/media/tt5180504/ratings/user')
         .set('Content-Type', 'application/json')
-        .set({ Cookie: session_key })
-        .end((err, res) => {
-          expect(res.status).to.equal(200);
-          done();
-        });
-    });
-    it('delete user rating without valid credentials', (done) => {
-      chai.request(server)
-        .delete('/api/media/tt5180504/ratings/user')
-        .end((err, res) => {
-          expect(res).to.have.status(401);
-          assert.equal(res.text, "Can't DELETE rating, not logged in");
-          done();
-        });
-    });
-  });
-
-  describe('/POST user rating', () => {
-    it('post user rating', (done) => {
-      chai.request(server)
-        .post('/api/media/tt5180504/ratings/user')
-        .set('Content-Type', 'application/json')
-        .set({ Cookie: session_key })
         .send({
           rating: 3,
         })
@@ -115,7 +101,10 @@ describe('Ratings Tests', () => {
           done();
         });
     });
-    it('post user rating without valid credentials', (done) => {
+  });
+
+  describe('/POST a user rating with invalid credentials', () => {
+    it('should not post a user rating and return code 401', (done) => {
       chai.request(server)
         .post('/api/media/tt5180504/ratings/user')
         .send({
@@ -127,11 +116,12 @@ describe('Ratings Tests', () => {
           done();
         });
     });
-    it('post user rating - invalid input', (done) => {
-      chai.request(server)
-        .post('/api/media/tt5180504/ratings/user')
+  });
+
+  describe('/POST an invalid user rating', () => {
+    it('should not post a user rating and return code 401', (done) => {
+      agent.post('/api/media/tt5180504/ratings/user')
         .set('Content-Type', 'application/json')
-        .set({ Cookie: session_key })
         .send({
           rating: 6,
         })
@@ -143,12 +133,10 @@ describe('Ratings Tests', () => {
     });
   });
 
-  describe('/PUT user rating', () => {
+  describe('/PUT a user rating with valid credentials', () => {
     it('put user rating', (done) => {
-      chai.request(server)
-        .put('/api/media/tt5180504/ratings/user')
+      agent.put('/api/media/tt5180504/ratings/user')
         .set('Content-Type', 'application/json')
-        .set({ Cookie: session_key })
         .send({
           rating: 4,
         })
@@ -157,7 +145,10 @@ describe('Ratings Tests', () => {
           done();
         });
     });
-    it('put user rating without valid credentials', (done) => {
+  });
+
+  describe('/PUT a user rating with invalid credentials', () => {
+    it('should not put auser rating and return code 401 ', (done) => {
       chai.request(server)
         .put('/api/media/tt5180504/ratings/user')
         .send({
@@ -169,17 +160,41 @@ describe('Ratings Tests', () => {
           done();
         });
     });
-    it('put user rating - invalid input', (done) => {
-      chai.request(server)
-        .put('/api/media/tt5180504/ratings/user')
+  });
+
+  describe('/PUT invalid user rating with valid credentials', () => {
+    it('should not put user rating and return code 400', (done) => {
+      agent.put('/api/media/tt5180504/ratings/user')
         .set('Content-Type', 'application/json')
-        .set({ Cookie: session_key })
         .send({
           rating: 6,
         })
         .end((err, res) => {
           expect(res).to.have.status(400);
           assert.equal(res.text, 'Error - Invalid Rating Value');
+          done();
+        });
+    });
+  });
+
+  describe('/DELETE a user rating with valid credentials', () => {
+    it('should delete user rating', (done) => {
+      agent.delete('/api/media/tt5180504/ratings/user')
+        .set('Content-Type', 'application/json')
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          done();
+        });
+    });
+  });
+
+  describe('/DELETE a user rating with invalid credentials', () => {
+    it('should not delete user rating and return code 401', (done) => {
+      chai.request(server)
+        .delete('/api/media/tt5180504/ratings/user')
+        .end((err, res) => {
+          expect(res).to.have.status(401);
+          assert.equal(res.text, "Can't DELETE rating, not logged in");
           done();
         });
     });
