@@ -1,7 +1,6 @@
-const { response } = require('express');
-const connect = require('../database.js');
+const connect = require('../database');
 
-exports.putUser = (req, res) => {
+exports.putUser = (req) => {
   console.log('updating account');
   const dbConnect = connect.getDb();
   dbConnect.collection('users').updateOne({

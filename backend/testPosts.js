@@ -5,7 +5,7 @@ const chaiHttp = require('chai-http');
 chai.use(chaiHttp);
 const url = 'http://127.0.0.1:3000/api';
 let session_key;
-const connect = require('../database.js')
+const connect = require('./database.js')
 
 let dbConnect;
 let documentId;

@@ -1,5 +1,5 @@
 const { ObjectId } = require('mongodb');
-const connect = require('../database.js');
+const connect = require('../database');
 
 exports.postPostVote = (req, res) => {
   if (req.session.user) {

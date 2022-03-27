@@ -1,5 +1,4 @@
-const { ObjectId } = require('mongodb');
-const connect = require('../database.js');
+const connect = require('../database');
 
 exports.getAvgRatings = (req, res) => {
   console.log(`getAvgRatings ${req.params.imdbID}`);

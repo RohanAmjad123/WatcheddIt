@@ -1,5 +1,4 @@
-const { ISODate } = require('mongodb');
-const connect = require('../database.js');
+const connect = require('../database');
 
 exports.deleteAccount = (req, res) => {
   if (req.session.user) {

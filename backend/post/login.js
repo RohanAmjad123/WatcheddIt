@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const connect = require('../database.js');
+const connect = require('../database');
 
 exports.login = (req, res) => {
   const dbConnect = connect.getDb();

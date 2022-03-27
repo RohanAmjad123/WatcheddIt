@@ -1,4 +1,4 @@
-const connect = require('../database.js');
+const connect = require('../database');
 
 exports.putRating = (req, res) => {
   if (req.session.user) {
@@ -30,6 +30,7 @@ exports.putRating = (req, res) => {
             // .updateOne({
             //     imdbID: req.params.imdbID
             // }, {
+            // eslint-disable-next-line max-len
             //     $inc: {'Ratings.total': parseInt(req.body.rating) - parseInt(result.value.rating)},
             // }, (err, result) => {
             //     if (err) {
@@ -44,8 +45,8 @@ exports.putRating = (req, res) => {
             dbConnect.collection('Media')
               .findOne({
                 imdbID: req.params.imdbID,
-              }, { projection: { _id: 0, Ratings: 1 } }, (err, media) => {
-                if (err) {
+              }, { projection: { _id: 0, Ratings: 1 } }, (error, media) => {
+                if (error) {
                   res.status(400).send(`Error updating Media with id ${req.params.imdbID}!`);
                 } else {
                   console.log('1 document updated');
@@ -54,8 +55,8 @@ exports.putRating = (req, res) => {
                       imdbID: req.params.imdbID,
                     }, {
                       $set: { 'Ratings.avg': media.Ratings.avg + (req.body.rating - result.value.rating) / media.Ratings.total },
-                    }, (err, result) => {
-                      if (err) {
+                    }, (error2) => {
+                      if (error2) {
                         res.status(400).send(`Error updating Media with id ${req.params.imdbID}!`);
                       } else {
                         console.log('1 document updated');

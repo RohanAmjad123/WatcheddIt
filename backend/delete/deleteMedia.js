@@ -1,5 +1,4 @@
-const { ISODate } = require('mongodb');
-const connect = require('../database.js');
+const connect = require('../database');
 
 exports.deleteMedia = (req, res) => {
   if (req.session.user) {
@@ -7,7 +6,7 @@ exports.deleteMedia = (req, res) => {
 
     dbConnect
       .collection('media')
-      .deleteOne({ imdbID: req.params.imdbID }, (err, result) => {
+      .deleteOne({ imdbID: req.params.imdbID }, (err) => {
         if (err) {
           res.status(400).send(`Error deleting listing with id ${req.params.imdbID}!`);
         } else {

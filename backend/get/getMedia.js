@@ -1,4 +1,4 @@
-const connect = require('../database.js');
+const connect = require('../database');
 
 exports.getMedia = (req, res) => {
   const dbConnect = connect.getDb();
@@ -88,7 +88,7 @@ exports.getAllMedia = (req, res) => {
 
 const pageLimit = 10;
 exports.getMediaPage = (req, res) => {
-  const pageNumber = parseInt(req.params.page) - 1;
+  const pageNumber = parseInt(req.params.page, 10) - 1;
   const dbConnect = connect.getDb();
   dbConnect.collection('media')
     .find()

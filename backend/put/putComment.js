@@ -1,5 +1,4 @@
-const { ISODate } = require('mongodb');
-const connect = require('../database.js');
+const connect = require('../database');
 
 exports.postPost = (req, res) => {
   if (req.session.user) {
@@ -7,12 +6,12 @@ exports.postPost = (req, res) => {
 
     dbConnect
       .collection('CommentEvents')
-      .insertOne(json({
+      .insertOne({
         type: 'update',
         data: req.body,
         user: req.session.user.username,
         timestamp: new Date(),
-      }));
+      });
 
     res.sendStatus(200);
   } else {

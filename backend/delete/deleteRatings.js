@@ -1,5 +1,4 @@
-const { ObjectId, Double } = require('mongodb');
-const connect = require('../database.js');
+const connect = require('../database');
 
 exports.deleteRating = (req, res) => {
   if (req.session.user) {
@@ -33,8 +32,8 @@ exports.deleteRating = (req, res) => {
           dbConnect.collection('Media')
             .findOne({
               imdbID: req.params.imdbID,
-            }, { projection: { _id: 0, Ratings: 1 } }, (err, media) => {
-              if (err) {
+            }, { projection: { _id: 0, Ratings: 1 } }, (error, media) => {
+              if (error) {
                 res.status(400).send(`Error updating Media with id ${req.params.imdbID}!`);
               } else {
                 console.log('1 document updated');
@@ -43,18 +42,19 @@ exports.deleteRating = (req, res) => {
                 if (media.Ratings.total - 1 === 0) {
                   finalRating = 0;
                 } else {
-                  finalRating = (media.Ratings.avg * media.Ratings.total - result.value.rating) / (media.Ratings.total - 1);
+                  finalRating = (media.Ratings.avg * media.Ratings.total
+                  - result.value.rating) / (media.Ratings.total - 1);
                 }
                 dbConnect.collection('Media')
                   .updateOne({
                     imdbID: req.params.imdbID,
                   }, {
                     $set: {
-                      'Ratings.avg': Double(finalRating),
+                      'Ratings.avg': (finalRating),
                       'Ratings.total': media.Ratings.total - 1,
                     },
-                  }, (err, result) => {
-                    if (err) {
+                  }, (error2) => {
+                    if (error2) {
                       res.status(400).send(`Error updating Media with id ${req.params.imdbID}!`);
                     } else {
                       console.log('1 document updated');

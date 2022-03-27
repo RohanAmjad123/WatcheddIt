@@ -1,5 +1,5 @@
 const { ObjectId } = require('mongodb');
-const connect = require('../database.js');
+const connect = require('../database');
 
 exports.getPostVotes = (req, res) => {
   console.log(`getPostVotes ${req.params.postID}`);
@@ -50,14 +50,18 @@ exports.getUserPostVotes = (req, res) => {
     const { postID } = req.params;
     const { username } = req.session.user;
     dbConnect.collection('PostVotes')
-      .findOne({ postID: ObjectId(postID), username }, { projection: { _id: 0, vote: 1 } }, (err, result) => {
-        if (err) {
-          res.status(400).send(`Error updating Media with id ${req.params.imdbID}!`);
-        } else {
-          console.log('1 document updated');
-          res.status(200).send(result);
-        }
-      });
+      .findOne(
+        { postID: ObjectId(postID), username },
+        { projection: { _id: 0, vote: 1 } },
+        (err, result) => {
+          if (err) {
+            res.status(400).send(`Error updating Media with id ${req.params.imdbID}!`);
+          } else {
+            console.log('1 document updated');
+            res.status(200).send(result);
+          }
+        },
+      );
   } else {
     res.status(401).send("Can't get ratings, no user privileges");
   }

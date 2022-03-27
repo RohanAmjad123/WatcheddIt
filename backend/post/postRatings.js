@@ -1,6 +1,5 @@
 const { Double } = require('mongodb');
-const { ObjectId } = require('mongodb');
-const connect = require('../database.js');
+const connect = require('../database');
 
 exports.postRating = (req, res) => {
   if (req.session.user) {
@@ -17,7 +16,7 @@ exports.postRating = (req, res) => {
         imdbID: req.params.imdbID,
         username: req.session.user.username,
         rating: req.body.rating,
-      }, (err, result) => {
+      }, (err) => {
         if (err) {
           res.status(400).send(`Error updating Media with id ${req.params.imdbID}!`);
         } else {
@@ -72,8 +71,8 @@ exports.postRating = (req, res) => {
           dbConnect.collection('Media')
             .findOne({
               imdbID: req.params.imdbID,
-            }, { projection: { _id: 0, Ratings: 1 } }, (err, result) => {
-              if (err) {
+            }, { projection: { _id: 0, Ratings: 1 } }, (error, result) => {
+              if (error) {
                 res.status(400).send(`Error updating Media with id ${req.params.imdbID}!`);
               } else {
                 console.log('1 document updated');
@@ -86,8 +85,8 @@ exports.postRating = (req, res) => {
                       'Ratings.avg': Double((result.Ratings.avg * result.Ratings.total + req.body.rating) / (result.Ratings.total + 1)),
                       'Ratings.total': result.Ratings.total + 1,
                     },
-                  }, (err, result) => {
-                    if (err) {
+                  }, (error2) => {
+                    if (error2) {
                       res.status(400).send(`Error updating Media with id ${req.params.imdbID}!`);
                     } else {
                       console.log('1 document updated');

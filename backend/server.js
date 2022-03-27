@@ -1,38 +1,35 @@
 const express = require('express');
 const session = require('express-session');
-const bcrypt = require('bcrypt');
 const swaggerUi = require('swagger-ui-express');
 const cors = require('cors');
 const bp = require('body-parser');
-const connect = require('./database.js');
+const connect = require('./database');
 const swaggerFile = require('./swagger_output.json');
 
-const getComments = require('./get/getComments.js');
-const getPosts = require('./get/getPosts.js');
-const getMedia = require('./get/getMedia.js');
-const getRatings = require('./get/getRatings.js');
-const login = require('./post/login.js');
-const getPostVote = require('./get/getPostVotes.js');
-const getMyRatings = require('./get/getMyRatings.js');
+const getComments = require('./get/getComments');
+const getPosts = require('./get/getPosts');
+const getMedia = require('./get/getMedia');
+const getRatings = require('./get/getRatings');
+const login = require('./post/login');
+const getPostVote = require('./get/getPostVotes');
+const getMyRatings = require('./get/getMyRatings');
 
 const postMedia = require('./post/postMedia');
-const postComments = require('./post/postComments.js');
-const postPosts = require('./post/postPosts.js');
-const postRatings = require('./post/postRatings.js');
-const postAccount = require('./post/postAccount.js');
-const postPostVote = require('./post/postPostVotes.js');
+const postComments = require('./post/postComments');
+const postPosts = require('./post/postPosts');
+const postRatings = require('./post/postRatings');
+const postAccount = require('./post/postAccount');
+const postPostVote = require('./post/postPostVotes');
 
 const putComment = require('./put/putComment');
 const putPost = require('./put/putPost');
 const putMedia = require('./put/putMedia');
-const putAccount = require('./put/putAccount');
-const putRating = require('./put/putRatings.js');
+const putRating = require('./put/putRatings');
 
-const deleteComment = require('./delete/deleteComment.js');
-const deletePost = require('./delete/deletePost.js');
-const deleteMedia = require('./delete/deleteMedia.js');
-const deleteAccount = require('./delete/deleteAccount.js');
-const deleteRating = require('./delete/deleteRatings.js');
+const deleteComment = require('./delete/deleteComment');
+const deletePost = require('./delete/deletePost');
+const deleteMedia = require('./delete/deleteMedia');
+const deleteRating = require('./delete/deleteRatings');
 
 const store = new session.MemoryStore();
 
@@ -290,9 +287,10 @@ app.route('/api/logout').post((req, res) => {
 //     deleteAccount.deleteAccount(req, res);
 // });
 
-module.exports = app;
 // app.listen(3000, function () {
 //     console.log("server started on http://127.0.0.1:3000");
 // });
 
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+
+module.exports = app;

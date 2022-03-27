@@ -1,6 +1,5 @@
-const { response } = require('express');
 const bcrypt = require('bcrypt');
-const connect = require('../database.js');
+const connect = require('../database');
 
 const saltRounds = 10;
 

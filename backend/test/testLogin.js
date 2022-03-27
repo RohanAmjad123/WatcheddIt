@@ -2,7 +2,6 @@ process.env.NODE_ENV = 'test';
 
 const chai = require('chai');
 const { expect, assert } = require('chai');
-const jp = require('jsonpath');
 const chaiHttp = require('chai-http');
 
 chai.use(chaiHttp);
@@ -19,19 +18,19 @@ describe('/POST Login', () => {
       .set('Content-Type', 'application/json')
       .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res).to.have.a.cookie;
+        expect(res).to.have.a.cookie('userId');
         assert.equal(
-          res.body.user.username,
+          res.body.username,
           'johnnyman',
           'The entered username should be the same',
         );
         assert.notEqual(
-          res.body.user.pcleaassword,
+          res.body.password,
           'papadog',
           'The password should be hashed',
         );
         assert.equal(
-          res.body.user.type,
+          res.body.type,
           'user',
           'The user should be a regular user',
         );
@@ -50,7 +49,7 @@ describe('/POST Login', () => {
       .set('Content-Type', 'application/json')
       .end((err, res) => {
         expect(res).to.have.status(401);
-        expect(res).to.not.have.a.cookie;
+        expect(res).to.not.have.a.cookie('userId');
         assert.equal(
           res.text,
           'Wrong password',
@@ -71,7 +70,7 @@ describe('/POST Login', () => {
       .set('Content-Type', 'application/json')
       .end((err, res) => {
         expect(res).to.have.status(401);
-        expect(res).to.not.have.a.cookie;
+        expect(res).to.not.have.a.cookie('userId');
         assert.equal(
           res.text,
           'No matching username found',

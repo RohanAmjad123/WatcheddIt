@@ -1,4 +1,4 @@
-const connect = require('../database.js');
+const connect = require('../database');
 
 exports.postMedia = (req, res) => {
   if (req.session.admin) {

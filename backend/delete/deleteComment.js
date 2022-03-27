@@ -1,6 +1,5 @@
 const { json } = require('body-parser');
-const { ISODate } = require('mongodb');
-const connect = require('../database.js');
+const connect = require('../database');
 
 exports.postPost = (req, res) => {
   if (req.session.user) {

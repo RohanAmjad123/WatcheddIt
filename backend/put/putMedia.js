@@ -1,7 +1,6 @@
-const { response } = require('express');
-const connect = require('../database.js');
+const connect = require('../database');
 
-exports.putMedia = (req, res) => {
+exports.putMedia = (req) => {
   console.log('updating media');
   const dbConnect = connect.getDb();
   dbConnect.collection('media').updateOne(req.body);
