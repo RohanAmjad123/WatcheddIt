@@ -139,7 +139,7 @@ describe('Post Voting Tests', () => {
         });
     });
 
-    describe('/POST an invalid user vote', () => {
+    describe('/POST an invalid user vote with valid credentials', () => {
         it('should not post a user vote and return code 401', (done) => {
             agent.post('/api/post/623ae6a310ebb643f5d9c26e/voting/user')
                 .set('Content-Type', 'application/json')
