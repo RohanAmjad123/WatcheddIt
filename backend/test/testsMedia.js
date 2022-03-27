@@ -1,58 +1,71 @@
 const chai = require('chai');
 const { expect, assert } = require('chai');
-const jp = require('jsonpath');
-const mongoose = require('mongoose');
 const chaiHttp = require('chai-http');
 
 chai.use(chaiHttp);
-const url = 'http://127.0.0.1:3000/api';
-const connect = require('../database.js');
+const connect = require('../database');
+
+const server = require('../server');
+
+var agent = chai.request.agent(server);
+
 let dbConnect;
 
-// Retrieves the cookie
-before(async () => {
-    let res = await chai.request(url)
-      .post('/login/')
-      .send({
-        username: 'adminman',
-        password: 'fakepass123'
-      })
-      .set('Content-Type', 'application/json');
-    var responseCookies = res.headers['set-cookie'].pop().split(';')[0];
-    session_key = responseCookies;
-    await connect.connect();
-  });
+let session_key
 
-
-
-describe('GET /media', () => {
-    it('Get all the media', async() => {
-        res = await chai.request(url)
-        .get('/media/')
-        
-        expect(res).to.have.status(200);
-    })
-    it('Get a single media with valid imdbID', async() => {
-        res = await chai.request(url)
-        .get('/media/tt0816692')
-
-        expect(res).to.have.status(200);
-    })
-
-    it('Get a single media with invalid imdbID', async() => {
-        res = await chai.request(url)
-        .get('/media/invalid')
-        expect(res).to.have.status(400);
-        assert(res.text,"No such requested imdbID was found", "Response should alert" +
-         " user that requsted imdbID was not found" )
-    })
+before((done) => {
+    server.on('app_started', () => {
+        done();
+})
 })
 
-describe('POST /media', () => {
-    it('Posts a valid media with a valid session', async () => {
-        res = await chai.request(url)
-        .post('/media/add')
-        .set({'Cookie': session_key})
+describe('Media tests', () => {
+
+
+    before((done) => {
+        agent.post('/api/login')
+          .send({
+            username: 'adminman',
+            password: 'fakepass123',
+          })
+          .set('Content-Type', 'application/json')
+          .end((err, res) => {
+            expect(res).to.have.cookie('userId');
+            done();
+          });
+      });
+
+      after((done) => {
+        dbConnect = connect.getDb();
+        dbConnect.collection('Media').deleteMany({
+            imdbID: 'test'
+          }, function (err, result)
+               {
+            if (err) throw err;
+            connect.closeConnection();
+            done();
+          });
+      });
+
+      it('Get all the media', (done) => {
+        agent.get('/api/media/')
+        .end((err, res) => {
+            expect(res).to.have.status(200);
+            done();
+          });
+    })
+
+    it('Get a single media with valid imdbID', (done) => {
+        agent.get('/api/media/tt0816692')
+        .end((err, res) => {
+            expect(res).to.have.status(200);
+            done();
+          });
+    })
+
+    it('Posts a valid media with a valid session', (done) => {
+        agent
+        .post('/api/media/add')
         .set('Content-Type', 'application/json')
         .send({
             "Title": "test",
@@ -61,13 +74,16 @@ describe('POST /media', () => {
             "Plot": "test",
             "Poster": "https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
             "imdbID": "test",
+        }).end((err, res) => {
+            expect(res).to.have.status(200);
+            done();
         })
-        expect(res).to.have.status(200);
     })
 
-    it('Posts a valid media with an invalid session', async () => {
-        res = await chai.request(url)
-        .post('/media/add')
+    it('Posts a valid media with an invalid session',  (done) => {
+        agent = chai.request.agent(server);
+        agent
+        .post('/api/media/add')
         .set({'Cookie': 'nocookie'})
         .set('Content-Type', 'application/json')
         .send({
@@ -78,20 +94,13 @@ describe('POST /media', () => {
             "Poster": "https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
             "imdbID": "test",
         })
-        expect(res).to.have.status(401);
+        .end((err, res) => {
+            expect(res).to.have.status(401);
+            done();
+        })
     })
 
 
-})
 
-after((done) => {
-    dbConnect = connect.getDb();
-    dbConnect.collection('Media').deleteMany({
-        imdbID: 'test'
-      }, function (err, result)
-           {
-        if (err) throw err;
-        connect.closeConnection();
-        done();
-      });
-  });
+
+})
