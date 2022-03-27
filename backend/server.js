@@ -25,11 +25,13 @@ const putComment = require('./put/putComment');
 const putPost = require('./put/putPost');
 const putMedia = require('./put/putMedia');
 const putRating = require('./put/putRatings');
+const putPostVote = require('./put/putPostVotes');
 
 const deleteComment = require('./delete/deleteComment');
 const deletePost = require('./delete/deletePost');
 const deleteMedia = require('./delete/deleteMedia');
 const deleteRating = require('./delete/deleteRatings');
+const deletePostVote = require('./delete/deletePostVote');
 
 const store = new session.MemoryStore();
 
@@ -252,6 +254,14 @@ app.route('/api/post/:postID/voting/user').get((req, res) => {
 
 app.route('/api/post/:postID/voting/user').post((req, res) => {
   postPostVote.postPostVote(req, res);
+});
+
+app.route('/api/post/:postID/voting/user').put((req, res) => {
+  putPostVote.putPostVote(req, res);
+});
+
+app.route('/api/post/:postID/voting/user').delete((req, res) => {
+  deletePostVote.deletePostVote(req, res);
 });
 
 // SIGN UP & LOGIN APIS
