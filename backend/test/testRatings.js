@@ -12,19 +12,17 @@ describe('Ratings Tests', () => {
   // Retrieve cookie
   before((done) => {
     server.on('app_started', () => {
-      done();
+      agent.post('/api/login')
+          .send({
+            username: 'johnnyman',
+            password: 'papadog',
+          })
+          .set('Content-Type', 'application/json')
+          .end((err, res) => {
+            expect(res).to.have.cookie('userId');
+            done();
+          });
     });
-
-    agent.post('/api/login')
-      .send({
-        username: 'johnnyman',
-        password: 'papadog',
-      })
-      .set('Content-Type', 'application/json')
-      .end((err, res) => {
-        expect(res).to.have.cookie('userId');
-        done();
-      });
   });
 
   after((done) => {

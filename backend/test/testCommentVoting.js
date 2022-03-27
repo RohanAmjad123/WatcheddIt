@@ -8,7 +8,7 @@ const server = require('../server');
 
 const agent = chai.request.agent(server);
 
-describe('Post Voting Tests', () => {
+describe('Comment Voting Tests', () => {
     // Retrieve cookie
     before((done) => {
         server.on('app_started', () => {
@@ -44,7 +44,7 @@ describe('Post Voting Tests', () => {
 
     describe('/DELETE a user vote with valid credentials', () => {
         it('should delete user vote', (done) => {
-            agent.delete('/api/post/623ae6a310ebb643f5d9c26e/voting/user')
+            agent.delete('/api/comments/623d71eb0af2e4f21b42a701/voting/user')
                 .set('Content-Type', 'application/json')
                 .end((err, res) => {
                     expect(res.status).to.equal(200);
@@ -56,10 +56,10 @@ describe('Post Voting Tests', () => {
     describe('/DELETE a user vote with invalid credentials', () => {
         it('should not delete user vote and return code 401', (done) => {
             chai.request(server)
-                .delete('/api/post/623ae6a310ebb643f5d9c26e/voting/user')
+                .delete('/api/comments/623d71eb0af2e4f21b42a701/voting/user')
                 .end((err, res) => {
                     expect(res).to.have.status(401);
-                    assert.equal(res.text, "Can't DELETE post vote, not logged in");
+                    assert.equal(res.text, "Can't DELETE comment vote, not logged in");
                     done();
                 });
         });
@@ -68,7 +68,7 @@ describe('Post Voting Tests', () => {
     describe('/GET valid total votes', () => {
         it('should get total votes', (done) => {
             chai.request(server)
-                .get('/api/post/623ae6a310ebb643f5d9c26e/voting')
+                .get('/api/comments/623d71eb0af2e4f21b42a701/voting')
                 .end((err, res) => {
                     expect(res.status).to.equal(200);
                     done();
@@ -79,7 +79,7 @@ describe('Post Voting Tests', () => {
     describe('/GET total votes of invalid postID', () => {
         it('should get nothing', (done) => {
             chai.request(server)
-                .get('/api/post/623ae6a310ebb643f5d9c26e/voting')
+                .get('/api/comments/623d71eb0af2e4f21b42a701/voting')
                 .end((err, res) => {
                     expect(res.status).to.equal(200);
                     expect(res.body).to.deep.equal("");
@@ -88,9 +88,9 @@ describe('Post Voting Tests', () => {
         });
     });
 
-    describe('/GET a users vote for a post with valid credentials', () => {
+    describe('/GET a users vote for a comment with valid credentials', () => {
         it('should get the users vote', (done) => {
-            agent.get('/api/post/623ae6a310ebb643f5d9c26e/voting/user')
+            agent.get('/api/comments/623d71eb0af2e4f21b42a701/voting/user')
                 .end((err, res) => {
                     expect(res.status).to.equal(200);
                     done();
@@ -98,21 +98,21 @@ describe('Post Voting Tests', () => {
         });
     });
 
-    describe('/GET a users vote for a post with invalid credentials', () => {
+    describe('/GET a users vote for a comment with invalid credentials', () => {
         it('should not return a vote and return code 401', (done) => {
             chai.request(server)
-                .get('/api/post/623ae6a310ebb643f5d9c26e/voting/user')
+                .get('/api/comments/623d71eb0af2e4f21b42a701/voting/user')
                 .end((err, res) => {
                     expect(res).to.have.status(401);
-                    assert.equal(res.text, "Can't GET post vote, not logged in");
+                    assert.equal(res.text, "Can't GET comment vote, not logged in");
                     done();
                 });
         });
     });
 
     describe('/POST a user vote with valid credentials', () => {
-        it('should post a user vote', (done) => {
-            agent.post('/api/post/623ae6a310ebb643f5d9c26e/voting/user')
+        it('should comment a user vote', (done) => {
+            agent.post('/api/comments/623d71eb0af2e4f21b42a701/voting/user')
                 .set('Content-Type', 'application/json')
                 .send({
                     vote: true,
@@ -125,23 +125,23 @@ describe('Post Voting Tests', () => {
     });
 
     describe('/POST a user vote with invalid credentials', () => {
-        it('should not post a user vote and return code 401', (done) => {
+        it('should not comment a user vote and return code 401', (done) => {
             chai.request(server)
-                .post('/api/post/623ae6a310ebb643f5d9c26e/voting/user')
+                .post('/api/comments/623d71eb0af2e4f21b42a701/voting/user')
                 .send({
                     vote: 3,
                 })
                 .end((err, res) => {
                     expect(res).to.have.status(401);
-                    assert.equal(res.text, "Can't POST post vote, not logged in");
+                    assert.equal(res.text, "Can't POST comment vote, not logged in");
                     done();
                 });
         });
     });
 
     describe('/POST an invalid user vote with valid credentials', () => {
-        it('should not post a user vote and return code 401', (done) => {
-            agent.post('/api/post/623ae6a310ebb643f5d9c26e/voting/user')
+        it('should not comment a user vote and return code 401', (done) => {
+            agent.post('/api/comments/623d71eb0af2e4f21b42a701/voting/user')
                 .set('Content-Type', 'application/json')
                 .send({
                     vote: 2,
@@ -156,7 +156,7 @@ describe('Post Voting Tests', () => {
 
     describe('/PUT a user vote with valid credentials', () => {
         it('put user vote', (done) => {
-            agent.put('/api/post/623ae6a310ebb643f5d9c26e/voting/user')
+            agent.put('/api/comments/623d71eb0af2e4f21b42a701/voting/user')
                 .set('Content-Type', 'application/json')
                 .send({
                     vote: false,
@@ -171,13 +171,13 @@ describe('Post Voting Tests', () => {
     describe('/PUT a user vote with invalid credentials', () => {
         it('should not put auser vote and return code 401 ', (done) => {
             chai.request(server)
-                .put('/api/post/623ae6a310ebb643f5d9c26e/voting/user')
+                .put('/api/comments/623d71eb0af2e4f21b42a701/voting/user')
                 .send({
                     vote: 4,
                 })
                 .end((err, res) => {
                     expect(res).to.have.status(401);
-                    assert.equal(res.text, "Can't PUT post vote, not logged in");
+                    assert.equal(res.text, "Can't PUT comment vote, not logged in");
                     done();
                 });
         });
@@ -185,7 +185,7 @@ describe('Post Voting Tests', () => {
 
     describe('/PUT invalid user vote with valid credentials', () => {
         it('should not put user vote and return code 400', (done) => {
-            agent.put('/api/post/623ae6a310ebb643f5d9c26e/voting/user')
+            agent.put('/api/comments/623d71eb0af2e4f21b42a701/voting/user')
                 .set('Content-Type', 'application/json')
                 .send({
                     vote: 6,

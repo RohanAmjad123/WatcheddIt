@@ -1,17 +1,17 @@
 const {ObjectId} = require('mongodb');
 const connect = require('../database');
 
-exports.getPostVotes = (req, res) => {
-    console.log(`getPostVotes ${req.params.postID}`);
+exports.getCommentVotes = (req, res) => {
+    console.log(`getCommentVotes ${req.params.commentID}`);
     const dbConnect = connect.getDb();
-    dbConnect.collection('PostVotes')
+    dbConnect.collection('CommentVotes')
         .aggregate([{
             $match: {
-                postID: ObjectId(req.params.postID),
+                commentID: ObjectId(req.params.commentID),
             },
         }, {
             $group: {
-                _id: '$postID',
+                _id: '$commentID',
                 upVote: {
                     $sum: {
                         $cond: [
@@ -34,33 +34,32 @@ exports.getPostVotes = (req, res) => {
         }])
         .toArray((err, result) => {
             if (err) {
-                res.status(400).send(`Error updating Media with id ${req.params.imdbID}!`);
+                res.status(400).send(`Error getting comment vote ${req.params.commentID}`);
             } else {
-                console.log('1 document updated');
                 res.status(200).json(result[0]);
             }
         })
 };
 
-exports.getUserPostVote = (req, res) => {
+exports.getUserCommentVote = (req, res) => {
     if (req.session.user) {
-        console.log('getUserPostVotes');
+        console.log(`getUserCommentVotes ${req.params.commentID}`);
         const dbConnect = connect.getDb();
-        dbConnect.collection('PostVotes')
+        dbConnect.collection('CommentVotes')
             .findOne({
-                    postID: ObjectId(req.params.postID),
+                    commentID: ObjectId(req.params.commentID),
                     username: req.session.user.username
                 }, {
                     projection: {_id: 0, vote: 1}
                 }, (err, result) => {
                     if (err) {
-                        res.status(400).send(`Error updating Media with id ${req.params.imdbID}!`);
+                        res.status(400).send(`Error getting comment vote ${req.params.commentID}`);
                     } else {
                         res.status(200).send(result);
                     }
                 },
             );
     } else {
-        res.status(401).send("Can't GET post vote, not logged in");
+        res.status(401).send("Can't GET comment vote, not logged in");
     }
 };

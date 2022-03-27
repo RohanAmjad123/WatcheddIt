@@ -6,13 +6,15 @@ const bp = require('body-parser');
 const connect = require('./database');
 const swaggerFile = require('./swagger_output.json');
 
+const login = require('./post/login');
+const getMyRatings = require('./get/getMyRatings');
+
 const getComments = require('./get/getComments');
 const getPosts = require('./get/getPosts');
 const getMedia = require('./get/getMedia');
 const getRatings = require('./get/getRatings');
-const login = require('./post/login');
 const getPostVote = require('./get/getPostVotes');
-const getMyRatings = require('./get/getMyRatings');
+const getCommentVote = require('./get/getCommentVotes');
 
 const postMedia = require('./post/postMedia');
 const postComments = require('./post/postComments');
@@ -20,16 +22,21 @@ const postPosts = require('./post/postPosts');
 const postRatings = require('./post/postRatings');
 const postAccount = require('./post/postAccount');
 const postPostVote = require('./post/postPostVotes');
+const postCommentVote = require('./post/postCommentVotes');
 
 const putComment = require('./put/putComment');
 const putPost = require('./put/putPost');
 const putMedia = require('./put/putMedia');
 const putRating = require('./put/putRatings');
+const putPostVote = require('./put/putPostVotes');
+const putCommentVote = require('./put/putCommentVotes');
 
 const deleteComment = require('./delete/deleteComment');
 const deletePost = require('./delete/deletePost');
 const deleteMedia = require('./delete/deleteMedia');
 const deleteRating = require('./delete/deleteRatings');
+const deletePostVote = require('./delete/deletePostVotes');
+const deleteCommentVote = require('./delete/deleteCommentVotes');
 
 const store = new session.MemoryStore();
 
@@ -233,11 +240,43 @@ app.route('/api/post/:postID/voting').get((req, res) => {
 });
 
 app.route('/api/post/:postID/voting/user').get((req, res) => {
-  getPostVote.getUserPostVotes(req, res);
+  getPostVote.getUserPostVote(req, res);
 });
 
 app.route('/api/post/:postID/voting/user').post((req, res) => {
   postPostVote.postPostVote(req, res);
+});
+
+app.route('/api/post/:postID/voting/user').put((req, res) => {
+  putPostVote.putPostVote(req, res);
+});
+
+app.route('/api/post/:postID/voting/user').delete((req, res) => {
+  deletePostVote.deletePostVote(req, res);
+});
+
+//
+// Comment Voting ENDPOINTS
+//
+
+app.route('/api/comments/:commentID/voting').get((req, res) => {
+  getCommentVote.getCommentVotes(req, res);
+});
+
+app.route('/api/comments/:commentID/voting/user').get((req, res) => {
+  getCommentVote.getUserCommentVote(req, res);
+});
+
+app.route('/api/comments/:commentID/voting/user').post((req, res) => {
+  postCommentVote.postCommentVote(req, res);
+});
+
+app.route('/api/comments/:commentID/voting/user').put((req, res) => {
+  putCommentVote.putCommentVote(req, res);
+});
+
+app.route('/api/comments/:commentID/voting/user').delete((req, res) => {
+  deleteCommentVote.deleteCommentVote(req, res);
 });
 
 // SIGN UP & LOGIN APIS
