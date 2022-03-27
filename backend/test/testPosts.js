@@ -12,22 +12,11 @@ const agent = chai.request.agent(server);
 let dbConnect;
 
 describe('Post tests', () => {
-  before((done) => {
-    server.on('app_started', () => {
-      done();
-    });
-
-    agent.post('/api/login')
-      .send({
-        username: 'johnnyman',
-        password: 'papadog',
-      })
-      .set('Content-Type', 'application/json')
-      .end((err, res) => {
-        expect(res).to.have.cookie('userId');
-        done();
-      });
-  });
+  // before(async (done) => {
+  //   server.on('app_started', () => {
+  //     done();
+  //   });
+  // });
 
   // Removes inserted documents
   after((done) => {
@@ -36,10 +25,22 @@ describe('Post tests', () => {
       user: 'johnnyman',
     }, (err) => {
       if (err) throw err;
-      connect.closeConnection();
+      // connect.closeConnection();
     });
     // agent.close();
     done();
+  });
+
+  describe('/GET userId cookie', () => {
+    it('should get a userId cookie', async () => {
+      const res = await agent.post('/api/login')
+        .send({
+          username: 'johnnyman',
+          password: 'papadog',
+        })
+        .set('Content-Type', 'application/json');
+      expect(res).to.have.cookie('userId');
+    });
   });
 
   // Test Case 08

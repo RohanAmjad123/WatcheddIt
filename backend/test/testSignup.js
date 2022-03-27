@@ -11,16 +11,16 @@ const connect = require('../database');
 let dbConnect;
 
 describe('Signup tests', () => {
-  before((done) => {
-    server.on('app_started', () => {
-      done();
-    });
+  // before((done) => {
+  //   server.on('app_started', () => {
+  //     done();
+  //   });
 
-    connect.connect();
-    done();
-  });
+  //   connect.connect();
+  //   done();
+  // });
 
-  after(() => connect.closeConnection());
+  // after(() => connect.closeConnection());
 
   // Test Case 04
   describe(('/POST Signup with valid credentials'), () => {
