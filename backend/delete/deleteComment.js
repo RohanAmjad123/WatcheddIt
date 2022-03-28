@@ -10,6 +10,7 @@ exports.deleteComment = (req, res) => {
       .insertOne(json({
         type: 'delete',
         data: json({ text: '<<deleted>>' }),
+        commentID: req.params.commentID,
         user: req.session.user.username,
         timestamp: new Date().toISOString(),
       }));
