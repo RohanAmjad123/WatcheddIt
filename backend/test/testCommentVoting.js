@@ -31,7 +31,7 @@ describe('Comment Voting Tests', () => {
       dbConnect.collection("PostEvents")
           .deleteMany({
               user: "johnnyman"
-          }, function (err, result) {
+          }, function (err) {
               if (err) throw err;
               done();
           })
