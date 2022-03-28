@@ -38,8 +38,8 @@ describe('Media tests', () => {
     }, (err) => {
       if (err) throw err;
       // connect.closeConnection();
-      done();
     });
+    done();
   });
 
   describe('/GET userId cookie', () => {

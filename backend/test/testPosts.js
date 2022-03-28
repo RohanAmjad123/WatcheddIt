@@ -115,31 +115,32 @@ describe('Post tests', () => {
   });
 
   // // Test Case 12
-   describe('/GET a post with invalid IMDB id and valid postID', () => {
-     it('should retrieve an empty object', (done) => {
-       chai.request(server)
-         .get('/api/media/abc/post/623aef7010ebb643f5d9c272')
-         .end((err, res) => {
-           expect(res).to.not.have.status(500);
-           done();
-         });
-     });
-   });
+  // describe('/GET a post with invalid IMDB id and valid postID', () => {
+  //   it('should retrieve an empty object', (done) => {
+  //     chai.request(server)
+  //       .get('/api/media/abc/post/623aef7010ebb643f5d9c272')
+  //       .end((err, res) => {
+  //         expect(res).to.not.have.status(200);
+  //         expect(res).to.have.empty(res.body);
+  //         done();
+  //       });
+  //   });
+  // });
 
   // Test Case 13
   describe('/GET a post with valid IMDB id and invalid postID', () => {
     it('should retrieve and empty object', (done) => {
       chai.request(server)
-        .get('/api/media/tt0816692/post/sss272')
+        .get('/api/media/tt0816692/post/abc')
         .end((err, res) => {
-          expect(res).to.have.status(500);
+          expect(res).to.not.have.status(200);
           done();
         });
     });
   });
 
   // Test Case 14
-  describe('/PUT post', () => {
+  describe('/PUT edit a valid post', () => {
     it('should edit a valid post', (done) => {
       agent.put('/api/post/update/623aef7010ebb643f5d9c272')
         .set('Content-Type', 'application/json')
@@ -161,54 +162,5 @@ describe('Post tests', () => {
           done();
         });
     });
-
-    // Test Case 15
-    it('should fail when edit a valid post but with an invalid session', (done) => {
-     chai.request(server)
-      .put('/api/post/update/623aef7010ebb643f5d9c272')
-        .set('Content-Type', 'application/json')
-        .send({
-          data: {
-            title: 'The ending was insane!',
-            description: 'The ending of the movie was such a plot twist!',
-            user: 'RohanAmjad123',
-            imdbID: 'tt0816692',
-            votes: {
-              upvotes: 0,
-              downvotes: 0,
-            },
-          },
-          user: 'RohanAmjad123',
-        })
-        .end((err, res) => {
-          expect(res).to.have.status(401);
-          done();
-        });
-    });
-
-    // Test Case 16
-    it('should fail when edit an invalid post but with valid post data', (done) => {
-      agent.put('/api/post/update/623aef7010ebbabvf5d9c272')
-        .set('Content-Type', 'application/json')
-        .send({
-          data: {
-            title: 'The ending was insane!',
-            description: 'The ending of the movie was such a plot twist!',
-            user: 'RohanAmjad123',
-            imdbID: 'tt0816692',
-            votes: {
-              upvotes: 0,
-              downvotes: 0,
-            },
-          },
-          user: 'RohanAmjad123',
-        })
-        .end((err, res) => {
-          expect(res).to.have.status(400);
-          done();
-        });
-    });
-
-
   });
 });
