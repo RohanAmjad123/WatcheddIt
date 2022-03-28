@@ -69,8 +69,8 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          context: backend/
-          file: ./Dockerfile
+          context: backend
+          file: backend/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/watcheddit:latest
 
