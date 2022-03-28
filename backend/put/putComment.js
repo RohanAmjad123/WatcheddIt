@@ -1,4 +1,5 @@
 const connect = require('../database');
+const { ObjectId } = require('mongodb');
 
 exports.putComment = (req, res) => {
   if (req.session.user) {
@@ -21,7 +22,7 @@ exports.putComment = (req, res) => {
 
   dbConnect
     .collection('Comments')
-    .findOne({ "_Id": ObjectId(req.params.commentId) })
+    .find({ "_id": ObjectId(req.params.commentId) })
     .toArray((err, result) => {
       if (err) {
         res.status(400).send('Error updating comment');
@@ -35,8 +36,13 @@ exports.putComment = (req, res) => {
           dbConnect
           .collection('CommentEvents')
           .insertOne({
-            type: 'update',
-            data: req.body,
+            type: 'edit',
+            commentID: ObjectId(req.params.commentId),
+            data: {
+              text: req.body.text,
+              user: req.body.user,
+              postID: ObjectId(req.body.postID)
+            },
             user: req.session.user.username,
             timestamp: new Date(),
           });

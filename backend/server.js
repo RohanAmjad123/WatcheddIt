@@ -106,7 +106,7 @@ app.route('/api/comment/:postId/:limit').get((req, res) => {
 
 // PUT comment
 app.route('/api/comment/update/:commentId').put((req, res) => {
-  putComment.postPost(req, res);
+  putComment.putComment(req, res);
 });
 
 // DELETE comment
