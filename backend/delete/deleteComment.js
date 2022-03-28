@@ -1,18 +1,24 @@
 const { json } = require('body-parser');
+const { ObjectId } = require('mongodb');
 const connect = require('../database');
 
-exports.postPost = (req, res) => {
-  if (req.session.user) {
+exports.deleteComment = (req, res) => {
+  if (req.session.user || req.session.admin) {
     const dbConnect = connect.getDb();
 
     dbConnect
-      .collection('commentEvents')
-      .insertOne(json({
+      .collection('CommentEvents')
+      .insertOne({
         type: 'delete',
-        data: json({ text: '<<deleted>>' }),
+        commentID: ObjectId(req.params.commentId),
+        data: { 
+          text: '<<deleted>>',
+          user: req.session.user.username,
+          postID: ObjectId(req.params.CommentId)
+        },
         user: req.session.user.username,
-        timestamp: new Date().toISOString(),
-      }));
+        timestamp: new Date(),
+      });
 
     res.sendStatus(200);
   } else {
