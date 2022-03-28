@@ -11,41 +11,16 @@ const agent = chai.request.agent(server);
 
 let dbConnect;
 
-// // connecto to server
-// before((done) => {
-//   server.on('app_started', () => {
-//     done();
-//   });
-// });
 
-<<<<<<< HEAD
-describe('/GET userId cookie', () => {
-  it('should get a userId cookie', async () => {
-    const res = await agent.post('/api/login')
-      .send({
-        username: 'johnnyman',
-        password: 'papadog',
-      })
-      .set('Content-Type', 'application/json');
-    expect(res).to.have.cookie('userId');
-=======
+
 describe('comment test', () => {
-  // Retrieve cookie
+
+  // connecto to server
   before((done) => {
     server.on('app_started', () => {
       done();
     });
->>>>>>> 4f86ff8b107e96ed4d29ea8620462e0bfa11aff0
   });
-});
-
-
-describe('comment test', () => {
-
-  // // create session
-  // before((done) => {
-
-  // });
 
   // Removes inserted documents
   after((done) => {
