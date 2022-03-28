@@ -11,10 +11,7 @@ const agent = chai.request.agent(server);
 
 let dbConnect;
 
-
-
 describe('comment test', () => {
-
   // connect to to server
   before((done) => {
     server.on('app_started', () => {
@@ -64,7 +61,7 @@ describe('comment test', () => {
       });
   });
 
-  //Test Case 24
+  // Test Case 24
   it('/GET comments for postId not a hex value', (done) => {
     agent.get('/api/comment/623ae6a3nothex43f5d9c26e')
       .end((err, res) => {
@@ -75,7 +72,7 @@ describe('comment test', () => {
   });
 
   // Test Case 25
-  it('Posts a comment with a valid session',  (done) => {
+  it('Posts a comment with a valid session', (done) => {
     agent
       .post('/api/comment/623be831862ea136b669ae9e/add')
       .set('Content-Type', 'application/json')
@@ -89,7 +86,7 @@ describe('comment test', () => {
   });
 
   // Test Case 26
-  it('Posts acomment with a valid session to an invalid postId',  (done) => {
+  it('Posts acomment with a valid session to an invalid postId', (done) => {
     agent
       .post('/api/comment/623be831862ea136b669a/add')
       .set('Content-Type', 'application/json')
@@ -102,8 +99,8 @@ describe('comment test', () => {
       });
   });
 
-  //Test Case 27
-  it('Posts a valid comment with an invalid session',  (done) => {
+  // Test Case 27
+  it('Posts a valid comment with an invalid session', (done) => {
     chai.request.agent(server)
       .post('/api/comment/623be831862ea136b669ae9e/add')
       .set({ Cookie: 'NA' })
@@ -117,8 +114,8 @@ describe('comment test', () => {
       });
   });
 
-  //Test Case 28
-  it("PUT on a valid comment", (done) => {
+  // Test Case 28
+  it('PUT on a valid comment', (done) => {
     agent.put('/api/comment/update/623d71eb0af2e4f21b42a701')
       .set('ContentType', 'application/json')
       .send({
@@ -131,7 +128,7 @@ describe('comment test', () => {
   });
 
   // Test Case 29
-  it("PUT on an invalid comment", (done) => {
+  it('PUT on an invalid comment', (done) => {
     agent.put('/api/comment/update/')
 
       .set('ContentType', 'application/json')

@@ -115,16 +115,16 @@ describe('Post tests', () => {
   });
 
   // // Test Case 12
-   describe('/GET a post with invalid IMDB id and valid postID', () => {
-     it('should retrieve an empty object', (done) => {
-       chai.request(server)
-         .get('/api/media/abc/post/623aef7010ebb643f5d9c272')
-         .end((err, res) => {
-           expect(res).to.not.have.status(500);
-           done();
-         });
-     });
-   });
+  describe('/GET a post with invalid IMDB id and valid postID', () => {
+    it('should retrieve an empty object', (done) => {
+      chai.request(server)
+        .get('/api/media/abc/post/623aef7010ebb643f5d9c272')
+        .end((err, res) => {
+          expect(res).to.not.have.status(500);
+          done();
+        });
+    });
+  });
 
   // Test Case 13
   describe('/GET a post with valid IMDB id and invalid postID', () => {
@@ -164,8 +164,8 @@ describe('Post tests', () => {
 
     // Test Case 15
     it('should fail when edit a valid post but with an invalid session', (done) => {
-     chai.request(server)
-      .put('/api/post/update/623aef7010ebb643f5d9c272')
+      chai.request(server)
+        .put('/api/post/update/623aef7010ebb643f5d9c272')
         .set('Content-Type', 'application/json')
         .send({
           data: {
@@ -208,7 +208,5 @@ describe('Post tests', () => {
           done();
         });
     });
-
-
   });
 });
