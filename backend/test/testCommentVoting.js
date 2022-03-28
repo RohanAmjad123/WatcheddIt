@@ -24,16 +24,16 @@ describe('Comment Voting Tests', () => {
   });
 
   // // Remove inserted documents
-  after(function (done) {
-      var dbConnect = connect.getDb()
-      dbConnect.collection("PostEvents")
-          .deleteMany({
-              user: "johnnyman"
-          }, function (err, result) {
-              if (err) throw err;
-              done();
-          })
-  })
+  after((done) => {
+    const dbConnect = connect.getDb();
+    dbConnect.collection('PostEvents')
+      .deleteMany({
+        user: 'johnnyman',
+      }, (err) => {
+        if (err) throw err;
+        done();
+      });
+  });
 
   describe('/GET userId cookie', () => {
     it('should get a userId cookie', async () => {
@@ -61,10 +61,9 @@ describe('Comment Voting Tests', () => {
   describe('/GET total votes of invalid postID', () => {
     it('should get nothing', (done) => {
       chai.request(server)
-        .get('/api/comments/323d71eb0af2e4f21b42a701/voting')
+        .get('/api/comments/DoesNotExist/voting')
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.equal('');
           done();
         });
     });
