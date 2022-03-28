@@ -29,7 +29,7 @@ exports.getComments = (req, res) => {
       if (err) {
         res.status(400).send('Error fetching comments!');
       } else if (result.length <= 0) {
-        res.status(404).send('post either does not exist or has no comments');
+        res.json(result).status(200);
       } else {
         res.json(result).status(200);
       }
