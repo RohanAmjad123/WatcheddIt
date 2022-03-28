@@ -6,9 +6,6 @@ const chaiHttp = require('chai-http');
 
 chai.use(chaiHttp);
 const server = require('../server');
-const connect = require('../database');
-
-let dbConnect;
 
 describe('Signup tests', () => {
   // before((done) => {
