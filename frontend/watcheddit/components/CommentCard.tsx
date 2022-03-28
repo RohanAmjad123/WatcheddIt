@@ -16,7 +16,7 @@ export default function CommentCard({ comment }: { comment: Comment }) {
     }, [userState])
 
     const defaultEditFormValues = {
-        user: userState.username,
+        user: comment.user,
         postID: comment.postID,
         text: comment.text
     }
@@ -66,14 +66,16 @@ export default function CommentCard({ comment }: { comment: Comment }) {
     }
 
     const userButtons = () => {
-        if (userState.username === comment.user) {
+        if (userState.username === comment.user || userState.type === 'admin') {
             return (
                 <React.Fragment>
-                    <Grid item pt={2}>
-                        <IconButton onClick={openEdit}>
-                            <EditIcon />
-                        </IconButton>
-                    </Grid>
+                    {userState.username === comment.user &&
+                        <Grid item pt={2}>
+                            <IconButton onClick={openEdit}>
+                                <EditIcon />
+                            </IconButton>
+                        </Grid>
+                    }
                     <Grid item pt={2}>
                         <IconButton onClick={handleDelete}>
                             <DeleteIcon />

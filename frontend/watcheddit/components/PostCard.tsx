@@ -19,7 +19,7 @@ export default function PostCard({ post }: { post: Post }) {
     }, [userState])
 
     const defaultEditFormValues = {
-        user: userState.username,
+        user: post.user,
         imdbID: post.imdbID,
         title: post.title,
         description: post.description
@@ -46,8 +46,8 @@ export default function PostCard({ post }: { post: Post }) {
         axios.post(`http://localhost:3000/api/post/delete/${post._id}`, postDeleteData, { withCredentials: true })
             .then((response) => {
                 console.log(response)
-             }, (err) => { 
-                console.log(err) 
+            }, (err) => {
+                console.log(err)
             });
     }
 
@@ -71,14 +71,16 @@ export default function PostCard({ post }: { post: Post }) {
     }
 
     const userButtons = () => {
-        if (userState.username === post.user) {
+        if (userState.username === post.user || userState.type === 'admin') {
             return (
                 <React.Fragment>
-                    <Grid item pt={2}>
-                        <IconButton onClick={openEdit}>
-                            <EditIcon />
-                        </IconButton>
-                    </Grid>
+                    {userState.username === post.user &&
+                        <Grid item pt={2}>
+                            <IconButton onClick={openEdit}>
+                                <EditIcon />
+                            </IconButton>
+                        </Grid>
+                    }
                     <Grid item pt={2}>
                         <IconButton onClick={handleDelete}>
                             <DeleteIcon />
