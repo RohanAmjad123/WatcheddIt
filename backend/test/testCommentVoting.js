@@ -4,17 +4,19 @@ const { expect, assert } = require('chai');
 
 chai.use(chaiHttp);
 
+const connect = require('../database');
+
 const server = require('../server');
 
 const agent = chai.request.agent(server);
 
 describe('Comment Voting Tests', () => {
   // Retrieve cookie
-  before((done) => {
-    server.on('app_started', () => {
-      done();
-    });
-  });
+  // before((done) => {
+  //   server.on('app_started', () => {
+  //     done();
+  //   });
+  // });
 
   after((done) => {
     agent.close();
@@ -22,16 +24,16 @@ describe('Comment Voting Tests', () => {
   });
 
   // // Remove inserted documents
-  // after(function (done) {
-  //     dbConnect = connect.getDb()
-  //     dbConnect.collection("PostEvents")
-  //         .deleteMany({
-  //             user: "johnnyman"
-  //         }, function (err, result) {
-  //             if (err) throw err;
-  //             done();
-  //         })
-  // })
+  after(function (done) {
+      var dbConnect = connect.getDb()
+      dbConnect.collection("PostEvents")
+          .deleteMany({
+              user: "johnnyman"
+          }, function (err, result) {
+              if (err) throw err;
+              done();
+          })
+  })
 
   describe('/GET userId cookie', () => {
     it('should get a userId cookie', async () => {
@@ -59,10 +61,10 @@ describe('Comment Voting Tests', () => {
   describe('/GET total votes of invalid postID', () => {
     it('should get nothing', (done) => {
       chai.request(server)
-        .get('/api/comments/623d71eb0af2e4f21b42a701/voting')
+        .get('/api/comments/323d71eb0af2e4f21b42a701/voting')
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.deep.equal('');
+          expect(res.body).to.equal('');
           done();
         });
     });

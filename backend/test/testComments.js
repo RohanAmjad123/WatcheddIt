@@ -11,28 +11,28 @@ const agent = chai.request.agent(server);
 
 let dbConnect;
 
-//connecto to server
-// before((done) => {
-//   server.on('app_started', () => {
-//     done();
-//   });
-// });
+// connecto to server
+before((done) => {
+  server.on('app_started', () => {
+    done();
+  });
+});
 
 describe('comment test', () => {
 
   // create session
-  // before((done) => {
-  //   agent.post('/api/login')
-  //     .send({
-  //       username: 'johnnyman',
-  //       password: 'papadog',
-  //     })
-  //     .set('Content-Type', 'application/json')
-  //     .end((err, res) => {
-  //       expect(res).to.have.cookie('userId');
-  //       done();
-  //     });
-  // });
+  before((done) => {
+    agent.post('/api/login')
+      .send({
+        username: 'johnnyman',
+        password: 'papadog',
+      })
+      .set('Content-Type', 'application/json')
+      .end((err, res) => {
+        expect(res).to.have.cookie('userId');
+        done();
+      });
+  });
 
   // Removes inserted documents
   after((done) => {
@@ -150,11 +150,8 @@ describe('comment test', () => {
       "text": "testing for update comment"
     })
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(404);
       done();
     });
   });
-
-
-
 });

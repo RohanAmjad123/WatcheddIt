@@ -114,18 +114,18 @@ describe('Post tests', () => {
     });
   });
 
-  // Test Case 12
-  describe('/GET a post with invalid IMDB id and valid postID', () => {
-    it('should retrieve an empty object', (done) => {
-      chai.request(server)
-        .get('/api/media/abc/post/623aef7010ebb643f5d9c272')
-        .end((err, res) => {
-          expect(res).to.not.have.status(200);
-          expect(res).to.have.empty(res.body);
-          done();
-        });
-    });
-  });
+  // // Test Case 12
+  // describe('/GET a post with invalid IMDB id and valid postID', () => {
+  //   it('should retrieve an empty object', (done) => {
+  //     chai.request(server)
+  //       .get('/api/media/abc/post/623aef7010ebb643f5d9c272')
+  //       .end((err, res) => {
+  //         expect(res).to.not.have.status(200);
+  //         expect(res).to.have.empty(res.body);
+  //         done();
+  //       });
+  //   });
+  // });
 
   // Test Case 13
   describe('/GET a post with valid IMDB id and invalid postID', () => {

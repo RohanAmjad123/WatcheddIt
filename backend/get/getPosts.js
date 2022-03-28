@@ -27,7 +27,7 @@ exports.getAllPosts = (req, res) => {
       if (err) {
         res.status(400).send('Error fetching posts!');
       } else {
-        res.json(result);
+        res.status(200).json(result);
       }
     });
 };
@@ -40,7 +40,7 @@ exports.getPost = (req, res) => {
       if (err) {
         res.status(400).send('Error fetching posts!');
       } else {
-        res.json(result);
+        res.status(200).json(result);
       }
     });
 };
