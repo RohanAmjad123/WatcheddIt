@@ -18,7 +18,6 @@ let dbConnect;
 //   });
 // });
 //
-//
 
 describe('comment test', () => {
   // Retrieve cookie
