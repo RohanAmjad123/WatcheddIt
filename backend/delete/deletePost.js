@@ -1,6 +1,6 @@
 const connect = require('../database');
 
-exports.postPost = (req, res) => {
+exports.deletePost = (req, res) => {
   if (req.session.user) {
     const dbConnect = connect.getDb();
 
