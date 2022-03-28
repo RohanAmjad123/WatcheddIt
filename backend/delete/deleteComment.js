@@ -6,13 +6,13 @@ exports.deleteComment = (req, res) => {
     const dbConnect = connect.getDb();
 
     dbConnect
-      .collection('commentEvents')
+      .collection('CommentEvents')
       .insertOne(json({
         type: 'delete',
         data: json({ text: '<<deleted>>' }),
         commentID: req.params.commentID,
         user: req.session.user.username,
-        timestamp: new Date().toISOString(),
+        timestamp: new Date(),
       }));
 
     res.sendStatus(200);

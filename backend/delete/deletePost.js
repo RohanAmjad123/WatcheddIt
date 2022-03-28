@@ -4,13 +4,13 @@ exports.deletePost = (req, res) => {
   if (req.session.user) {
     const dbConnect = connect.getDb();
     dbConnect
-      .collection('postEvents')
+      .collection('PostEvents')
       .insertOne({
         type: 'delete',
         data: req.body,
         postID: req.params.postID,
         user: req.session.user.username,
-        timestamp: new Date().toISOString(),
+        timestamp: new Date(),
       });
 
     res.sendStatus(200);
