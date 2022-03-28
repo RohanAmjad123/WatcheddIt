@@ -1,7 +1,7 @@
 const { json } = require('body-parser');
 const connect = require('../database');
 
-exports.postPost = (req, res) => {
+exports.deleteComment = (req, res) => {
   if (req.session.user) {
     const dbConnect = connect.getDb();
 
