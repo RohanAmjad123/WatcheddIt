@@ -1,5 +1,5 @@
-const connect = require('../database');
 const { ObjectId } = require('mongodb');
+const connect = require('../database');
 
 exports.putComment = (req, res) => {
   if (req.session.user) {
@@ -31,9 +31,7 @@ exports.putComment = (req, res) => {
       } else {
         if(result.length <= 0){
           res.status(404).send('comment does not exist');
-          return;
-        }
-        else{
+        } else {
           dbConnect
           .collection('CommentEvents')
           .insertOne({
@@ -45,8 +43,7 @@ exports.putComment = (req, res) => {
           });
           res.sendStatus(200);
         }
-      }
-    });
+      });
   } else {
     res.status(401).send("Can't PUT comment, not logged in");
   }

@@ -11,12 +11,14 @@ const server = require('../server');
 const agent = chai.request.agent(server);
 
 describe('Comment Voting Tests', () => {
+
   // Retrieve cookie
   // before((done) => {
   //   server.on('app_started', () => {
   //     done();
   //   });
   // });
+
 
   after((done) => {
     agent.close();
@@ -61,10 +63,9 @@ describe('Comment Voting Tests', () => {
   describe('/GET total votes of invalid postID', () => {
     it('should get nothing', (done) => {
       chai.request(server)
-        .get('/api/comments/323d71eb0af2e4f21b42a701/voting')
+        .get('/api/comments/DoesNotExist/voting')
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.equal('');
           done();
         });
     });
