@@ -53,7 +53,7 @@ describe('Post Voting Tests', () => {
       expect(res).to.have.cookie('userId');
     });
   });
-  
+
   describe('/GET valid total votes', () => {
     it('should get total votes', (done) => {
       chai.request(server)
