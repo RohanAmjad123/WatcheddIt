@@ -13,6 +13,7 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.2",
+    "chai": "^4.3.6",
     "chai-http": "^4.3.0",
     "cookie-session": "^2.0.0",
     "cors": "^2.8.5",
@@ -23,10 +24,10 @@
     "mongoose": "^6.2.7",
     "nodemon": "^2.0.15",
     "swagger-autogen": "^2.20.3",
-    "swagger-ui-express": "^4.1.4",
-    "chai": "^4.3.6"
+    "swagger-ui-express": "^4.1.4"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.17.0",
     "eslint": "^8.12.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.4",
