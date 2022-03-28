@@ -11,32 +11,16 @@ const agent = chai.request.agent(server);
 
 let dbConnect;
 
-// // connecto to server
-// before((done) => {
-//   server.on('app_started', () => {
-//     done();
-//   });
-// });
-
-describe('/GET userId cookie', () => {
-  it('should get a userId cookie', async () => {
-    const res = await agent.post('/api/login')
-      .send({
-        username: 'johnnyman',
-        password: 'papadog',
-      })
-      .set('Content-Type', 'application/json');
-    expect(res).to.have.cookie('userId');
-  });
-});
 
 
 describe('comment test', () => {
 
-  // // create session
-  // before((done) => {
-
-  // });
+  // connect to to server
+  before((done) => {
+    server.on('app_started', () => {
+      done();
+    });
+  });
 
   // Removes inserted documents
   after((done) => {
@@ -90,7 +74,7 @@ describe('comment test', () => {
       });
   });
 
-  // Test Case 26
+  // Test Case 25
   it('Posts a comment with a valid session',  (done) => {
     agent
       .post('/api/comment/623be831862ea136b669ae9e/add')
@@ -104,7 +88,7 @@ describe('comment test', () => {
       });
   });
 
-  // Test Case 27
+  // Test Case 26
   it('Posts acomment with a valid session to an invalid postId',  (done) => {
     agent
       .post('/api/comment/623be831862ea136b669a/add')
@@ -118,7 +102,7 @@ describe('comment test', () => {
       });
   });
 
-  //Test Case 28
+  //Test Case 27
   it('Posts a valid comment with an invalid session',  (done) => {
     chai.request.agent(server)
       .post('/api/comment/623be831862ea136b669ae9e/add')
@@ -133,7 +117,7 @@ describe('comment test', () => {
       });
   });
 
-  //Test Case 29
+  //Test Case 28
   it("PUT on a valid comment", (done) => {
     agent.put('/api/comment/update/623d71eb0af2e4f21b42a701')
       .set('ContentType', 'application/json')
@@ -146,7 +130,7 @@ describe('comment test', () => {
       });
   });
 
-  // Test Case 30
+  // Test Case 29
   it("PUT on an invalid comment", (done) => {
     agent.put('/api/comment/update/')
 

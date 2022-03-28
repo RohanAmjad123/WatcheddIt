@@ -31,7 +31,7 @@ exports.getComments = (req, res) => {
       } else if (result.length <= 0) {
         res.status(404).send('post either does not exist or has no comments');
       } else {
-        res.json(result).status(200);   
+        res.json(result).status(200);
       }
     });
 };
