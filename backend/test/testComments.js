@@ -11,25 +11,13 @@ const agent = chai.request.agent(server);
 
 let dbConnect;
 
-// // connecto to server
-// before((done) => {
-//   server.on('app_started', () => {
-//     done();
-//   });
-// });
-
 describe('comment test', () => {
-  // Retrieve cookie
+  // connect to to server
   before((done) => {
     server.on('app_started', () => {
       done();
     });
   });
-
-  // // create session
-  // before((done) => {
-
-  // });
 
   // Removes inserted documents
   after((done) => {
@@ -73,7 +61,7 @@ describe('comment test', () => {
       });
   });
 
-  // Test Case 23
+  // Test Case 24
   it('/GET comments for postId not a hex value', (done) => {
     agent.get('/api/comment/623ae6a3nothex43f5d9c26e')
       .end((err, res) => {
@@ -83,19 +71,7 @@ describe('comment test', () => {
       });
   });
 
-  // Test Case 23
-  // tested together because they are an equivalence class
-  // if this fails, check if somehow a media got added with this id
-  it('/GET comments for no comments in post or post doe not exist', (done) => {
-    agent.get('/api/comment/523aef7010ebb643f5d9c272')
-      .end((err, res) => {
-        expect(res).to.have.status(404);
-        assert.equal(res.text, 'post either does not exist or has no comments');
-        done();
-      });
-  });
-
-  // Test Case 24
+  // Test Case 25
   it('Posts a comment with a valid session', (done) => {
     agent
       .post('/api/comment/623be831862ea136b669ae9e/add')
@@ -109,7 +85,7 @@ describe('comment test', () => {
       });
   });
 
-  // Test Case 25
+  // Test Case 26
   it('Posts acomment with a valid session to an invalid postId', (done) => {
     agent
       .post('/api/comment/623be831862ea136b669a/add')
@@ -123,7 +99,7 @@ describe('comment test', () => {
       });
   });
 
-  // Test Case 26 Cant get it to work rn
+  // Test Case 27
   it('Posts a valid comment with an invalid session', (done) => {
     chai.request.agent(server)
       .post('/api/comment/623be831862ea136b669ae9e/add')
@@ -138,6 +114,7 @@ describe('comment test', () => {
       });
   });
 
+  // Test Case 28
   it('PUT on a valid comment', (done) => {
     agent.put('/api/comment/update/623d71eb0af2e4f21b42a701')
       .set('ContentType', 'application/json')
@@ -150,6 +127,7 @@ describe('comment test', () => {
       });
   });
 
+  // Test Case 29
   it('PUT on an invalid comment', (done) => {
     agent.put('/api/comment/update/')
 
