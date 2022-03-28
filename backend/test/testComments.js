@@ -12,13 +12,12 @@ const agent = chai.request.agent(server);
 let dbConnect;
 
 // connecto to server
-// before((done) => {
-//   server.on('app_started', () => {
-//     done();
-//   });
-// });
-//
-//
+before((done) => {
+  server.on('app_started', () => {
+    done();
+  });
+});
+
 
 describe('comment test', () => {
   // Retrieve cookie
@@ -29,18 +28,18 @@ describe('comment test', () => {
   });
 
   // create session
-  // before((done) => {
-  //   agent.post('/api/login')
-  //     .send({
-  //       username: 'johnnyman',
-  //       password: 'papadog',
-  //     })
-  //     .set('Content-Type', 'application/json')
-  //     .end((err, res) => {
-  //       expect(res).to.have.cookie('userId');
-  //       done();
-  //     });
-  // });
+  before((done) => {
+    agent.post('/api/login')
+      .send({
+        username: 'johnnyman',
+        password: 'papadog',
+      })
+      .set('Content-Type', 'application/json')
+      .end((err, res) => {
+        expect(res).to.have.cookie('userId');
+        done();
+      });
+  });
 
   // Removes inserted documents
   after((done) => {
@@ -152,13 +151,15 @@ describe('comment test', () => {
 
   it('PUT on an invalid comment', (done) => {
     agent.put('/api/comment/update/')
-      .set('ContentType', 'application/json')
-      .send({
-        text: 'testing for update comment',
-      })
-      .end((err, res) => {
-        expect(res).to.have.status(400);
-        done();
-      });
+
+    .set('ContentType', 'application/json')
+    .send({
+      "text": "testing for update comment"
+    })
+    .end((err, res) => {
+      expect(res).to.have.status(404);
+      done();
+    });
   });
 });
+
