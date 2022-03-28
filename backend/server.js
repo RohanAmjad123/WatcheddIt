@@ -94,34 +94,19 @@ app.route('/api/comment/:postId/add').post((req, res) => {
   postComments.postComment(req, res);
 });
 
-// examples (move examples to documentation later):
-// retrieves all comments for a post with a given id:
-//   /api/Title/620da70c1cfcdb12af569d91/comments/
-//   /api/620da70c1cfcdb12af569d91/comments/
-
-// gives the option to specify a limit on the comments retrieved:
-//   /api/Title/620da70c1cfcdb12af569d91/comments/2
-//   /api/620da70c1cfcdb12af569d91/comments/105
-
-// title is not used but might be good for clarity for users (limit defaults to inf)
+// (limit defaults to inf)
 // GET comments no limit
-app.route('/api/comment/:postTitle/:postId/').get((req, res) => {
+app.route('/api/comment/:postId').get((req, res) => {
   getComments.getComments(req, res);
 });
-app.route('/api/:postId/comments').get((req, res) => {
-  getComments.getComments(req, res);
-});
-// GET comments with limit
-app.route('/api/comment/:postTitle/:postId/:limit').get((req, res) => {
-  getComments.getComments(req, res);
-});
+
 app.route('/api/comment/:postId/:limit').get((req, res) => {
   getComments.getComments(req, res);
 });
 
 // PUT comment
-app.route('/api/post/update/:commentId').put((req, res) => {
-  putComment.postPost(req, res);
+app.route('/api/comment/update/:commentId').put((req, res) => {
+  putComment.putComment(req, res);
 });
 
 // DELETE comment

@@ -27,7 +27,7 @@ describe('Post tests', () => {
       if (err) throw err;
       // connect.closeConnection();
     });
-    agent.close();
+    // agent.close();
     done();
   });
 

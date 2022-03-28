@@ -9,7 +9,7 @@ exports.login = (req, res) => {
       username: req.body.username,
     }, (err, result) => {
       if (err) throw err;
-      console.log(result);
+      console.log(req.body);
       if (result == null) {
         console.log('No matching email-address');
         res.status(401).send('No matching username found');
