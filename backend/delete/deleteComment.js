@@ -1,4 +1,3 @@
-const { json } = require('body-parser');
 const { ObjectId } = require('mongodb');
 const connect = require('../database');
 
