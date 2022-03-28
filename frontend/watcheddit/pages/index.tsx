@@ -15,7 +15,7 @@ export default function Home({ mediaList }: { mediaList: Media[] }) {
         sortedMediaData = [...mediaList].sort((a, b) => b[sortProperty].avg - a[sortProperty].avg)
       }
       else if (sortProperty == 'Year') {
-        sortedMediaData = [...mediaList].sort((a, b) => a[sortProperty].localeCompare(b[sortProperty]))
+        sortedMediaData = [...mediaList].sort((a, b) => b[sortProperty].localeCompare(a[sortProperty]))
       }
       else {
         sortedMediaData = [...mediaList].sort((a, b) => a[sortProperty].localeCompare(b[sortProperty]))
