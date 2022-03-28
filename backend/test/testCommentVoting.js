@@ -9,13 +9,6 @@ const server = require('../server');
 const agent = chai.request.agent(server);
 
 describe('Comment Voting Tests', () => {
-  // Retrieve cookie
-  before((done) => {
-    server.on('app_started', () => {
-      done();
-    });
-  });
-
   after((done) => {
     agent.close();
     done();

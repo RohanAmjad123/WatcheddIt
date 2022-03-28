@@ -5,9 +5,9 @@ exports.postComment = (req, res) => {
   if (req.session.user || req.session.admin) {
     // checks if a string represents valid hex
     // from https://www.sitepoint.com/community/t/how-to-check-if-string-is-hexadecimal/162739
-    const regex = /[0-9A-Fa-f]{24}/g; 
+    const regex = /[0-9A-Fa-f]{24}/g;
 
-    if(!regex.test(req.params.postId)){
+    if (!regex.test(req.params.postId)) {
       res.status(400).send('invalid postID');
       regex.lastIndex = 0; // reset index after use
       return;
