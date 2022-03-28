@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const connect = require('../database');
 
 exports.deletePost = (req, res) => {
@@ -8,7 +9,7 @@ exports.deletePost = (req, res) => {
       .insertOne({
         type: 'delete',
         data: req.body,
-        postID: req.params.postID,
+        postID: ObjectId(req.params.postID),
         user: req.session.user.username,
         timestamp: new Date(),
       });
