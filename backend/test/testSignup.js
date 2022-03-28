@@ -6,6 +6,9 @@ const chaiHttp = require('chai-http');
 
 chai.use(chaiHttp);
 const server = require('../server');
+const connect = require('../database');
+let dbConnect
+dbConnect = connect.getDb()
 
 describe('Signup tests', () => {
   // before((done) => {
@@ -46,36 +49,35 @@ describe('Signup tests', () => {
   });
 
   // Test Case 05
-  // SHOULD NOT BE TESTING DATABASE
-  // describe(('Check password'), () => {
-  //   it('should assert that the inserted users password is obfuscated', (done) => {
-  //     dbConnect = connect.getDb();
-  //     dbConnect.collection('users').findOne(
-  //       {
-  //         username: 'testuser',
-  //       },
-  //       (err, res) => {
-  //         if (err) throw err;
-  //         assert.notEqual(
-  //           res.password,
-  //           'testpassword',
-  //           'The password should be obfuscated',
-  //         );
-  //       },
-  //     );
+   describe(('Check password'), () => {
+     it('should assert that the inserted users password is obfuscated', (done) => {
+       dbConnect = connect.getDb();
+      dbConnect.collection('users').findOne(
+         {
+          username: 'testuser',
+         },
+         (err, res) => {
+           if (err) throw err;
+          assert.notEqual(
+            res.password,
+           'testpassword',
+           'The password should be obfuscated',
+         );
+        },
+     );
 
-  //     // Remove the newly created user from the database
-  //     dbConnect.collection('users').deleteOne(
-  //       {
-  //         username: 'testuser',
-  //       },
-  //       (err) => {
-  //         if (err) throw err;
-  //         done()
-  //       },
-  //     );
-  //   });
-  // });
+      // Remove the newly created user from the database
+       dbConnect.collection('users').deleteOne(
+        {
+          username: 'testuser',
+        },
+        (err) => {
+          if (err) throw err;
+          done()
+        },
+     );
+    });
+ });
 
   // Test Case 06
   describe(('/POST Signup with an already existing username'), () => {
