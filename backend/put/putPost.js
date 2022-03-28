@@ -9,7 +9,7 @@ exports.postPost = (req, res) => {
     // from https://www.sitepoint.com/community/t/how-to-check-if-string-is-hexadecimal/162739
     const regex = /[0-9A-Fa-f]{24}/g; 
 
-    if(req.params.postId.length != 24){
+    if(req.params.postId.length !== 24){
       res.status(400).send('invalid postID : expected 12 bytes or 24 hex characters');
       return;
     }
