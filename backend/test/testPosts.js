@@ -133,7 +133,7 @@ describe('Post tests', () => {
       chai.request(server)
         .get('/api/media/tt0816692/post/abc')
         .end((err, res) => {
-          expect(res).to.not.have.status(200);
+          expect(res).to.have.status(400);
           done();
         });
     });
