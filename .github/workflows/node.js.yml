@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build_test:
+  build_test_deploy:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -47,11 +47,7 @@ jobs:
         run: |
           npm run build --if-present
           npm run test
-      
-  deploy_to_docker_hub:
-    runs-on: ubuntu-latest
-    
-    steps:
+
       - name: Check Out Repo 
         uses: actions/checkout@v2
 
@@ -76,3 +72,6 @@ jobs:
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
+
+ 
+     
