@@ -18,7 +18,6 @@ let dbConnect;
 //   });
 // });
 
-<<<<<<< HEAD
 describe('/GET userId cookie', () => {
   it('should get a userId cookie', async () => {
     const res = await agent.post('/api/login')
@@ -28,14 +27,6 @@ describe('/GET userId cookie', () => {
       })
       .set('Content-Type', 'application/json');
     expect(res).to.have.cookie('userId');
-=======
-describe('comment test', () => {
-  // Retrieve cookie
-  before((done) => {
-    server.on('app_started', () => {
-      done();
-    });
->>>>>>> 4f86ff8b107e96ed4d29ea8620462e0bfa11aff0
   });
 });
 
