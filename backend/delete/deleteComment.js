@@ -1,4 +1,3 @@
-const { json } = require('body-parser');
 const { ObjectId } = require('mongodb');
 const connect = require('../database');
 
@@ -22,6 +21,6 @@ exports.deleteComment = (req, res) => {
 
     res.sendStatus(200);
   } else {
-    res.status(400).send("Can't PUT post, not logged in");
+    res.status(400).send("Can't Delete post, not logged in");
   }
 };
