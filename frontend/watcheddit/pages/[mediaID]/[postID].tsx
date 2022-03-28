@@ -55,7 +55,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     const postRes = await fetch(`http://localhost:3000/api/media/${params.mediaID}/post/${params.postID}/`);
     const post = await postRes.json();
 
-    const commentRes = await fetch(`http://localhost:3000/api/${params.postID}/comments`);
+    const commentRes = await fetch(`http://localhost:3000/api/comment/${params.postID}`).then()
     const commentsList = await commentRes.json();
 
     return {
