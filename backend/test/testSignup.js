@@ -24,15 +24,14 @@ describe('Signup tests', () => {
 
   // Test Case 04
   describe(('/POST Signup with valid credentials'), () => {
-    it('should signup with valid details', (done) => {
-      chai.request(server)
+    it('should signup with valid details', async function() {
+      const res = await chai.request(server)
         .post('/api/signup/')
         .send({
           username: 'testuser',
           password: 'testpassword',
         })
         .set('Content-Type', 'application/json')
-        .end((err, res) => {
           expect(res).to.have.status(200);
           assert.equal(
             res.body.acknowledged,
@@ -43,8 +42,6 @@ describe('Signup tests', () => {
             res.body.insertedId,
             'The document should have an inserted ID',
           );
-          done();
-        });
     });
   });
 
