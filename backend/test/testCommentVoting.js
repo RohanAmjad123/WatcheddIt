@@ -11,7 +11,6 @@ const server = require('../server');
 const agent = chai.request.agent(server);
 
 describe('Comment Voting Tests', () => {
-
   // Retrieve cookie
   // before((done) => {
   //   server.on('app_started', () => {
@@ -19,23 +18,22 @@ describe('Comment Voting Tests', () => {
   //   });
   // });
 
-
   after((done) => {
     agent.close();
     done();
   });
 
   // // Remove inserted documents
-  after(function (done) {
-      var dbConnect = connect.getDb()
-      dbConnect.collection("PostEvents")
-          .deleteMany({
-              user: "johnnyman"
-          }, function (err) {
-              if (err) throw err;
-              done();
-          })
-  })
+  after((done) => {
+    const dbConnect = connect.getDb();
+    dbConnect.collection('PostEvents')
+      .deleteMany({
+        user: 'johnnyman',
+      }, (err) => {
+        if (err) throw err;
+        done();
+      });
+  });
 
   describe('/GET userId cookie', () => {
     it('should get a userId cookie', async () => {
