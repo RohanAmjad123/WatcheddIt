@@ -4,27 +4,36 @@ const { expect, assert } = require('chai');
 
 chai.use(chaiHttp);
 
+const connect = require('../database');
+
 const server = require('../server');
 
 const agent = chai.request.agent(server);
 
 describe('Comment Voting Tests', () => {
+  // Retrieve cookie
+  // before((done) => {
+  //   server.on('app_started', () => {
+  //     done();
+  //   });
+  // });
+
   after((done) => {
     agent.close();
     done();
   });
 
   // // Remove inserted documents
-  // after(function (done) {
-  //     dbConnect = connect.getDb()
-  //     dbConnect.collection("PostEvents")
-  //         .deleteMany({
-  //             user: "johnnyman"
-  //         }, function (err, result) {
-  //             if (err) throw err;
-  //             done();
-  //         })
-  // })
+  after((done) => {
+    const dbConnect = connect.getDb();
+    dbConnect.collection('PostEvents')
+      .deleteMany({
+        user: 'johnnyman',
+      }, (err) => {
+        if (err) throw err;
+        done();
+      });
+  });
 
   describe('/GET userId cookie', () => {
     it('should get a userId cookie', async () => {
@@ -55,7 +64,6 @@ describe('Comment Voting Tests', () => {
         .get('/api/comments/DoesNotExist/voting')
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          // expect(res.body).to.deep.equal('');
           done();
         });
     });

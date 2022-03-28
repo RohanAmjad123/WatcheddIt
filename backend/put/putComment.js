@@ -10,15 +10,16 @@ exports.putComment = (req, res) => {
     const regex = /[0-9A-Fa-f]{24}/g;
 
     if (req.params.commentId.length !== 24) {
-      res.status(400).send('invalid postID : expected 12 bytes or 24 hex characters');
+      res.status(400).send('invalid commentId : expected 12 bytes or 24 hex characters');
       return;
     }
 
     if (!regex.test(req.params.commentId)) {
-      res.status(400).send('invalid postID : expected hex value');
+      res.status(400).send('invalid commentId : expected hex value');
       regex.lastIndex = 0; // reset index after use
       return;
     }
+    req.body.postID = ObjectId(req.body.postID);
 
     dbConnect
       .collection('Comments')
@@ -34,11 +35,7 @@ exports.putComment = (req, res) => {
             .insertOne({
               type: 'edit',
               commentID: ObjectId(req.params.commentId),
-              data: {
-                text: req.body.text,
-                user: req.body.user,
-                postID: ObjectId(req.body.postID),
-              },
+              data: req.body,
               user: req.session.user.username,
               timestamp: new Date(),
             });
