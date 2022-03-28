@@ -110,7 +110,7 @@ app.route('/api/comment/update/:commentId').put((req, res) => {
 });
 
 // DELETE comment
-app.route('/api/comment/delete/:commentId').delete((req, res) => {
+app.route('/api/comment/delete/:commentID').post((req, res) => {
   deleteComment.deleteComment(req, res);
 });
 
@@ -144,7 +144,7 @@ app.route('/api/post/update/:postId').put((req, res) => {
 });
 
 // DELETE post
-app.route('/api/post/delete/:postId').delete((req, res) => {
+app.route('/api/post/delete/:postID').post((req, res) => {
   deletePost.deletePost(req, res);
 });
 
