@@ -20,35 +20,43 @@ describe('Signup tests', () => {
   //   connect.connect();
   //   done();
   // });
-
-  // after(() => connect.closeConnection());
+  // Remove the newly created user from the database
+  after(() => dbConnect.collection('users')
+    .deleteOne(
+      {
+        username: 'testuser',
+      },
+      (err) => {
+        if (err) throw err;
+      },
+    ));
 
   // Test Case 04
   describe(('/POST Signup with valid credentials'), () => {
-    it('should signup with valid details', async function() {
+    it('should signup with valid details', async () => {
       const res = await chai.request(server)
         .post('/api/signup/')
         .send({
           username: 'testuser',
           password: 'testpassword',
         })
-        .set('Content-Type', 'application/json')
-          expect(res).to.have.status(200);
-          assert.equal(
-            res.body.acknowledged,
-            true,
-            'The document should be inserted',
-          );
-          assert.exists(
-            res.body.insertedId,
-            'The document should have an inserted ID',
-          );
+        .set('Content-Type', 'application/json');
+      expect(res).to.have.status(200);
+      assert.equal(
+        res.body.acknowledged,
+        true,
+        'The document should be inserted',
+      );
+      assert.exists(
+        res.body.insertedId,
+        'The document should have an inserted ID',
+      );
     });
   });
 
   // Test Case 05
   describe(('Check password'), () => {
-    it('should assert that the inserted users password is obfuscated', (done) => {
+    it('should assert that the inserted users password is obfuscated', () => {
       dbConnect = connect.getDb();
       dbConnect.collection('users').findOne(
         {
@@ -63,23 +71,12 @@ describe('Signup tests', () => {
           );
         },
       );
-
-      // Remove the newly created user from the database
-      dbConnect.collection('users').deleteOne(
-        {
-          username: 'testuser',
-        },
-        (err) => {
-          if (err) throw err;
-          done();
-        },
-      );
     });
   });
 
   // Test Case 06
   describe(('/POST Signup with an already existing username'), () => {
-    it('should fail and send code 409', (done) => {
+    it('should fail and send code 409', () => {
       chai.request(server)
         .post('/api/signup/')
         .send({
@@ -94,7 +91,6 @@ describe('Signup tests', () => {
             'Failure trying to register an account',
             'The body message should display that it failed trying to register for an account',
           );
-          done();
         });
     });
   });
