@@ -2,13 +2,15 @@ name: CI-CD
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
     paths:
-      - backend/
+      - 'backend/**'
   pull_request:
-    branches: [ main ]
+    branches: 
+      - main
     paths:
-      - backend/ 
+      - 'backend/**' 
 
   workflow_dispatch:
 
