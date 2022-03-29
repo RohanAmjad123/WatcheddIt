@@ -41,7 +41,7 @@ export default function PostForm({ mediaID }: { mediaID: any }) {
 
         console.log(formValues);
 
-        axios.post('http://localhost:3000/api/post/add', formValues, { withCredentials: true })
+        axios.post('https://watcheddit-ljy5gpprra-uc.a.run.app/api/post/add', formValues, { withCredentials: true })
         
         .then((response) => {
             router.push(`/${imdbID}`);

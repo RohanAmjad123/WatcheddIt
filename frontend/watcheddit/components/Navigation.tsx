@@ -142,7 +142,7 @@ export default function Navigation() {
         if (e.target.value.length === 0) {
             return
         }
-        axios.get(`http://localhost:3000/api/media-search/${e.target.value}`)
+        axios.get(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/media-search/${e.target.value}`)
             .then((res) => {
                 console.log(res)
                 setData(res.data)

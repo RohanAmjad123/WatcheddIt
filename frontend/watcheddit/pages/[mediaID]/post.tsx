@@ -22,7 +22,7 @@ export default function Post({ media }: { media: Media }) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const res = await fetch(`http://localhost:3000/api/media`);
+    const res = await fetch(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/media`);
     const mediaList = await res.json();
 
     const paths = mediaList.map((media: Media) => ({
@@ -37,7 +37,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
     const params = context.params!
-    const mediaRes = await fetch(`http://localhost:3000/api/media/${params.mediaID}`);
+    const mediaRes = await fetch(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/media/${params.mediaID}`);
     const media = await mediaRes.json();
 
     return {
