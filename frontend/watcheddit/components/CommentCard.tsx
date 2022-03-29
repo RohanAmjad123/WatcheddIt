@@ -40,7 +40,7 @@ export default function CommentCard({ comment }: { comment: Comment }) {
         console.log(comment._id);
 
         console.log(postDeleteData)
-        axios.post(`http://localhost:3000/api/comment/delete/${comment._id}`, postDeleteData, { withCredentials: true })
+        axios.post(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/comment/delete/${comment._id}`, postDeleteData, { withCredentials: true })
             .then((response) => {
                 console.log(response)
              }, (err) => { 
@@ -59,7 +59,7 @@ export default function CommentCard({ comment }: { comment: Comment }) {
     const handleEditFormSubmit = () => {
         console.log(editFormValues)
 
-        axios.put(`http://localhost:3000/api/comment/update/${comment._id}`, editFormValues, { withCredentials: true })
+        axios.put(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/comment/update/${comment._id}`, editFormValues, { withCredentials: true })
             .then((response) => {
                 setShowEdit(false)
             }, (err) => {

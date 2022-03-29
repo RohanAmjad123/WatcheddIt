@@ -34,7 +34,7 @@ export default function PostPage({ post, commentsList }: { post: Post, commentsL
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const postRes = await fetch(`http://localhost:3000/api/posts/`);
+    const postRes = await fetch(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/posts/`);
     const postList = await postRes.json();
 
     const paths = postList.map((post: Post) => ({
@@ -52,10 +52,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
     const params = context.params!
-    const postRes = await fetch(`http://localhost:3000/api/media/${params.mediaID}/post/${params.postID}/`);
+    const postRes = await fetch(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/media/${params.mediaID}/post/${params.postID}/`);
     const post = await postRes.json();
 
-    const commentRes = await fetch(`http://localhost:3000/api/comment/${params.postID}`).then()
+    const commentRes = await fetch(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/comment/${params.postID}`).then()
     const commentsList = await commentRes.json();
 
     return {
