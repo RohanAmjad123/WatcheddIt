@@ -1,7 +1,7 @@
 const connect = require('../database');
 
 exports.getMyVoted = (req, res) => {
-  const { username } = req.session.user;
+  var { username } = req.session.user;
   if (username == null) username = req.session.admin
   if (username == null) {
     res.status(400).send('You are currently not logged in');
