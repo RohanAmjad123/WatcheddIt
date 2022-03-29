@@ -22,7 +22,7 @@ describe('Post tests', () => {
   after((done) => {
     dbConnect = connect.getDb();
     dbConnect.collection('PostEvents').deleteMany({
-      user: 'johnnyman',
+      user: 'testuser123',
     }, (err) => {
       if (err) throw err;
       // connect.closeConnection();
@@ -35,8 +35,8 @@ describe('Post tests', () => {
     it('should get a userId cookie', async () => {
       const res = await agent.post('/api/login')
         .send({
-          username: 'johnnyman',
-          password: 'papadog',
+          username: 'testuser123',
+          password: 'pass',
         })
         .set('Content-Type', 'application/json');
       expect(res).to.have.cookie('userId');
@@ -51,7 +51,7 @@ describe('Post tests', () => {
         .send({
           title: 'test',
           description: 'test',
-          user: 'johnnyman',
+          user: 'testuser123',
           imdbID: 'tt5180504',
           votes: {
             upvotes: 0,
@@ -74,7 +74,7 @@ describe('Post tests', () => {
         .send({
           title: 'test',
           description: 'test',
-          user: 'johnnyman',
+          user: 'testuser123',
           imdbID: 'tt5180504',
           votes: {
             upvotes: 0,
@@ -102,7 +102,7 @@ describe('Post tests', () => {
   });
 
   // Test Case 11
-  describe('/GET a singular post', () => {
+  describe('/GET posts', () => {
     it('should retrieve a singular valid post', (done) => {
       chai.request(server)
         .get('/api/media/tt0816692/post/623aef7010ebb643f5d9c272')
@@ -112,7 +112,41 @@ describe('Post tests', () => {
           done();
         });
     });
-  });
+
+    // Test Case 12
+
+    it('should retrieve all posts under a specific imdbID', (done) => {
+      chai.request(server)
+      .get('/api/posts/tt0816692')
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        done();
+      });
+    })
+
+    it('should return 200 and all posts a user has voted on', (done) => {
+      agent
+        .get('/api/myvoted')
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          assert.equal(res.body.length, 2, 'It should return an array of two posts')
+          done();
+        });
+    })
+
+    it('should return 401 and zero posts if no user is logged in', (done) => {
+      chai.request(server)
+        .get('/api/myvoted')
+        .end((err, res) => {
+          expect(res).to.have.status(401);
+          assert.equal(res.text, '', 'It should return zero posts')
+          done();
+        });
+    });
+
+  })
+
+
 
   // // Test Case 12
   describe('/GET a post with invalid IMDB id and valid postID', () => {

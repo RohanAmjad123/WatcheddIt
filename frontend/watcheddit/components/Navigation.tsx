@@ -6,10 +6,10 @@ import { Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import Link from "next/link";
-import { Button } from "@mui/material";
-import { useAppSelector } from "../app/hooks";
-import { useAppDispatch } from "../app/hooks";
-import { logoutUser } from "../app/actions/logoutUser"
+import {Button} from "@mui/material";
+import {useAppSelector} from "../app/hooks";
+import {useAppDispatch} from "../app/hooks";
+import {logoutUser} from "../app/actions/logoutUser"
 import LogoutIcon from "@mui/icons-material/Logout"
 import { Menu, MenuItem, ListItemIcon, ListItemText, Tooltip, IconButton, Avatar } from '@mui/material'
 import React from 'react';
@@ -137,7 +137,7 @@ export default function Navigation() {
     }
     const [data, setData] = useState([]);
     const [searchVisible, setSearchVisibility] = useState<boolean>(true);
-    
+  
     const inputHandler = (e: any) => {
         if (e.target.value.length === 0) {
             return
@@ -165,12 +165,12 @@ export default function Navigation() {
     }
 
     return (
-        <AppBar sx={{ backgroundColor: 'white' }} position='sticky'>
+        <AppBar sx={{backgroundColor: 'white'}} position='sticky'>
             <Toolbar>
                 <Grid container direction="row">
                     <Grid item justifyContent="center" direction="column" display="flex">
                         <Link href="/" passHref>
-                            <Typography sx={{ color: 'black' }}>Watcheddit</Typography>
+                            <Typography sx={{color: 'black'}}>Watcheddit</Typography>
                         </Link>
                     </Grid>
                     <ClickAwayListener onClickAway={hideSearch}>
