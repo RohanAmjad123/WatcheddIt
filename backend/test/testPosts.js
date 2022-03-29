@@ -22,7 +22,7 @@ describe('Post tests', () => {
   after((done) => {
     dbConnect = connect.getDb();
     dbConnect.collection('PostEvents').deleteMany({
-      user: 'johnnyman',
+      user: 'testuser123',
     }, (err) => {
       if (err) throw err;
       // connect.closeConnection();
