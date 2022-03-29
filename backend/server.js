@@ -169,27 +169,9 @@ app.route('/api/media/:imdbID').get((req, res) => {
   getMedia.getMedia(req, res);
 });
 
-// Retrieve movies from the database based on page number with limit of 10
-//app.route('/api/media/page/:page').get((req, res) => {
-//  getMedia.getMediaPage(req, res);
-//});
-
-// Retrieve the amount of movies in the database
-//app.route('/api/media-count').get((req, res) => {
- // getMedia.getMediaCount(req, res);
-//});
-
-//app.route('/api/media-categories').get((req, res) => {
- // getMedia.getMediaCategories(req, res);
-//});
-
-//app.route('/api/media-categories/:category').get((req, res) => {
- // getMedia.getMediaByCategory(req, res);
-//});
-
-//app.route('/api/media-search/:search').get((req, res) => {
-//  //getMedia.search(req, res);
-//});
+app.route('/api/media-search/:search').get((req, res) => {
+  getMedia.search(req, res);
+});
 
 
 //
