@@ -1,6 +1,6 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const { expect, assert } = require('chai');
+const {expect, assert} = require('chai');
 
 chai.use(chaiHttp);
 
@@ -12,16 +12,16 @@ describe('Ratings Tests', () => {
   // Retrieve cookie
   // before((done) => {
   //   server.on('app_started', () => {
-  //     agent.post('/api/login')
-  //       .send({
-  //         username: 'johnnyman',
-  //         password: 'papadog',
-  //       })
-  //       .set('Content-Type', 'application/json')
-  //       .end((err, res) => {
-  //         expect(res).to.have.cookie('userId');
+  //     // agent.post('/api/login')
+  //     //   .send({
+  //     //     username: 'johnnyman',
+  //     //     password: 'papadog',
+  //     //   })
+  //     //   .set('Content-Type', 'application/json')
+  //     //   .end((err, res) => {
+  //     //     expect(res).to.have.cookie('userId');
   //         done();
-  //       });
+  //     //   });
   //   });
   // });
 
@@ -54,18 +54,6 @@ describe('Ratings Tests', () => {
     });
   });
 
-  describe('/GET valid avg rating', () => {
-    it('should get avg rating', (done) => {
-      var agentt = chai.request.agent(server)
-      agentt
-        .get('/api/media/tt5180504/ratings')
-        .end((err, res) => {
-          expect(res.status).to.equal(200);
-          done();
-        });
-    });
-  });
-
   describe('/GET all the media a user has rated on ', () => {
     it('should return 200 and all media if user is logged in', (done) => {
       agent
@@ -84,40 +72,6 @@ describe('Ratings Tests', () => {
         .get('/api/myratings')
         .end((err, res) => {
           expect(res).to.have.status(401);
-          done();
-        });
-    });
-  });
-
-  describe('/GET avg rating of invalid imdbID', () => {
-    it('should get nothing', (done) => {
-      chai.request(server)
-        .get('/api/media/DoesNotExist/ratings')
-        .end((err, res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body).to.deep.equal([]);
-          done();
-        });
-    });
-  });
-
-  describe('/GET a users rating for a media with valid credentials', () => {
-    it('should get the users rating', (done) => {
-      agent.get('/api/media/tt5180504/ratings/user')
-        .end((err, res) => {
-          expect(res.status).to.equal(200);
-          done();
-        });
-    });
-  });
-
-  describe('/GET a users rating for a media with invalid credentials', () => {
-    it('should not return a rating and return code 401', (done) => {
-      chai.request(server)
-        .get('/api/media/tt5180504/ratings/user')
-        .end((err, res) => {
-          expect(res).to.have.status(401);
-          assert.equal(res.text, "Can't GET rating, not logged in");
           done();
         });
     });
@@ -162,6 +116,50 @@ describe('Ratings Tests', () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           assert.equal(res.text, 'Error - Invalid Rating Value');
+          done();
+        });
+    });
+  });
+
+  describe('/GET valid avg rating', () => {
+    it('should get avg rating', (done) => {
+      chai.request(server)
+        .get('/api/media/tt5180504/ratings')
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          done();
+        });
+    });
+  });
+
+  describe('/GET avg rating of invalid imdbID', () => {
+    it('should get nothing', (done) => {
+      chai.request(server)
+        .get('/api/media/DoesNotExist/ratings')
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          done();
+        });
+    });
+  });
+
+  describe('/GET a users rating for a media with valid credentials', () => {
+    it('should get the users rating', (done) => {
+      agent.get('/api/media/tt5180504/ratings/user')
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          done();
+        });
+    });
+  });
+
+  describe('/GET a users rating for a media with invalid credentials', () => {
+    it('should not return a rating and return code 401', (done) => {
+      chai.request(server)
+        .get('/api/media/tt5180504/ratings/user')
+        .end((err, res) => {
+          expect(res).to.have.status(401);
+          assert.equal(res.text, "Can't GET rating, not logged in");
           done();
         });
     });

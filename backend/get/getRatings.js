@@ -6,7 +6,7 @@ exports.getAvgRatings = (req, res) => {
   dbConnect.collection('Ratings')
     .aggregate([{
       $match: {
-        _id: req.params.imdbID.toString(),
+        imdbID: req.params.imdbID.toString(),
       },
     }, {
       $group: {
@@ -26,6 +26,8 @@ exports.getAvgRatings = (req, res) => {
     .toArray((err, result) => {
       if (err) {
         res.status(400).send(`Failed to find documents: ${err}`);
+      }else if(result.length===0){
+        res.status(400).send(`Rating does not exist`);
       } else {
         res.status(200).send(result);
       }
