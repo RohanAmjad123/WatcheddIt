@@ -18,7 +18,7 @@ exports.postComment = (req, res) => {
       .collection('CommentEvents')
       .insertOne({
         type: 'post',
-        commentID: new ObjectId(),
+        commentID: new ObjectId(req.body.commentID),
         data: {
           text: req.body.text,
           user: req.session.user.username,

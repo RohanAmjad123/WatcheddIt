@@ -25,9 +25,7 @@ describe('Post tests', () => {
       user: 'testuser123',
     }, (err) => {
       if (err) throw err;
-      // connect.closeConnection();
     });
-    // agent.close();
     done();
   });
 
@@ -49,6 +47,7 @@ describe('Post tests', () => {
       agent.post('/api/post/add')
         .set('Content-Type', 'application/json')
         .send({
+          postID: "123ae75910ebb643f5d9c270",
           title: 'test',
           description: 'test',
           user: 'testuser123',
@@ -135,11 +134,12 @@ describe('Post tests', () => {
     })
 
     it('should return 401 and zero posts if no user is logged in', (done) => {
-      chai.request(server)
+       const agentt = chai.request.agent(server);
+       agentt
         .get('/api/myvoted')
         .end((err, res) => {
           expect(res).to.have.status(401);
-          assert.equal(res.text, '', 'It should return zero posts')
+          assert.equal(res.text, 'You are currently not logged in', 'It should return zero posts')
           done();
         });
     });
@@ -239,6 +239,20 @@ describe('Post tests', () => {
         })
         .end((err, res) => {
           expect(res).to.have.status(400);
+          done();
+        });
+    });
+
+    // Test Case 17
+    it('Delete a valid post', (done) => {
+
+      agent.post('/api/post/delete/123ae75910ebb643f5d9c270')
+        .set('ContentType', 'application/json')
+        .send({
+          text: 'testing for delete comment',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(200);
           done();
         });
     });
