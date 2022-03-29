@@ -1,14 +1,13 @@
 const connect = require('../database');
 
 exports.getMyVoted = (req, res) => {
-    if (!req.session.user && !req.session.admin)
-    {
-      res.status(401).send('');
-      return;
-    }
-    var { username } = req.session.user;
-    if (username == null)
-    username  = req.session.admin;
+  console.log(req.session.user)
+  if (!req.session.user)
+ {
+    res.status(401).send('You are currently not logged in');
+    return;
+ }
+  var username = req.session.user.username
 
   console.log(`The user's username is: ${username}`);
   const dbConnect = connect.getDb();
@@ -30,6 +29,7 @@ exports.getMyVoted = (req, res) => {
       res.send(items);
     })
     .catch((err) => {
+      res.send([]);
       console.error(`Failed to find documents: ${err}`);
     });
 };

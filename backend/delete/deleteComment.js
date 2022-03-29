@@ -2,7 +2,7 @@ const { ObjectId } = require('mongodb');
 const connect = require('../database');
 
 exports.deleteComment = (req, res) => {
-  if (req.session.user || req.session.admin) {
+  if (req.session.user) {
     const dbConnect = connect.getDb();
 
     dbConnect

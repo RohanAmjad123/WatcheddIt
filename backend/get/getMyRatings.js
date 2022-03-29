@@ -1,15 +1,12 @@
 const connect = require('../database');
 
 exports.getMyRatings = (req, res) => {
-  if (!req.session.user && !req.session.admin)
-  {
+  if (!req.session.user)
+ {
     res.status(401).send('You are currently not logged in');
     return;
-  }
-  var { username } = req.session.user;
-  if (username == null)
-  username  = req.session.admin;
-  console.log(`The user's username is: ${username}`);
+ }
+  var username = req.session.user.username
   const dbConnect = connect.getDb();
   dbConnect.collection('Ratings')
     .aggregate([{
@@ -29,6 +26,7 @@ exports.getMyRatings = (req, res) => {
       res.send(items);
     })
     .catch((err) => {
+      res.send([]);
       console.error(`Failed to find documents: ${err}`);
     });
 };

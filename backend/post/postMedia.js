@@ -1,9 +1,8 @@
 const connect = require('../database');
 
 exports.postMedia = (req, res) => {
-    if (req.session.admin) {
-        const dbConnect = connect.getDb();
-
+  if (req.session.user && req.session.user.type === 'admin' ) {
+    const dbConnect = connect.getDb();
         dbConnect
             .collection('Media')
             .insertOne({
