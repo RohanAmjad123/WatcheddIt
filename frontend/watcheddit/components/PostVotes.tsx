@@ -5,7 +5,7 @@ import { Post } from '../interfaces/index'
 
 export default function PostVotes({ votes }: { votes: Post["votes"] }) {
     return (
-        <Grid item container direction="row" pt={2}>
+        <Grid item container direction="row">
             <Grid item>
                 <IconButton>
                     <ArrowUpwardRoundedIcon />

@@ -1,14 +1,17 @@
 const connect = require('../database');
 
-exports.getMyRatings = (req, res) => {
+exports.getMyVoted = (req, res) => {
+  console.log(req.session.user)
   if (!req.session.user)
  {
     res.status(401).send('You are currently not logged in');
     return;
  }
   var username = req.session.user.username
+
+  console.log(`The user's username is: ${username}`);
   const dbConnect = connect.getDb();
-  dbConnect.collection('Ratings')
+  dbConnect.collection('PostVotes')
     .aggregate([{
       $match: {
         username,
@@ -16,8 +19,8 @@ exports.getMyRatings = (req, res) => {
     }, {
       $project: {
         _id: 0,
-        imdbID: 1,
-        rating: 1,
+        vote: 1,
+        postID: 1,
       },
     }])
     .toArray()

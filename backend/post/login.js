@@ -29,8 +29,8 @@ exports.login = (req, res) => {
         // A valid password hash match has been found
         if (result.type === 'admin') {
           console.log('user is admin');
-          req.session.admin = result;
-          res.json(req.session.admin);
+          req.session.user = result;
+          res.json(req.session.user);
         } else {
           console.log('user is regular user');
           req.session.user = result;

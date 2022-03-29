@@ -51,6 +51,16 @@ describe('comment test', () => {
       });
   });
 
+    // Test Case 22
+    it('/GET comments for valid postId with comments with limit 100', (done) => {
+      agent.get('/api/comment/623ae6a310ebb643f5d9c26e/1')
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          assert.isBelow(res.body.length, 100, 'It should return <= 100 comment')
+          done();
+        });
+    });
+
   // Test Case 23
   it('/GET comments for postId with incorrect length', (done) => {
     agent.get('/api/comment/12345678abc')
@@ -60,6 +70,8 @@ describe('comment test', () => {
         done();
       });
   });
+
+  
 
   // Test Case 24
   it('/GET comments for postId not a hex value', (done) => {
