@@ -39,7 +39,6 @@ export default function PostCard({ post }: { post: Post }) {
         const postDeleteData = {
             user: post.user,
             imdbID: post.imdbID,
-            votes: post.votes
         }
 
         console.log(postDeleteData)
@@ -110,7 +109,7 @@ export default function PostCard({ post }: { post: Post }) {
                     </Link>
                     <Grid item container direction="row" alignItems="center" pt={2}>
                         <Grid item>
-                            <PostVotes votes={post.votes} />
+                            <PostVotes postID={post._id} />
                         </Grid>
                         <Grid item xs />
                         {userButtons()}

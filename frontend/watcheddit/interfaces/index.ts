@@ -4,10 +4,12 @@ export interface Post {
     description: string,
     user: string,
     imdbID: string
-    votes: {
-        upvotes: number,
-        downvotes: number
-    },
+}
+
+export interface Vote {
+    _id: string,
+    upVote: number,
+    downVote: number
 }
 
 export interface Comment {
@@ -36,5 +38,9 @@ export interface User {
     ratings: {
         imdbID: string,
         rating: number
+    }[],
+    votes: {
+        postID: string,
+        vote: boolean
     }[]
 }
