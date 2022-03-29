@@ -112,7 +112,7 @@ export default function CommentCard({ comment }: { comment: Comment }) {
                                     <Button variant="contained" onClick={handleEditFormSubmit}>Save</Button>
                                 </Grid>
                                 <Grid item>
-                                    <Button variant="outlined" onClick={closeEdit}>Cancel</Button>
+                                    <Button color="success" variant="outlined" onClick={closeEdit}>Cancel</Button>
                                 </Grid>
                             </Grid>
                         </Grid>
