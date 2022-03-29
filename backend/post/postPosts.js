@@ -10,7 +10,7 @@ exports.postPost = (req, res) => {
       .collection('PostEvents')
       .insertOne({
         type: 'post',
-        postID: ObjectId(),
+        postID: ObjectId(req.body.postID),
         data: req.body,
         user: req.session.user.username,
         timestamp: new Date(),

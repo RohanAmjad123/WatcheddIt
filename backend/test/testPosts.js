@@ -25,9 +25,7 @@ describe('Post tests', () => {
       user: 'testuser123',
     }, (err) => {
       if (err) throw err;
-      // connect.closeConnection();
     });
-    // agent.close();
     done();
   });
 
@@ -49,6 +47,7 @@ describe('Post tests', () => {
       agent.post('/api/post/add')
         .set('Content-Type', 'application/json')
         .send({
+          postID: "123ae75910ebb643f5d9c270",
           title: 'test',
           description: 'test',
           user: 'testuser123',
@@ -240,6 +239,20 @@ describe('Post tests', () => {
         })
         .end((err, res) => {
           expect(res).to.have.status(400);
+          done();
+        });
+    });
+
+    // Test Case 17
+    it('Delete a valid post', (done) => {
+
+      agent.post('/api/post/delete/123ae75910ebb643f5d9c270')
+        .set('ContentType', 'application/json')
+        .send({
+          text: 'testing for delete comment',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(200);
           done();
         });
     });
