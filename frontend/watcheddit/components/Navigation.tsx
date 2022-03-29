@@ -1,24 +1,25 @@
-import {AppBar, CardMedia} from '@mui/material';
-import {styled} from '@mui/material/styles';
-import {Toolbar} from '@mui/material';
-import {Grid} from '@mui/material';
-import {Typography} from '@mui/material';
+import { AppBar, CardMedia } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { Toolbar } from '@mui/material';
+import { Grid } from '@mui/material';
+import { Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import Link from "next/link";
-import { Button } from "@mui/material";
-import { useAppSelector } from "../app/hooks";
-import { useAppDispatch } from "../app/hooks";
-import { logoutUser } from "../app/actions/logoutUser"
+import {Button} from "@mui/material";
+import {useAppSelector} from "../app/hooks";
+import {useAppDispatch} from "../app/hooks";
+import {logoutUser} from "../app/actions/logoutUser"
 import LogoutIcon from "@mui/icons-material/Logout"
-import {Menu, MenuItem, ListItemIcon, ListItemText, Tooltip, IconButton, Avatar} from '@mui/material'
+import { Menu, MenuItem, ListItemIcon, ListItemText, Tooltip, IconButton, Avatar } from '@mui/material'
 import React from 'react';
-import {useState} from 'react'
+import { useState } from 'react'
 import axios from "axios";
+import SettingsIcon from '@mui/icons-material/Settings';
 
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 
-const Search = styled('div')(({theme}) => ({
+const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     marginRight: theme.spacing(2),
@@ -30,7 +31,7 @@ const Search = styled('div')(({theme}) => ({
     },
 }));
 
-const SearchIconWrapper = styled('div')(({theme}) => ({
+const SearchIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 2),
     height: '100%',
     position: 'absolute',
@@ -41,7 +42,7 @@ const SearchIconWrapper = styled('div')(({theme}) => ({
     color: "grey"
 }));
 
-const StyledInputBase = styled(InputBase)(({theme}) => ({
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
         // vertical padding + font size from searchIcon
@@ -93,16 +94,23 @@ export default function Navigation() {
         } else {
             return (
                 <React.Fragment>
+                    {userState.type === 'admin' &&
+                        <Link href="/manage" passHref>
+                            <IconButton>
+                                <SettingsIcon />
+                            </IconButton>
+                        </Link>
+                    }
                     <Tooltip title="Account settings">
                         <IconButton
                             onClick={handleClick}
                             size="small"
-                            sx={{ml: 2}}
+                            sx={{ ml: 2 }}
                             aria-controls={open ? 'account-menu' : undefined}
                             aria-haspopup="true"
                             aria-expanded={open ? 'true' : undefined}
                         >
-                            <Avatar sx={{width: 32, height: 32}}>{userState.username.charAt(0)}</Avatar>
+                            <Avatar sx={{ width: 32, height: 32 }}>{userState.username.charAt(0)}</Avatar>
                         </IconButton>
                     </Tooltip>
                     <Menu
@@ -115,7 +123,7 @@ export default function Navigation() {
                         <MenuItem>
                             <Button onClick={logout} color="error">
                                 <ListItemIcon>
-                                    <LogoutIcon/>
+                                    <LogoutIcon />
                                 </ListItemIcon>
                                 <ListItemText>
                                     <Typography>Log out</Typography>
@@ -129,11 +137,12 @@ export default function Navigation() {
     }
     const [data, setData] = useState([]);
     const [searchVisible, setSearchVisibility] = useState<boolean>(true);
-    let inputHandler = (e: any) => {
-    if(e.target.value.length===0){
-    return
-    }
-        axios.get('http://localhost:3000/api/media-search/' + e.target.value)
+  
+    const inputHandler = (e: any) => {
+        if (e.target.value.length === 0) {
+            return
+        }
+        axios.get(`http://localhost:3000/api/media-search/${e.target.value}`)
             .then((res) => {
                 console.log(res)
                 setData(res.data)
@@ -147,6 +156,7 @@ export default function Navigation() {
     };
 
     function hideSearch() {
+        setData([])
         setSearchVisibility(false)
     }
 
@@ -155,29 +165,31 @@ export default function Navigation() {
     }
 
     return (
-        <AppBar sx={{ backgroundColor: 'white' }} position='sticky'>
+        <AppBar sx={{backgroundColor: 'white'}} position='sticky'>
             <Toolbar>
                 <Grid container direction="row">
                     <Grid item justifyContent="center" direction="column" display="flex">
                         <Link href="/" passHref>
-                            <Typography sx={{ color: 'black' }}>Watcheddit</Typography>
+                            <Typography sx={{color: 'black'}}>Watcheddit</Typography>
                         </Link>
                     </Grid>
                     <ClickAwayListener onClickAway={hideSearch}>
                         <Grid item>
                             <Search onChange={inputHandler} onClick={showSearch}>
                                 <SearchIconWrapper>
-                                    <SearchIcon/>
+                                    <SearchIcon />
                                 </SearchIconWrapper>
                                 <StyledInputBase
-                                    sx={{color: 'black'}}
+                                    sx={{ color: 'black' }}
                                     placeholder="Search"
-                                    inputProps={{'aria-label': 'search'}}
+                                    inputProps={{ 'aria-label': 'search' }}
                                 />
                             </Search>
                             <div style={{
                                 position: "absolute",
                                 background: "#242424",
+                                overflowY: "scroll",
+                                maxHeight: "400px",
                                 visibility: searchVisible ? "visible" : "hidden"
                             }}>
                                 {data.map((media: any) => {
@@ -185,7 +197,7 @@ export default function Navigation() {
                                         <Grid key={media.imdbID} container direction="row" height="100px" mb={3}>
                                             <Grid item height="100px" padding="1em">
                                                 <Link href={`/${encodeURIComponent(media.imdbID)}`} passHref>
-                                                    <CardMedia onClick={hideSearch} component="img" image={media.Poster} height="100px"/>
+                                                    <CardMedia onClick={hideSearch} component="img" image={media.Poster} height="100px" />
                                                 </Link>
                                             </Grid>
                                             <Grid item sm padding="1em">
@@ -212,7 +224,7 @@ export default function Navigation() {
                             </div>
                         </Grid>
                     </ClickAwayListener>
-                    <Grid sm item/>
+                    <Grid sm item />
                     {userButtons()}
                 </Grid>
             </Toolbar>
