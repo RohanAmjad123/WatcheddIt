@@ -20,16 +20,16 @@ describe('comment test', () => {
   });
 
   // Removes inserted documents
-  // after((done) => {
-  //   dbConnect = connect.getDb();
-  //   dbConnect.collection('CommentEvents').deleteMany({
-  //     user: 'johnnyman',
-  //   }, (err) => {
-  //     if (err) throw err;
-  //     // connect.closeConnection();
-  //     done();
-  //   });
-  // });
+  after((done) => {
+    dbConnect = connect.getDb();
+    dbConnect.collection('CommentEvents').deleteMany({
+      user: 'johnnyman',
+    }, (err) => {
+      if (err) throw err;
+      // connect.closeConnection();
+      done();
+    });
+  });
 
   // get userId cookie',
   it('should get a userId cookie', async () => {

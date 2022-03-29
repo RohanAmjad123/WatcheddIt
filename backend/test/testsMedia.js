@@ -123,4 +123,44 @@ describe('Media tests', () => {
         });
     });
   });
+
+  describe('/PUT a valid media', () => {
+    it('put a valid media', (done) => {
+      agent
+        .put('/api/media/update/test')
+        .set('Content-Type', 'application/json')
+        .send({
+          Title: 'updated',
+          Year: 'test',
+          Genre: 'test',
+          Plot: 'test',
+          Poster: 'https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg',
+          imdbID: 'test',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          done();
+        });
+    });
+  });
+
+  describe('/DELETE a valid media', () => {
+    it('delete a valid media', (done) => {
+      agent
+        .delete('/api/media/delete/test')
+        .set('Content-Type', 'application/json')
+        .send({
+          Title: 'test',
+          Year: 'test',
+          Genre: 'test',
+          Plot: 'test',
+          Poster: 'https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg',
+          imdbID: 'test',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          done();
+        });
+    });
+  });
 });

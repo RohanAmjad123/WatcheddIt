@@ -198,12 +198,12 @@ app.route('/api/media-search/:search').get((req, res) => {
 });
 
 // PUT media
-app.route('/api/post/update/:media').put((req, res) => {
+app.route('/api/media/update/:mediaId').put((req, res) => {
   putMedia.putMedia(req, res);
 });
 
 // DELETE media
-app.route('/api/post/delete/:mediaId').delete((req, res) => {
+app.route('/api/media/delete/:mediaId').delete((req, res) => {
   deleteMedia.deleteMedia(req, res);
 });
 
