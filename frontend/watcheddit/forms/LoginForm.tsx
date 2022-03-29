@@ -25,9 +25,10 @@ export default function LoginForm() {
     };
 
     const handleClick = async (event: any) => {
-        var username: string
-        var type: string
-        var ratings: User["ratings"]
+        let username: string
+        let type: string
+        let ratings: User["ratings"]
+        let votes: User['votes'] 
         var successfulLogin = false
 
         await axios.post('https://watcheddit-ljy5gpprra-uc.a.run.app/api/login', formValues, { withCredentials: true })
@@ -43,17 +44,28 @@ export default function LoginForm() {
             axios.get('https://watcheddit-ljy5gpprra-uc.a.run.app/api/myratings', { withCredentials: true })
                 .then((response) => {
                     ratings = response.data
-                    const dispatchValues = {
-                        username: username,
-                        type: type,
-                        ratings: ratings
-                    }
                     console.log(response)
-                    dispatch(loginUser(dispatchValues));
-                    router.push('/')
                 }, (error) => {
                     console.log(error)
                 })
+
+            axios.get('https://watcheddit-ljy5gpprra-uc.a.run.app/api/myvoted', { withCredentials: true })
+            .then((response) => {
+                console.log(response)
+                votes = response.data
+                const dispatchValues = {
+                    username: username,
+                    type: type,
+                    ratings: ratings,
+                    votes: votes
+                }
+                console.log(response)
+                dispatch(loginUser(dispatchValues));
+                router.push('/')
+            }, (err) => {
+                console.log(err)
+            })
+
         }
     }
 
