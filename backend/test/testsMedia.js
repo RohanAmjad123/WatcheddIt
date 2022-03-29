@@ -74,7 +74,7 @@ describe('Media tests', () => {
     });
 
     it('should return an error when retrieving a media with invalid imdbID', (done) => {
-      agent.get('/api/media/test')
+      agent.get('/api/media/bababooey')
         .end((err, res) => {
           expect(res).to.have.status(400);
           done();
