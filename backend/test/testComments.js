@@ -51,6 +51,16 @@ describe('comment test', () => {
       });
   });
 
+    // Test Case 22
+    it('/GET comments for valid postId with comments with limit 100', (done) => {
+      agent.get('/api/comment/623ae6a310ebb643f5d9c26e/1')
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          assert.isBelow(res.body.length, 100, 'It should return <= 100 comment')
+          done();
+        });
+    });
+
   // Test Case 23
   it('/GET comments for postId with incorrect length', (done) => {
     agent.get('/api/comment/12345678abc')
@@ -60,6 +70,8 @@ describe('comment test', () => {
         done();
       });
   });
+
+  
 
   // Test Case 24
   it('/GET comments for postId not a hex value', (done) => {
@@ -78,6 +90,7 @@ describe('comment test', () => {
       .set('Content-Type', 'application/json')
       .send({
         text: 'testing for case 24',
+        commentID: "123d71eb0af2e4f21b42a701"
       })
       .end((err, res) => {
         expect(res).to.have.status(200);
@@ -86,7 +99,7 @@ describe('comment test', () => {
   });
 
   // Test Case 26
-  it('Posts acomment with a valid session to an invalid postId', (done) => {
+  it('Posts a comment with a valid session to an invalid postId', (done) => {
     agent
       .post('/api/comment/623be831862ea136b669a/add')
       .set('Content-Type', 'application/json')
@@ -137,6 +150,34 @@ describe('comment test', () => {
       })
       .end((err, res) => {
         expect(res).to.have.status(404);
+        done();
+      });
+  });
+
+  // Test Case 30
+  it('Delete a valid comment', (done) => {
+
+    agent.post('/api/comment/delete/123d71eb0af2e4f21b42a701')
+      .set('ContentType', 'application/json')
+      .send({
+        text: 'testing for delete comment',
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        done();
+      });
+  });
+
+  // Test Case 31
+  it('Delete an invalid comment', (done) => {
+
+    agent.post('/api/comment/delete/323d71eb0af2e4f21b42a701')
+      .set('ContentType', 'application/json')
+      .send({
+        text: 'testing for delete comment',
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(200);
         done();
       });
   });

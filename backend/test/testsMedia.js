@@ -72,7 +72,18 @@ describe('Media tests', () => {
           done();
         });
     });
+
+    it('should return an error when retrieving a media with invalid imdbID', (done) => {
+      agent.get('/api/media/bababooey')
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          done();
+        });
+    });
+
+
   });
+  
 
   describe('/POST a valid media with valid session', () => {
     it('Posts a valid media with a valid session', (done) => {
@@ -108,6 +119,46 @@ describe('Media tests', () => {
         })
         .end((err, res) => {
           expect(res).to.have.status(401);
+          done();
+        });
+    });
+  });
+
+  describe('/PUT a valid media', () => {
+    it('put a valid media', (done) => {
+      agent
+        .put('/api/media/update/test')
+        .set('Content-Type', 'application/json')
+        .send({
+          Title: 'updated',
+          Year: 'test',
+          Genre: 'test',
+          Plot: 'test',
+          Poster: 'https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg',
+          imdbID: 'test',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          done();
+        });
+    });
+  });
+
+  describe('/DELETE a valid media', () => {
+    it('delete a valid media', (done) => {
+      agent
+        .delete('/api/media/delete/test')
+        .set('Content-Type', 'application/json')
+        .send({
+          Title: 'test',
+          Year: 'test',
+          Genre: 'test',
+          Plot: 'test',
+          Poster: 'https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg',
+          imdbID: 'test',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(200);
           done();
         });
     });

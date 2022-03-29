@@ -15,6 +15,7 @@ const getMedia = require('./get/getMedia');
 const getRatings = require('./get/getRatings');
 const getPostVote = require('./get/getPostVotes');
 const getCommentVote = require('./get/getCommentVotes');
+const myVotedPosts = require('./get/getMyVoted');
 
 const postMedia = require('./post/postMedia');
 const postComments = require('./post/postComments');
@@ -138,6 +139,12 @@ app.route('/api/media/:imdbID/post/:postID/').get((req, res) => {
   getPosts.getPost(req, res);
 });
 
+// GET all the posts I voted on
+
+app.route('/api/myvoted').get((req, res) => {
+  myVotedPosts.getMyVoted(req, res);
+})
+
 // PUT post
 app.route('/api/post/update/:postId').put((req, res) => {
   putPost.postPost(req, res);
@@ -191,12 +198,12 @@ app.route('/api/media-search/:search').get((req, res) => {
 });
 
 // PUT media
-app.route('/api/post/update/:media').put((req, res) => {
+app.route('/api/media/update/:mediaId').put((req, res) => {
   putMedia.putMedia(req, res);
 });
 
 // DELETE media
-app.route('/api/post/delete/:mediaId').delete((req, res) => {
+app.route('/api/media/delete/:mediaId').delete((req, res) => {
   deleteMedia.deleteMedia(req, res);
 });
 
