@@ -135,11 +135,12 @@ describe('Post tests', () => {
     })
 
     it('should return 401 and zero posts if no user is logged in', (done) => {
-      chai.request(server)
+       const agentt = chai.request.agent(server);
+       agentt
         .get('/api/myvoted')
         .end((err, res) => {
           expect(res).to.have.status(401);
-          assert.equal(res.text, '', 'It should return zero posts')
+          assert.equal(res.text, 'You are currently not logged in', 'It should return zero posts')
           done();
         });
     });

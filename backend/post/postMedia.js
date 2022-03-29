@@ -1,7 +1,7 @@
 const connect = require('../database');
 
 exports.postMedia = (req, res) => {
-  if (req.session.admin) {
+  if (req.session.user && req.session.user.type == 'admin' ) {
     const dbConnect = connect.getDb();
 
     dbConnect
