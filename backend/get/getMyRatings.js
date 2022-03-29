@@ -1,10 +1,14 @@
 const connect = require('../database');
 
 exports.getMyRatings = (req, res) => {
-  const { username } = req.session.user;
-  if (username == null) {
-    res.status(400).send('You are currently not logged in');
+  if (!req.session.user && !req.session.admin)
+  {
+    res.status(401).send('You are currently not logged in');
+    return;
   }
+  var { username } = req.session.user;
+  if (username == null)
+  username  = req.session.admin;
   console.log(`The user's username is: ${username}`);
   const dbConnect = connect.getDb();
   dbConnect.collection('Ratings')

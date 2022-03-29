@@ -1,11 +1,15 @@
 const connect = require('../database');
 
 exports.getMyVoted = (req, res) => {
-  var { username } = req.session.user;
-  if (username == null) username = req.session.admin
-  if (username == null) {
-    res.status(400).send('You are currently not logged in');
-  }
+    if (!req.session.user && !req.session.admin)
+    {
+      res.status(401).send('');
+      return;
+    }
+    var { username } = req.session.user;
+    if (username == null)
+    username  = req.session.admin;
+
   console.log(`The user's username is: ${username}`);
   const dbConnect = connect.getDb();
   dbConnect.collection('PostVotes')
@@ -16,8 +20,8 @@ exports.getMyVoted = (req, res) => {
     }, {
       $project: {
         _id: 0,
-        type: 1,
-        post: 1,
+        vote: 1,
+        postID: 1,
       },
     }])
     .toArray()
