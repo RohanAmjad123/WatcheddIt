@@ -15,7 +15,7 @@ const getMedia = require('./get/getMedia');
 const getRatings = require('./get/getRatings');
 const getPostVote = require('./get/getPostVotes');
 const getCommentVote = require('./get/getCommentVotes');
-const myVotedPosts = require('./get/getMyVoted.js');
+const myVotedPosts = require('./get/getMyVoted');
 
 const postMedia = require('./post/postMedia');
 const postComments = require('./post/postComments');
@@ -142,7 +142,7 @@ app.route('/api/media/:imdbID/post/:postID/').get((req, res) => {
 // GET all the posts I voted on
 
 app.route('/api/myvoted').get((req, res) => {
-  getMyVoted.getMyVoted(req, res);
+  myVotedPosts.getMyVoted(req, res);
 })
 
 // PUT post
