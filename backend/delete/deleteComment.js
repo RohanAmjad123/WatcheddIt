@@ -17,7 +17,15 @@ exports.deleteComment = (req, res) => {
         },
         user: req.session.user.username,
         timestamp: new Date(),
-      });
+      }, (err) => {
+        if (err) {
+          res.status(400).send('Error deleting')
+          return;
+        } else{
+          console.log('doc deleted')
+        }
+        }      
+    );
 
     res.sendStatus(200);
   } else {

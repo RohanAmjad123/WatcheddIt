@@ -55,6 +55,7 @@ describe('Post Voting Tests', () => {
   });
 
   describe('/GET valid total votes', () => {
+    // Test Case 28
     it('should get total votes', (done) => {
       chai.request(server)
         .get('/api/post/623ae6a310ebb643f5d9c26e/voting')
@@ -66,6 +67,7 @@ describe('Post Voting Tests', () => {
   });
 
   describe('/GET total votes of invalid postID', () => {
+    // Test Case 29
     it('should get nothing', (done) => {
       chai.request(server)
         .get('/api/post/DoesNotExist/voting')
@@ -78,6 +80,7 @@ describe('Post Voting Tests', () => {
   });
 
   describe('/GET a users vote for a post with valid credentials', () => {
+    // Test Case 30
     it('should get the users vote', (done) => {
       agent.get('/api/post/623ae6a310ebb643f5d9c26e/voting/user')
         .end((err, res) => {
@@ -88,6 +91,7 @@ describe('Post Voting Tests', () => {
   });
 
   describe('/GET a users vote for a post with invalid credentials', () => {
+    // Test Case 31
     it('should not return a vote and return code 401', (done) => {
       chai.request(server)
         .get('/api/post/623ae6a310ebb643f5d9c26e/voting/user')
@@ -100,6 +104,7 @@ describe('Post Voting Tests', () => {
   });
 
   describe('/POST a user vote with valid credentials', () => {
+    // Test Case 32
     it('should post a user vote', (done) => {
       agent.post('/api/post/623ae6a310ebb643f5d9c26e/voting/user')
         .set('Content-Type', 'application/json')
@@ -114,6 +119,7 @@ describe('Post Voting Tests', () => {
   });
 
   describe('/POST a user vote with invalid credentials', () => {
+    // Test Case 33
     it('should not post a user vote and return code 401', (done) => {
       chai.request(server)
         .post('/api/post/623ae6a310ebb643f5d9c26e/voting/user')
@@ -129,6 +135,7 @@ describe('Post Voting Tests', () => {
   });
 
   describe('/POST an invalid user vote with valid credentials', () => {
+    // Test Case 34
     it('should not post a user vote and return code 401', (done) => {
       agent.post('/api/post/623ae6a310ebb643f5d9c26e/voting/user')
         .set('Content-Type', 'application/json')
@@ -144,6 +151,7 @@ describe('Post Voting Tests', () => {
   });
 
   describe('/PUT a user vote with valid credentials', () => {
+    // Test Case 35
     it('put user vote', (done) => {
       agent.put('/api/post/623ae6a310ebb643f5d9c26e/voting/user')
         .set('Content-Type', 'application/json')
@@ -158,6 +166,7 @@ describe('Post Voting Tests', () => {
   });
 
   describe('/PUT a user vote with invalid credentials', () => {
+    // Test Case 36
     it('should not put auser vote and return code 401 ', (done) => {
       chai.request(server)
         .put('/api/post/623ae6a310ebb643f5d9c26e/voting/user')
@@ -173,6 +182,7 @@ describe('Post Voting Tests', () => {
   });
 
   describe('/PUT invalid user vote with valid credentials', () => {
+    // Test Case 37
     it('should not put user vote and return code 400', (done) => {
       agent.put('/api/post/623ae6a310ebb643f5d9c26e/voting/user')
         .set('Content-Type', 'application/json')
@@ -188,6 +198,7 @@ describe('Post Voting Tests', () => {
   });
 
   describe('/DELETE a user vote with valid credentials', () => {
+    // Test Case 38
     it('should delete user vote', (done) => {
       agent.delete('/api/post/623ae6a310ebb643f5d9c26e/voting/user')
         .set('Content-Type', 'application/json')
@@ -199,6 +210,7 @@ describe('Post Voting Tests', () => {
   });
 
   describe('/DELETE a user vote with invalid credentials', () => {
+    // Test Case 39
     it('should not delete user vote and return code 401', (done) => {
       chai.request(server)
         .delete('/api/post/623ae6a310ebb643f5d9c26e/voting/user')

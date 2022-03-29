@@ -41,8 +41,9 @@ describe('Post tests', () => {
     });
   });
 
-  // Test Case 08
   describe('/POST Post a post with valid session and data', () => {
+
+    // Test Case 15
     it('should post a post and get code 200', (done) => {
       agent.post('/api/post/add')
         .set('Content-Type', 'application/json')
@@ -64,8 +65,9 @@ describe('Post tests', () => {
     });
   });
 
-  // Test Case 09
+
   describe('/POST Post a post with an invalid session but valid data', () => {
+    // Test Case 16
     it('should fail send code 401', (done) => {
       chai.request(server)
         .post('/api/post/add')
@@ -88,8 +90,9 @@ describe('Post tests', () => {
     });
   });
 
-  // Test Case 10
+
   describe('/GET all posts', () => {
+    // Test Case 17
     it('should return all posts', (done) => {
       chai.request(server)
         .get('/api/posts/')
@@ -100,8 +103,8 @@ describe('Post tests', () => {
     });
   });
 
-  // Test Case 11
   describe('/GET posts', () => {
+    // Test Case 18
     it('should retrieve a singular valid post', (done) => {
       chai.request(server)
         .get('/api/media/tt0816692/post/623aef7010ebb643f5d9c272')
@@ -112,8 +115,8 @@ describe('Post tests', () => {
         });
     });
 
-    // Test Case 12
 
+    // Test Case 19
     it('should retrieve all posts under a specific imdbID', (done) => {
       chai.request(server)
       .get('/api/posts/tt0816692')
@@ -123,6 +126,7 @@ describe('Post tests', () => {
       });
     })
 
+    // Test Case 20
     it('should return 200 and all posts a user has voted on', (done) => {
       agent
         .get('/api/myvoted')
@@ -133,6 +137,7 @@ describe('Post tests', () => {
         });
     })
 
+    // Test Case 21
     it('should return 401 and zero posts if no user is logged in', (done) => {
        const agentt = chai.request.agent(server);
        agentt
@@ -148,7 +153,7 @@ describe('Post tests', () => {
 
 
 
-  // // Test Case 12
+  // // Test Case 22
   describe('/GET a post with invalid IMDB id and valid postID', () => {
     it('should retrieve an empty object', (done) => {
       chai.request(server)
@@ -160,7 +165,7 @@ describe('Post tests', () => {
     });
   });
 
-  // Test Case 13
+  // Test Case 23
   describe('/GET a post with valid IMDB id and invalid postID', () => {
     it('should retrieve and empty object', (done) => {
       chai.request(server)
@@ -172,7 +177,7 @@ describe('Post tests', () => {
     });
   });
 
-  // Test Case 14
+  // Test Case 24
   describe('/PUT post', () => {
     it('should edit a valid post', (done) => {
       agent.put('/api/post/update/623aef7010ebb643f5d9c272')
@@ -196,7 +201,7 @@ describe('Post tests', () => {
         });
     });
 
-    // Test Case 15
+    // Test Case 25
     it('should fail when edit a valid post but with an invalid session', (done) => {
       chai.request(server)
         .put('/api/post/update/623aef7010ebb643f5d9c272')
@@ -220,7 +225,7 @@ describe('Post tests', () => {
         });
     });
 
-    // Test Case 16
+    // Test Case 26
     it('should fail when edit an invalid post but with valid post data', (done) => {
       agent.put('/api/post/update/623aef7010ebbabvf5d9c272')
         .set('Content-Type', 'application/json')
@@ -243,7 +248,7 @@ describe('Post tests', () => {
         });
     });
 
-    // Test Case 17
+    // Test Case 27
     it('Delete a valid post', (done) => {
 
       agent.post('/api/post/delete/123ae75910ebb643f5d9c270')

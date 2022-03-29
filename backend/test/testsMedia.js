@@ -42,6 +42,7 @@ describe('Media tests', () => {
     });
   });
 
+  
   describe('/GET userId cookie', () => {
     it('should get a userId cookie', async () => {
       const res = await agent.post('/api/login')
@@ -54,6 +55,7 @@ describe('Media tests', () => {
     });
   });
 
+  // Test Case 58
   describe('/GET all media', () => {
     it('should retrieve all media', (done) => {
       agent.get('/api/media/')
@@ -64,6 +66,7 @@ describe('Media tests', () => {
     });
   });
 
+   // Test Case 59
   describe('/GET a single media', () => {
     it('should retrieve a single media with valid imdbID', (done) => {
       agent.get('/api/media/tt0816692')
@@ -73,6 +76,7 @@ describe('Media tests', () => {
         });
     });
 
+     // Test Case 60
     it('should return an error when retrieving a media with invalid imdbID', (done) => {
       agent.get('/api/media/bababooey')
         .end((err, res) => {
@@ -85,6 +89,7 @@ describe('Media tests', () => {
   });
   
 
+   // Test Case 61
   describe('/POST a valid media with valid session', () => {
     it('Posts a valid media with a valid session', (done) => {
       agent.post('/api/media/add')
@@ -103,6 +108,7 @@ describe('Media tests', () => {
     });
   });
 
+   // Test Case 62
   describe('/POST a valid media with an invalid session', () => {
     it('Posts a valid media with an invalid session', (done) => {
       chai.request(server)
@@ -123,44 +129,4 @@ describe('Media tests', () => {
         });
     });
   });
-
-  describe('/PUT a valid media', () => {
-    it('put a valid media', (done) => {
-      agent
-        .put('/api/media/update/test')
-        .set('Content-Type', 'application/json')
-        .send({
-          Title: 'updated',
-          Year: 'test',
-          Genre: 'test',
-          Plot: 'test',
-          Poster: 'https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg',
-          imdbID: 'test',
-        })
-        .end((err, res) => {
-          expect(res).to.have.status(200);
-          done();
-        });
-    });
-  });
-
-  describe('/DELETE a valid media', () => {
-    it('delete a valid media', (done) => {
-      agent
-        .delete('/api/media/delete/test')
-        .set('Content-Type', 'application/json')
-        .send({
-          Title: 'test',
-          Year: 'test',
-          Genre: 'test',
-          Plot: 'test',
-          Poster: 'https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg',
-          imdbID: 'test',
-        })
-        .end((err, res) => {
-          expect(res).to.have.status(200);
-          done();
-        });
-    });
-  });
-});
+});    
