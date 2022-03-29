@@ -56,7 +56,8 @@ describe('Ratings Tests', () => {
 
   describe('/GET valid avg rating', () => {
     it('should get avg rating', (done) => {
-      chai.request(server)
+      var agentt = chai.request.agent(server)
+      agentt
         .get('/api/media/tt5180504/ratings')
         .end((err, res) => {
           expect(res.status).to.equal(200);
@@ -71,6 +72,18 @@ describe('Ratings Tests', () => {
         .get('/api/myratings')
         .end((err, res) => {
           expect(res).to.have.status(200);
+          assert.equal(res.body.length, 2, 'It should return an array of two movies')
+          done();
+        });
+    });
+  });
+
+  describe('/GET all the media a user has rated on ', () => {
+    it('should return 200 and all media if user is NOT logged in', (done) => {
+      chai.request(server)
+        .get('/api/myratings')
+        .end((err, res) => {
+          expect(res).to.have.status(401);
           done();
         });
     });
