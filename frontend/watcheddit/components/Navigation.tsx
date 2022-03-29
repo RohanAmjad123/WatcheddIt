@@ -137,7 +137,8 @@ export default function Navigation() {
     }
     const [data, setData] = useState([]);
     const [searchVisible, setSearchVisibility] = useState<boolean>(true);
-    let inputHandler = (e: any) => {
+    
+    const inputHandler = (e: any) => {
         if (e.target.value.length === 0) {
             return
         }
@@ -155,6 +156,7 @@ export default function Navigation() {
     };
 
     function hideSearch() {
+        setData([])
         setSearchVisibility(false)
     }
 
@@ -186,6 +188,8 @@ export default function Navigation() {
                             <div style={{
                                 position: "absolute",
                                 background: "#242424",
+                                overflowY: "scroll",
+                                maxHeight: "400px",
                                 visibility: searchVisible ? "visible" : "hidden"
                             }}>
                                 {data.map((media: any) => {
