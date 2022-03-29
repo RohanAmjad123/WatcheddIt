@@ -55,6 +55,7 @@ describe('Ratings Tests', () => {
   });
 
   describe('/GET valid avg rating', () => {
+    // Test Case 40
     it('should get avg rating', (done) => {
       var agentt = chai.request.agent(server)
       agentt
@@ -67,6 +68,7 @@ describe('Ratings Tests', () => {
   });
 
   describe('/GET all the media a user has rated on ', () => {
+    // Test Case 41
     it('should return 200 and all media if user is logged in', (done) => {
       agent
         .get('/api/myratings')
@@ -79,6 +81,7 @@ describe('Ratings Tests', () => {
   });
 
   describe('/GET all the media a user has rated on ', () => {
+    // Test Case 42
     it('should return 200 and all media if user is NOT logged in', (done) => {
       chai.request(server)
         .get('/api/myratings')
@@ -90,6 +93,7 @@ describe('Ratings Tests', () => {
   });
 
   describe('/GET avg rating of invalid imdbID', () => {
+    // Test Case 43
     it('should get nothing', (done) => {
       chai.request(server)
         .get('/api/media/DoesNotExist/ratings')
@@ -102,6 +106,7 @@ describe('Ratings Tests', () => {
   });
 
   describe('/GET a users rating for a media with valid credentials', () => {
+    // Test Case 44
     it('should get the users rating', (done) => {
       agent.get('/api/media/tt5180504/ratings/user')
         .end((err, res) => {
@@ -112,6 +117,7 @@ describe('Ratings Tests', () => {
   });
 
   describe('/GET a users rating for a media with invalid credentials', () => {
+    // Test Case 45
     it('should not return a rating and return code 401', (done) => {
       chai.request(server)
         .get('/api/media/tt5180504/ratings/user')
@@ -124,6 +130,7 @@ describe('Ratings Tests', () => {
   });
 
   describe('/POST a user rating with valid credentials', () => {
+    // Test Case 46
     it('should post a user rating', (done) => {
       agent.post('/api/media/tt5180504/ratings/user')
         .set('Content-Type', 'application/json')
@@ -138,6 +145,7 @@ describe('Ratings Tests', () => {
   });
 
   describe('/POST a user rating with invalid credentials', () => {
+    // Test Case 47
     it('should not post a user rating and return code 401', (done) => {
       chai.request(server)
         .post('/api/media/tt5180504/ratings/user')
@@ -153,6 +161,7 @@ describe('Ratings Tests', () => {
   });
 
   describe('/POST an invalid user rating', () => {
+    // Test Case 48
     it('should not post a user rating and return code 401', (done) => {
       agent.post('/api/media/tt5180504/ratings/user')
         .set('Content-Type', 'application/json')
@@ -168,6 +177,7 @@ describe('Ratings Tests', () => {
   });
 
   describe('/PUT a user rating with valid credentials', () => {
+    // Test Case 49
     it('put user rating', (done) => {
       agent.put('/api/media/tt5180504/ratings/user')
         .set('Content-Type', 'application/json')
@@ -182,6 +192,7 @@ describe('Ratings Tests', () => {
   });
 
   describe('/PUT a user rating with invalid credentials', () => {
+    // Test Case 50
     it('should not put auser rating and return code 401 ', (done) => {
       chai.request(server)
         .put('/api/media/tt5180504/ratings/user')
@@ -197,6 +208,7 @@ describe('Ratings Tests', () => {
   });
 
   describe('/PUT invalid user rating with valid credentials', () => {
+    // Test Case 51
     it('should not put user rating and return code 400', (done) => {
       agent.put('/api/media/tt5180504/ratings/user')
         .set('Content-Type', 'application/json')
@@ -212,6 +224,7 @@ describe('Ratings Tests', () => {
   });
 
   describe('/DELETE a user rating with valid credentials', () => {
+    // Test Case 52
     it('should delete user rating', (done) => {
       agent.delete('/api/media/tt5180504/ratings/user')
         .set('Content-Type', 'application/json')
@@ -223,6 +236,7 @@ describe('Ratings Tests', () => {
   });
 
   describe('/DELETE a user rating with invalid credentials', () => {
+    // Test Case 53
     it('should not delete user rating and return code 401', (done) => {
       chai.request(server)
         .delete('/api/media/tt5180504/ratings/user')

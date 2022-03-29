@@ -42,7 +42,7 @@ describe('comment test', () => {
     expect(res).to.have.cookie('userId');
   });
 
-  // Test Case 22
+  // Test Case 1
   it('/GET comments for valid postId with comments', (done) => {
     agent.get('/api/comment/623ae6a310ebb643f5d9c26e')
       .end((err, res) => {
@@ -51,7 +51,7 @@ describe('comment test', () => {
       });
   });
 
-    // Test Case 22
+    // Test Case 2
     it('/GET comments for valid postId with comments with limit 100', (done) => {
       agent.get('/api/comment/623ae6a310ebb643f5d9c26e/1')
         .end((err, res) => {
@@ -61,8 +61,8 @@ describe('comment test', () => {
         });
     });
 
-  // Test Case 23
-  it('/GET comments for postId with incorrect length', (done) => {
+  // Test Case 3
+  it('/GET comments for postId with incorrect postID', (done) => {
     agent.get('/api/comment/12345678abc')
       .end((err, res) => {
         expect(res).to.have.status(400);
@@ -73,7 +73,7 @@ describe('comment test', () => {
 
   
 
-  // Test Case 24
+  // Test Case 4
   it('/GET comments for postId not a hex value', (done) => {
     agent.get('/api/comment/623ae6a3nothex43f5d9c26e')
       .end((err, res) => {
@@ -83,7 +83,7 @@ describe('comment test', () => {
       });
   });
 
-  // Test Case 25
+  // Test Case 5
   it('Posts a comment with a valid session', (done) => {
     agent
       .post('/api/comment/623be831862ea136b669ae9e/add')
@@ -98,7 +98,7 @@ describe('comment test', () => {
       });
   });
 
-  // Test Case 26
+  // Test Case 6
   it('Posts a comment with a valid session to an invalid postId', (done) => {
     agent
       .post('/api/comment/623be831862ea136b669a/add')
@@ -112,7 +112,7 @@ describe('comment test', () => {
       });
   });
 
-  // Test Case 27
+  // Test Case 7
   it('Posts a valid comment with an invalid session', (done) => {
     chai.request.agent(server)
       .post('/api/comment/623be831862ea136b669ae9e/add')
@@ -127,7 +127,7 @@ describe('comment test', () => {
       });
   });
 
-  // Test Case 28
+  // Test Case 8
   it('PUT on a valid comment', (done) => {
     agent.put('/api/comment/update/623d71eb0af2e4f21b42a701')
       .set('ContentType', 'application/json')
@@ -140,7 +140,7 @@ describe('comment test', () => {
       });
   });
 
-  // Test Case 29
+  // Test Case 9
   it('PUT on an invalid comment', (done) => {
     agent.put('/api/comment/update/')
 
@@ -154,7 +154,7 @@ describe('comment test', () => {
       });
   });
 
-  // Test Case 30
+  // Test Case 10
   it('Delete a valid comment', (done) => {
 
     agent.post('/api/comment/delete/123d71eb0af2e4f21b42a701')
@@ -168,16 +168,16 @@ describe('comment test', () => {
       });
   });
 
-  // Test Case 31
+  // Test Case 11
   it('Delete an invalid comment', (done) => {
 
-    agent.post('/api/comment/delete/323d71eb0af2e4f21b42a701')
+    agent.post('/api/comment/delete/323d71eb0af2ess4f21b42a701')
       .set('ContentType', 'application/json')
       .send({
         text: 'testing for delete comment',
       })
       .end((err, res) => {
-        expect(res).to.have.status(200);
+        expect(res).to.have.status(500);
         done();
       });
   });

@@ -14,7 +14,6 @@ const getPosts = require('./get/getPosts');
 const getMedia = require('./get/getMedia');
 const getRatings = require('./get/getRatings');
 const getPostVote = require('./get/getPostVotes');
-const getCommentVote = require('./get/getCommentVotes');
 const myVotedPosts = require('./get/getMyVoted');
 
 const postMedia = require('./post/postMedia');
@@ -23,21 +22,16 @@ const postPosts = require('./post/postPosts');
 const postRatings = require('./post/postRatings');
 const postAccount = require('./post/postAccount');
 const postPostVote = require('./post/postPostVotes');
-const postCommentVote = require('./post/postCommentVotes');
 
 const putComment = require('./put/putComment');
 const putPost = require('./put/putPost');
-const putMedia = require('./put/putMedia');
 const putRating = require('./put/putRatings');
 const putPostVote = require('./put/putPostVotes');
-const putCommentVote = require('./put/putCommentVotes');
 
 const deleteComment = require('./delete/deleteComment');
 const deletePost = require('./delete/deletePost');
-const deleteMedia = require('./delete/deleteMedia');
 const deleteRating = require('./delete/deleteRatings');
 const deletePostVote = require('./delete/deletePostVotes');
-const deleteCommentVote = require('./delete/deleteCommentVotes');
 
 const store = new session.MemoryStore();
 
@@ -176,36 +170,27 @@ app.route('/api/media/:imdbID').get((req, res) => {
 });
 
 // Retrieve movies from the database based on page number with limit of 10
-app.route('/api/media/page/:page').get((req, res) => {
-  getMedia.getMediaPage(req, res);
-});
+//app.route('/api/media/page/:page').get((req, res) => {
+//  getMedia.getMediaPage(req, res);
+//});
 
 // Retrieve the amount of movies in the database
-app.route('/api/media-count').get((req, res) => {
-  getMedia.getMediaCount(req, res);
-});
+//app.route('/api/media-count').get((req, res) => {
+ // getMedia.getMediaCount(req, res);
+//});
 
-app.route('/api/media-categories').get((req, res) => {
-  getMedia.getMediaCategories(req, res);
-});
+//app.route('/api/media-categories').get((req, res) => {
+ // getMedia.getMediaCategories(req, res);
+//});
 
-app.route('/api/media-categories/:category').get((req, res) => {
-  getMedia.getMediaByCategory(req, res);
-});
+//app.route('/api/media-categories/:category').get((req, res) => {
+ // getMedia.getMediaByCategory(req, res);
+//});
 
-app.route('/api/media-search/:search').get((req, res) => {
-  getMedia.search(req, res);
-});
+//app.route('/api/media-search/:search').get((req, res) => {
+//  //getMedia.search(req, res);
+//});
 
-// PUT media
-app.route('/api/media/update/:mediaId').put((req, res) => {
-  putMedia.putMedia(req, res);
-});
-
-// DELETE media
-app.route('/api/media/delete/:mediaId').delete((req, res) => {
-  deleteMedia.deleteMedia(req, res);
-});
 
 //
 // Ratings ENDPOINTS
@@ -261,29 +246,6 @@ app.route('/api/post/:postID/voting/user').delete((req, res) => {
   deletePostVote.deletePostVote(req, res);
 });
 
-//
-// Comment Voting ENDPOINTS
-//
-
-app.route('/api/comments/:commentID/voting').get((req, res) => {
-  getCommentVote.getCommentVotes(req, res);
-});
-
-app.route('/api/comments/:commentID/voting/user').get((req, res) => {
-  getCommentVote.getUserCommentVote(req, res);
-});
-
-app.route('/api/comments/:commentID/voting/user').post((req, res) => {
-  postCommentVote.postCommentVote(req, res);
-});
-
-app.route('/api/comments/:commentID/voting/user').put((req, res) => {
-  putCommentVote.putCommentVote(req, res);
-});
-
-app.route('/api/comments/:commentID/voting/user').delete((req, res) => {
-  deleteCommentVote.deleteCommentVote(req, res);
-});
 
 // SIGN UP & LOGIN APIS
 
