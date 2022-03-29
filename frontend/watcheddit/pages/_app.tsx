@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <PersistGate loading={null} persistor={persistor}>
         <CssBaseline />
         <Navigation />
-        <div style={{ backgroundColor: '#EEEEEE', height: "100%" }}>
+        <div style={{ backgroundColor: '#EEEEEE', minHeight: "100vh" }}>
           <Container sx={{ paddingTop: 3 }}>
             <Component {...pageProps} />
           </Container>
