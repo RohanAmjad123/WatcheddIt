@@ -17,7 +17,7 @@ export default function Rate({ media }: { media: Media }) {
         if (newValue != null) {
             setValue(newValue)
 
-            await axios.post(`http://localhost:3000/api/media/${media.imdbID}/ratings/user`, { rating: newValue }, { withCredentials: true })
+            await axios.post(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/media/${media.imdbID}/ratings/user`, { rating: newValue }, { withCredentials: true })
                 .then((response) => {
 
                 }, (error) => {
@@ -36,7 +36,7 @@ export default function Rate({ media }: { media: Media }) {
         if (newValue != null) {
             setValue(newValue)
 
-            await axios.put(`http://localhost:3000/api/media/${media.imdbID}/ratings/user`, { rating: newValue }, { withCredentials: true })
+            await axios.put(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/media/${media.imdbID}/ratings/user`, { rating: newValue }, { withCredentials: true })
                 .then((response) => {
 
                 }, (error) => {

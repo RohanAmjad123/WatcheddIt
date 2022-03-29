@@ -22,7 +22,7 @@ export default function SignupForm () {
 
     const handleClick = (event: any) => {
         console.log(formValues);
-        axios.post('http://localhost:3000/api/signup', formValues)
+        axios.post('https://watcheddit-ljy5gpprra-uc.a.run.app/api/signup', formValues)
         .then((response) => {
             router.push('/login')
         }, (error) => {

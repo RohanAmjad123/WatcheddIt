@@ -30,7 +30,7 @@ export default function LoginForm() {
         var ratings: User["ratings"]
         var successfulLogin = false
 
-        await axios.post('http://localhost:3000/api/login', formValues, { withCredentials: true })
+        await axios.post('https://watcheddit-ljy5gpprra-uc.a.run.app/api/login', formValues, { withCredentials: true })
             .then((response) => {
                 username = response.data.username
                 type = response.data.type
@@ -40,7 +40,7 @@ export default function LoginForm() {
             })
             
         if (successfulLogin) {
-            axios.get('http://localhost:3000/api/myratings', { withCredentials: true })
+            axios.get('https://watcheddit-ljy5gpprra-uc.a.run.app/api/myratings', { withCredentials: true })
                 .then((response) => {
                     ratings = response.data
                     const dispatchValues = {
