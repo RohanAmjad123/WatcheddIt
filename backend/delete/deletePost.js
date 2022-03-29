@@ -2,7 +2,7 @@ const { ObjectId } = require('mongodb');
 const connect = require('../database');
 
 exports.deletePost = (req, res) => {
-  if (req.session.user) {
+  if (req.session.user || req.session.admin) {
     const dbConnect = connect.getDb();
     dbConnect
       .collection('PostEvents')

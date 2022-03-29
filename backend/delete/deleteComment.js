@@ -9,11 +9,11 @@ exports.deleteComment = (req, res) => {
       .collection('CommentEvents')
       .insertOne({
         type: 'delete',
-        commentID: ObjectId(req.params.commentId),
+        commentID: ObjectId(req.params.commentID),
         data: { 
           text: '<<deleted>>',
           user: req.session.user.username,
-          postID: ObjectId(req.params.CommentId)
+          postID: ObjectId(req.params.commentID)
         },
         user: req.session.user.username,
         timestamp: new Date(),
