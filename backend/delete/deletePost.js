@@ -1,14 +1,15 @@
+const { ObjectId } = require('mongodb');
 const connect = require('../database');
 
 exports.deletePost = (req, res) => {
-  if (req.session.user) {
+  if (req.session.user || req.session.admin) {
     const dbConnect = connect.getDb();
     dbConnect
       .collection('PostEvents')
       .insertOne({
         type: 'delete',
         data: req.body,
-        postID: req.params.postID,
+        postID: ObjectId(req.params.postID),
         user: req.session.user.username,
         timestamp: new Date(),
       });
