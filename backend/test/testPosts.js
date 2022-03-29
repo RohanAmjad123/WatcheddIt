@@ -51,7 +51,7 @@ describe('Post tests', () => {
         .send({
           title: 'test',
           description: 'test',
-          user: 'johnnyman',
+          user: 'testuser123',
           imdbID: 'tt5180504',
           votes: {
             upvotes: 0,
@@ -74,7 +74,7 @@ describe('Post tests', () => {
         .send({
           title: 'test',
           description: 'test',
-          user: 'johnnyman',
+          user: 'testuser123',
           imdbID: 'tt5180504',
           votes: {
             upvotes: 0,
