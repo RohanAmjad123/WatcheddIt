@@ -37,13 +37,15 @@ export default function CommentCard({ comment }: { comment: Comment }) {
             postID: comment.postID,
         }
 
+        console.log(comment._id);
+
         console.log(postDeleteData)
-        // axios.post(`http://localhost:3000/api/post/delete/${post._id}`, postDeleteData, { withCredentials: true })
-        //     .then((response) => {
-        //         console.log(response)
-        //      }, (err) => { 
-        //         console.log(err) 
-        //     });
+        axios.post(`http://localhost:3000/api/comment/delete/${comment._id}`, postDeleteData, { withCredentials: true })
+            .then((response) => {
+                console.log(response)
+             }, (err) => { 
+                console.log(err) 
+            });
     }
 
     const handleEditFormChange = (event: any) => {
