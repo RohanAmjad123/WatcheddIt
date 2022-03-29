@@ -1,15 +1,17 @@
 import SignupForm from "../forms/SignupForm";
-import { Typography, Grid } from "@mui/material"; 
+import { Typography, Grid, Paper } from "@mui/material";
 
-export default function signup () {
+export default function signup() {
     return (
-        <Grid container direction="column" spacing={3} mt={3}>
-            <Grid item>
-                <Typography variant="h4">Sign Up</Typography>
+        <Paper>
+            <Grid container direction="column" p={3} mt={3}>
+                <Grid item>
+                    <Typography variant="h4">Sign Up</Typography>
+                </Grid>
+                <Grid item pt={2}>
+                    <SignupForm />
+                </Grid>
             </Grid>
-            <Grid item>
-                <SignupForm />
-            </Grid>
-        </Grid>
+        </Paper>
     );
 }
