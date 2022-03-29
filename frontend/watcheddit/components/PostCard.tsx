@@ -39,11 +39,10 @@ export default function PostCard({ post }: { post: Post }) {
         const postDeleteData = {
             user: post.user,
             imdbID: post.imdbID,
-            votes: post.votes
         }
 
         console.log(postDeleteData)
-        axios.post(`http://localhost:3000/api/post/delete/${post._id}`, postDeleteData, { withCredentials: true })
+        axios.post(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/post/delete/${post._id}`, postDeleteData, { withCredentials: true })
             .then((response) => {
                 console.log(response)
             }, (err) => {
@@ -62,7 +61,7 @@ export default function PostCard({ post }: { post: Post }) {
     const handleEditFormSubmit = () => {
         console.log(editFormValues)
 
-        axios.put(`http://localhost:3000/api/post/update/${post._id}`, editFormValues, { withCredentials: true })
+        axios.put(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/post/update/${post._id}`, editFormValues, { withCredentials: true })
             .then((response) => {
                 setShowEdit(false)
             }, (err) => {
@@ -110,7 +109,7 @@ export default function PostCard({ post }: { post: Post }) {
                     </Link>
                     <Grid item container direction="row" alignItems="center" pt={2}>
                         <Grid item>
-                            <PostVotes votes={post.votes} />
+                            <PostVotes postID={post._id} />
                         </Grid>
                         <Grid item xs />
                         {userButtons()}

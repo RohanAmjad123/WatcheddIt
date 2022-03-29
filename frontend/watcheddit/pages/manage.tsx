@@ -105,9 +105,9 @@ export default function Manage() {
     }
 
     const handleAdd = () => {
-        axios.post('http://localhost:3000', media, { withCredentials: true })
+        axios.post('https://watcheddit-ljy5gpprra-uc.a.run.app/api/media/add', media, { withCredentials: true })
         .then((response) => {
-            console.log
+            setShowSearch(false)
         }, (err) => {
             console.log(err)
         })
@@ -115,11 +115,11 @@ export default function Manage() {
 
     return (
         <Paper>
-            <Grid container p={3} rowSpacing={2} direction="column">
+            <Grid container p={3} direction="column">
                 <Grid item>
                     <Typography variant="h4">Add Media</Typography>
                 </Grid>
-                <Grid item container direction="row">
+                <Grid item container pt={3} direction="row">
                     <Grid item>
                         <Search onChange={handleChange}>
                             <SearchIconWrapper>
@@ -136,7 +136,7 @@ export default function Manage() {
                         <Button onClick={handleClick} color="success" variant="contained">Search</Button>
                     </Grid>
                 </Grid>
-                <Grid item container>
+                <Grid item container pt={3} >
                     <Grid item>
                         {showSearch &&
                             <Grid container direction="row" alignItems="center">

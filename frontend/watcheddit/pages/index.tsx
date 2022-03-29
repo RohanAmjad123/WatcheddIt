@@ -64,9 +64,9 @@ export default function Home({ mediaList }: { mediaList: Media[] }) {
 }
 
 export async function getStaticProps() {
-  let res = await fetch("http://localhost:3000/api/media");
+  let res = await fetch("https://watcheddit-ljy5gpprra-uc.a.run.app/api/media");
   const mediaList = await res.json();
-  res = await fetch("http://localhost:3000/api/media-categories");
+  res = await fetch("https://watcheddit-ljy5gpprra-uc.a.run.app/api/media-categories");
   const categories = await res.json();
 
   return {

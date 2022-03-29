@@ -28,7 +28,7 @@ export default function CommentForm() {
             postID: postID
         }
 
-        axios.post(`http://localhost:3000/api/comment/${postID}/add`, comment, { withCredentials: true })
+        axios.post(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/comment/${postID}/add`, comment, { withCredentials: true })
             .then((response) => {
 
             },
