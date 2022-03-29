@@ -46,8 +46,8 @@ describe('Ratings Tests', () => {
     it('should get a userId cookie', async () => {
       const res = await agent.post('/api/login')
         .send({
-          username: 'johnnyman',
-          password: 'papadog',
+          username: 'testuser123',
+          password: 'pass',
         })
         .set('Content-Type', 'application/json');
       expect(res).to.have.cookie('userId');
@@ -60,6 +60,17 @@ describe('Ratings Tests', () => {
         .get('/api/media/tt5180504/ratings')
         .end((err, res) => {
           expect(res.status).to.equal(200);
+          done();
+        });
+    });
+  });
+
+  describe('/GET all the media a user has rated on ', () => {
+    it('should return 200 and all media if user is logged in', (done) => {
+      agent
+        .get('/api/myratings')
+        .end((err, res) => {
+          expect(res).to.have.status(200);
           done();
         });
     });
@@ -210,3 +221,5 @@ describe('Ratings Tests', () => {
     });
   });
 });
+
+
