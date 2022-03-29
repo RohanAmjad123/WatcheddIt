@@ -20,16 +20,16 @@ describe('comment test', () => {
   });
 
   // Removes inserted documents
-  after((done) => {
-    dbConnect = connect.getDb();
-    dbConnect.collection('CommentEvents').deleteMany({
-      user: 'johnnyman',
-    }, (err) => {
-      if (err) throw err;
-      // connect.closeConnection();
-      done();
-    });
-  });
+  // after((done) => {
+  //   dbConnect = connect.getDb();
+  //   dbConnect.collection('CommentEvents').deleteMany({
+  //     user: 'johnnyman',
+  //   }, (err) => {
+  //     if (err) throw err;
+  //     // connect.closeConnection();
+  //     done();
+  //   });
+  // });
 
   // get userId cookie',
   it('should get a userId cookie', async () => {
@@ -78,6 +78,7 @@ describe('comment test', () => {
       .set('Content-Type', 'application/json')
       .send({
         text: 'testing for case 24',
+        commentID: "123d71eb0af2e4f21b42a701"
       })
       .end((err, res) => {
         expect(res).to.have.status(200);
@@ -86,7 +87,7 @@ describe('comment test', () => {
   });
 
   // Test Case 26
-  it('Posts acomment with a valid session to an invalid postId', (done) => {
+  it('Posts a comment with a valid session to an invalid postId', (done) => {
     agent
       .post('/api/comment/623be831862ea136b669a/add')
       .set('Content-Type', 'application/json')
@@ -137,6 +138,34 @@ describe('comment test', () => {
       })
       .end((err, res) => {
         expect(res).to.have.status(404);
+        done();
+      });
+  });
+
+  // Test Case 30
+  it('Delete a valid comment', (done) => {
+
+    agent.post('/api/comment/delete/123d71eb0af2e4f21b42a701')
+      .set('ContentType', 'application/json')
+      .send({
+        text: 'testing for delete comment',
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        done();
+      });
+  });
+
+  // Test Case 31
+  it('Delete an invalid comment', (done) => {
+
+    agent.post('/api/comment/delete/323d71eb0af2e4f21b42a701')
+      .set('ContentType', 'application/json')
+      .send({
+        text: 'testing for delete comment',
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(200);
         done();
       });
   });
