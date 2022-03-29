@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "mocha ./test/**/*.js --exit",
+    "test": "nyc mocha ./test/**/*.js --exit",
     "start": "node server.js",
     "debug": "nodemon --inspect=0.0.0.0:3002 server.js"
   },
@@ -23,6 +23,7 @@
     "mongodb": "^4.4.0",
     "mongoose": "^6.2.7",
     "nodemon": "^2.0.15",
+    "nyc": "^15.1.0",
     "swagger-autogen": "^2.20.3",
     "swagger-ui-express": "^4.1.4"
   },

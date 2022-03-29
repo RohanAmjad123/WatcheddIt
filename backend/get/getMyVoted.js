@@ -3,7 +3,7 @@ const connect = require('../database');
 exports.getMyVoted = (req, res) => {
     if (!req.session.user && !req.session.admin)
     {
-      res.status(401).send('You are currently not logged in');
+      res.status(401).send('');
       return;
     }
     var { username } = req.session.user;

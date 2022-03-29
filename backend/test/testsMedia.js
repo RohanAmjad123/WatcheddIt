@@ -72,7 +72,18 @@ describe('Media tests', () => {
           done();
         });
     });
+
+    it('should return an error when retrieving a media with invalid imdbID', (done) => {
+      agent.get('/api/media/test')
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          done();
+        });
+    });
+
+
   });
+  
 
   describe('/POST a valid media with valid session', () => {
     it('Posts a valid media with a valid session', (done) => {
