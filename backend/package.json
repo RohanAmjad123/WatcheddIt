@@ -24,6 +24,7 @@
     "mongoose": "^6.2.7",
     "nodemon": "^2.0.15",
     "nyc": "^15.1.0",
+    "optionator": "^0.9.1",
     "swagger-autogen": "^2.20.3",
     "swagger-ui-express": "^4.1.4"
   },

@@ -122,7 +122,7 @@ describe('Post tests', () => {
         expect(res).to.have.status(200);
         done();
       });
-    }),
+    })
 
     it('should return 200 and all posts a user has voted on', (done) => {
       agent
@@ -132,7 +132,7 @@ describe('Post tests', () => {
           assert.equal(res.body.length, 2, 'It should return an array of two posts')
           done();
         });
-    }),
+    })
 
     it('should return 401 and zero posts if no user is logged in', (done) => {
       chai.request(server)
