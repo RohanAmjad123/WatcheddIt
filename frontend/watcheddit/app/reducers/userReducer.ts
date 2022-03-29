@@ -9,6 +9,12 @@ const initialUserState = {
             imdbID: "",
             rating: 1
         }
+    ],
+    votes: [
+        {
+            postID: "",
+            vote: true
+        }
     ]
 }
 
@@ -33,7 +39,8 @@ export function userReducer(state = initialUserState, action: AnyAction) {
             loggedIn: true,
             username: action.payload.username,
             type: action.payload.type,
-            ratings: action.payload.ratings
+            ratings: action.payload.ratings,
+            votes: action.payload.votes
         }
     }
     else if (action.type === 'user/addRating') {
@@ -54,5 +61,30 @@ export function userReducer(state = initialUserState, action: AnyAction) {
         }
 
     }
+    else if (action.type === 'user/addVote') {
+        return {
+            ...state,
+            votes: [
+                ...state.votes,
+                action.payload
+            ]
+        }
+    }  
+    else if (action.type === 'user/updateVote') {
+        return {
+            ...state,
+            votes: state.votes.map((v) => {
+                return v.postID == action.payload.postID ? {...v, vote: action.payload.vote} : v
+            })
+        }
+    }
+    else if (action.type === 'user/deleteVote') {
+        return {
+            ...state,
+            votes: state.votes.filter((v) => {
+                v.postID !== action.payload.postID
+            })
+        }
+    }  
     return state
 }
