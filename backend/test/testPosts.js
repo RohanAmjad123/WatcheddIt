@@ -22,7 +22,7 @@ describe('Post tests', () => {
   after((done) => {
     dbConnect = connect.getDb();
     dbConnect.collection('PostEvents').deleteMany({
-      user: 'johnnyman',
+      user: 'testuser123',
     }, (err) => {
       if (err) throw err;
       // connect.closeConnection();
@@ -51,7 +51,7 @@ describe('Post tests', () => {
         .send({
           title: 'test',
           description: 'test',
-          user: 'johnnyman',
+          user: 'testuser123',
           imdbID: 'tt5180504',
           votes: {
             upvotes: 0,
@@ -74,7 +74,7 @@ describe('Post tests', () => {
         .send({
           title: 'test',
           description: 'test',
-          user: 'johnnyman',
+          user: 'testuser123',
           imdbID: 'tt5180504',
           votes: {
             upvotes: 0,
