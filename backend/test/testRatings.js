@@ -57,7 +57,7 @@ describe('Ratings Tests', () => {
   describe('/GET valid avg rating', () => {
     // Test Case 40
     it('should get avg rating', (done) => {
-      var agentt = chai.request.agent(server)
+      const agentt = chai.request.agent(server);
       agentt
         .get('/api/media/tt5180504/ratings')
         .end((err, res) => {
@@ -74,7 +74,7 @@ describe('Ratings Tests', () => {
         .get('/api/myratings')
         .end((err, res) => {
           expect(res).to.have.status(200);
-          assert.equal(res.body.length, 2, 'It should return an array of two movies')
+          assert.equal(res.body.length, 2, 'It should return an array of two movies');
           done();
         });
     });
@@ -248,5 +248,3 @@ describe('Ratings Tests', () => {
     });
   });
 });
-
-

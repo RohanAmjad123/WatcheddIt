@@ -1,13 +1,12 @@
 const connect = require('../database');
 
 exports.getMyVoted = (req, res) => {
-  console.log(req.session.user)
-  if (!req.session.user)
- {
+  console.log(req.session.user);
+  if (!req.session.user) {
     res.status(401).send('You are currently not logged in');
     return;
- }
-  var username = req.session.user.username
+  }
+  const { username } = req.session.user;
 
   console.log(`The user's username is: ${username}`);
   const dbConnect = connect.getDb();

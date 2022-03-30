@@ -42,13 +42,12 @@ describe('Post tests', () => {
   });
 
   describe('/POST Post a post with valid session and data', () => {
-
     // Test Case 15
     it('should post a post and get code 200', (done) => {
       agent.post('/api/post/add')
         .set('Content-Type', 'application/json')
         .send({
-          postID: "123ae75910ebb643f5d9c270",
+          postID: '123ae75910ebb643f5d9c270',
           title: 'test',
           description: 'test',
           user: 'testuser123',
@@ -64,7 +63,6 @@ describe('Post tests', () => {
         });
     });
   });
-
 
   describe('/POST Post a post with an invalid session but valid data', () => {
     // Test Case 16
@@ -90,7 +88,6 @@ describe('Post tests', () => {
     });
   });
 
-
   describe('/GET all posts', () => {
     // Test Case 17
     it('should return all posts', (done) => {
@@ -115,16 +112,15 @@ describe('Post tests', () => {
         });
     });
 
-
     // Test Case 19
     it('should retrieve all posts under a specific imdbID', (done) => {
       chai.request(server)
-      .get('/api/posts/tt0816692')
-      .end((err, res) => {
-        expect(res).to.have.status(200);
-        done();
-      });
-    })
+        .get('/api/posts/tt0816692')
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          done();
+        });
+    });
 
     // Test Case 20
     it('should return 200 and all posts a user has voted on', (done) => {
@@ -132,26 +128,23 @@ describe('Post tests', () => {
         .get('/api/myvoted')
         .end((err, res) => {
           expect(res).to.have.status(200);
-          assert.equal(res.body.length, 2, 'It should return an array of two posts')
-          done();
-        });
-    })
-
-    // Test Case 21
-    it('should return 401 and zero posts if no user is logged in', (done) => {
-       const agentt = chai.request.agent(server);
-       agentt
-        .get('/api/myvoted')
-        .end((err, res) => {
-          expect(res).to.have.status(401);
-          assert.equal(res.text, 'You are currently not logged in', 'It should return zero posts')
+          assert.equal(res.body.length, 2, 'It should return an array of two posts');
           done();
         });
     });
 
-  })
-
-
+    // Test Case 21
+    it('should return 401 and zero posts if no user is logged in', (done) => {
+      const agentt = chai.request.agent(server);
+      agentt
+        .get('/api/myvoted')
+        .end((err, res) => {
+          expect(res).to.have.status(401);
+          assert.equal(res.text, 'You are currently not logged in', 'It should return zero posts');
+          done();
+        });
+    });
+  });
 
   // // Test Case 22
   describe('/GET a post with invalid IMDB id and valid postID', () => {
@@ -250,7 +243,6 @@ describe('Post tests', () => {
 
     // Test Case 27
     it('Delete a valid post', (done) => {
-
       agent.post('/api/post/delete/123ae75910ebb643f5d9c270')
         .set('ContentType', 'application/json')
         .send({

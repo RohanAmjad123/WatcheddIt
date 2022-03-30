@@ -42,7 +42,6 @@ describe('Media tests', () => {
     });
   });
 
-  
   describe('/GET userId cookie', () => {
     it('should get a userId cookie', async () => {
       const res = await agent.post('/api/login')
@@ -66,7 +65,7 @@ describe('Media tests', () => {
     });
   });
 
-   // Test Case 59
+  // Test Case 59
   describe('/GET a single media', () => {
     it('should retrieve a single media with valid imdbID', (done) => {
       agent.get('/api/media/tt0816692')
@@ -76,7 +75,7 @@ describe('Media tests', () => {
         });
     });
 
-     // Test Case 60
+    // Test Case 60
     it('should return an error when retrieving a media with invalid imdbID', (done) => {
       agent.get('/api/media/bababooey')
         .end((err, res) => {
@@ -84,12 +83,9 @@ describe('Media tests', () => {
           done();
         });
     });
-
-
   });
-  
 
-   // Test Case 61
+  // Test Case 61
   describe('/POST a valid media with valid session', () => {
     it('Posts a valid media with a valid session', (done) => {
       agent.post('/api/media/add')
@@ -108,7 +104,7 @@ describe('Media tests', () => {
     });
   });
 
-   // Test Case 62
+  // Test Case 62
   describe('/POST a valid media with an invalid session', () => {
     it('Posts a valid media with an invalid session', (done) => {
       chai.request(server)
@@ -129,4 +125,4 @@ describe('Media tests', () => {
         });
     });
   });
-});    
+});
