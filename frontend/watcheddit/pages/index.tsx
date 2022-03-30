@@ -66,13 +66,10 @@ export default function Home({ mediaList }: { mediaList: Media[] }) {
 export async function getStaticProps() {
   let res = await fetch("https://watcheddit-ljy5gpprra-uc.a.run.app/api/media");
   const mediaList = await res.json();
-  res = await fetch("https://watcheddit-ljy5gpprra-uc.a.run.app/api/media-categories");
-  const categories = await res.json();
 
   return {
     props: {
       mediaList,
-      categories
     }
   };
 }
