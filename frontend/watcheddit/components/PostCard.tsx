@@ -9,10 +9,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import React, { useEffect } from 'react'
 import axios from 'axios'
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 
 export default function PostCard({ post }: { post: Post }) {
     const userState = useAppSelector((state) => state)
     const [showEdit, setShowEdit] = useState(false)
+    const router = useRouter()
+    const { mediaID, postID } = router.query
 
     useEffect(() => {
         setShowEdit(false)
@@ -44,6 +47,7 @@ export default function PostCard({ post }: { post: Post }) {
         console.log(postDeleteData)
         axios.post(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/post/delete/${post._id}`, postDeleteData, { withCredentials: true })
             .then((response) => {
+                router.push(`/${mediaID}`)
                 console.log(response)
             }, (err) => {
                 console.log(err)
@@ -63,6 +67,7 @@ export default function PostCard({ post }: { post: Post }) {
 
         axios.put(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/post/update/${post._id}`, editFormValues, { withCredentials: true })
             .then((response) => {
+                router.push(`/${mediaID}/${postID}`)
                 setShowEdit(false)
             }, (err) => {
                 console.log(err)
@@ -109,7 +114,7 @@ export default function PostCard({ post }: { post: Post }) {
                     </Link>
                     <Grid item container direction="row" alignItems="center" pt={2}>
                         <Grid item>
-                            <PostVotes postID={post._id} />
+                            <PostVotes postId={post._id} />
                         </Grid>
                         <Grid item xs />
                         {userButtons()}

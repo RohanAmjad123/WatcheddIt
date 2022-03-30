@@ -7,15 +7,19 @@ import { useState, useEffect } from 'react'
 import { addVote } from '../app/actions/addVote'
 import { updateVote } from '../app/actions/updateVote'
 import { deleteVote } from '../app/actions/deleteVote'
+import { useRouter } from 'next/router'
 
 import React from 'react'
 import axios from 'axios'
 
-export default function PostVotes({ postID }: { postID: string }) {
+export default function PostVotes({ postId }: { postId: string }) {
     const userState = useAppSelector((state) => state)
+    const router = useRouter();
+    const { mediaID, postID } = router.query
+
     const dispatch = useAppDispatch()
     const [votes, setVotes] = useState<Vote>({
-        _id: postID,
+        _id: postId,
         upVote: 0,
         downVote: 0
     });
@@ -26,7 +30,7 @@ export default function PostVotes({ postID }: { postID: string }) {
             console.log(res.data)
             if (res.data !== "") {
                 setVotes({
-                    _id: postID,
+                    _id: postId,
                     upVote: res.data['upVote'],
                     downVote: res.data['downVote']
                 })
@@ -34,7 +38,7 @@ export default function PostVotes({ postID }: { postID: string }) {
         }, (err) => {
             console.log(err)
         })
-    }, [])
+    })
 
     const handleUpvoteClickNotVoted = () => {
         const vote = {
@@ -43,13 +47,14 @@ export default function PostVotes({ postID }: { postID: string }) {
 
         axios.post(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/post/${postID}/voting/user`, vote, { withCredentials: true })
         .then((res) => {
+            router.push(`/${mediaID}/${postID}`)
             console.log(res)
         }, (err) => {
             console.log(err)
         })
 
         dispatch(addVote({
-            postID: postID,
+            postID: postId,
             vote: true
         }))
     }
@@ -61,13 +66,14 @@ export default function PostVotes({ postID }: { postID: string }) {
 
         axios.post(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/post/${postID}/voting/user`, vote, { withCredentials: true })
         .then((res) => {
+            router.push(`/${mediaID}/${postID}`)
             console.log(res)
         }, (err) => {
             console.log(err)
         })
 
         dispatch(addVote({
-            postID: postID,
+            postID: postId,
             vote: false
         }))
     }
@@ -75,13 +81,14 @@ export default function PostVotes({ postID }: { postID: string }) {
     const handleUpvoteClickVotedUpvote = () => {
         axios.delete(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/post/${postID}/voting/user`, { withCredentials: true })
         .then((res) => {
+            router.push(`/${mediaID}/${postID}`)
             console.log(res)
         }, (err) => {
             console.log(err)
         })
 
         dispatch(deleteVote({
-            postID: postID,
+            postID: postId,
             vote: true
         }))
     }
@@ -93,13 +100,14 @@ export default function PostVotes({ postID }: { postID: string }) {
 
         axios.put(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/post/${postID}/voting/user`, vote, { withCredentials: true })
         .then((res) => {
+            router.push(`/${mediaID}/${postID}`)
             console.log(res)
         }, (err) => {
             console.log(err)
         })
 
         dispatch(updateVote({
-            postID: postID,
+            postID: postId,
             vote: false
         }))
     }
@@ -111,13 +119,14 @@ export default function PostVotes({ postID }: { postID: string }) {
 
         axios.put(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/post/${postID}/voting/user`, vote, { withCredentials: true })
         .then((res) => {
+            router.push(`/${mediaID}/${postID}`)
             console.log(res)
         }, (err) => {
             console.log(err)
         })
 
         dispatch(updateVote({
-            postID: postID,
+            postID: postId,
             vote: true
         }))
     }
@@ -125,13 +134,14 @@ export default function PostVotes({ postID }: { postID: string }) {
     const handleDownvoteClickVotedDownvote = () => {
         axios.delete(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/post/${postID}/voting/user`, { withCredentials: true })
         .then((res) => {
+            router.push(`/${mediaID}/${postID}`)
             console.log(res)
         }, (err) => {
             console.log(err)
         })
 
         dispatch(deleteVote({
-            postID: postID,
+            postID: postId,
             vote: true
         }))
     }
@@ -139,13 +149,13 @@ export default function PostVotes({ postID }: { postID: string }) {
     const userStateVote = () => {
         if (userState.loggedIn) {
             const userHasVoted = userState.votes.some(element => {
-                if (element.postID === postID) {
+                if (element.postID === postId) {
                     return true
                 }
             })
 
             const userVotedPost = userState.votes.find(element => {
-                return element.postID == postID
+                return element.postID == postId
             })
 
             if (userHasVoted && userVotedPost != undefined) {
