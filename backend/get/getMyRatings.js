@@ -1,12 +1,11 @@
 const connect = require('../database');
 
 exports.getMyRatings = (req, res) => {
-  if (!req.session.user)
- {
+  if (!req.session.user) {
     res.status(401).send('You are currently not logged in');
     return;
- }
-  var username = req.session.user.username
+  }
+  const { username } = req.session.user;
   const dbConnect = connect.getDb();
   dbConnect.collection('Ratings')
     .aggregate([{
