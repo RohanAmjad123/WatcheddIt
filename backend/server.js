@@ -52,7 +52,7 @@ connect.connect().then(() => {
 // connect.connectToWrite();
 
 app.use(cors({
-  origin: ['http://localhost:3001', 'https://watcheddit.netlify.app', 'https://watcheddit-kq8dwbzvg-rohanamjad123-gmailcom.vercel.app'],
+  origin: ['http://localhost:3001', 'https://watcheddit.netlify.app', 'https://watcheddit.vercel.app'],
   credentials: true,
 }));
 
