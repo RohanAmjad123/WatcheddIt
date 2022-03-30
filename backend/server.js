@@ -52,7 +52,7 @@ connect.connect().then(() => {
 // connect.connectToWrite();
 
 app.use(cors({
-  origin: 'http://localhost:3001',
+  origin: ['http://localhost:3001', 'https://watcheddit.netlify.app/'],
   credentials: true,
 }));
 
@@ -137,7 +137,7 @@ app.route('/api/media/:imdbID/post/:postID/').get((req, res) => {
 
 app.route('/api/myvoted').get((req, res) => {
   myVotedPosts.getMyVoted(req, res);
-})
+});
 
 // PUT post
 app.route('/api/post/update/:postId').put((req, res) => {
@@ -172,7 +172,6 @@ app.route('/api/media/:imdbID').get((req, res) => {
 app.route('/api/media-search/:search').get((req, res) => {
   getMedia.search(req, res);
 });
-
 
 //
 // Ratings ENDPOINTS
@@ -227,7 +226,6 @@ app.route('/api/post/:postID/voting/user').put((req, res) => {
 app.route('/api/post/:postID/voting/user').delete((req, res) => {
   deletePostVote.deletePostVote(req, res);
 });
-
 
 // SIGN UP & LOGIN APIS
 

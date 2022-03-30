@@ -10,22 +10,20 @@ exports.deleteComment = (req, res) => {
       .insertOne({
         type: 'delete',
         commentID: ObjectId(req.params.commentID),
-        data: { 
+        data: {
           text: '<<deleted>>',
           user: req.session.user.username,
-          postID: ObjectId(req.params.commentID)
+          postID: ObjectId(req.params.commentID),
         },
         user: req.session.user.username,
         timestamp: new Date(),
       }, (err) => {
         if (err) {
-          res.status(400).send('Error deleting')
-          return;
-        } else{
-          console.log('doc deleted')
+          res.status(400).send('Error deleting');
+        } else {
+          console.log('doc deleted');
         }
-        }      
-    );
+      });
 
     res.sendStatus(200);
   } else {
