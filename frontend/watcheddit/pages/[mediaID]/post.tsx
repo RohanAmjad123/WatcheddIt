@@ -1,5 +1,5 @@
 import MediaCard from "../../components/MediaCard";
-import { GetStaticProps, GetStaticPaths } from 'next'
+import { GetServerSideProps } from 'next'
 import { Grid } from "@mui/material";
 import { useRouter } from "next/router";
 import PostForm from "../../forms/PostForm";
@@ -21,21 +21,7 @@ export default function Post({ media }: { media: Media }) {
     );
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-    const res = await fetch(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/media`);
-    const mediaList = await res.json();
-
-    const paths = mediaList.map((media: Media) => ({
-        params: { mediaID: media.imdbID },
-    }))
-
-    return {
-        paths,
-        fallback: false,
-    };
-}
-
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
     const params = context.params!
     const mediaRes = await fetch(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/media/${params.mediaID}`);
     const media = await mediaRes.json();

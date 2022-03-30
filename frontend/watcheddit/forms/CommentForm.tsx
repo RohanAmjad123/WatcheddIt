@@ -30,8 +30,8 @@ export default function CommentForm() {
 
         axios.post(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/comment/${postID}/add`, comment, { withCredentials: true })
             .then((response) => {
-
-            },
+                router.push(`/${mediaID}/${postID}`)
+            }, 
                 (error) => {
                     console.log(error)
                 })
@@ -40,6 +40,7 @@ export default function CommentForm() {
             ...formValues,
             text: ""
         })
+
     }
 
     return (

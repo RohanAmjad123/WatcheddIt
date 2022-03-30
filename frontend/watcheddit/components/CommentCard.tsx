@@ -6,10 +6,13 @@ import { useState, useEffect } from 'react'
 import { useAppSelector } from '../app/hooks'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useRouter } from 'next/router'
 
 export default function CommentCard({ comment }: { comment: Comment }) {
     const userState = useAppSelector((state) => state)
     const [showEdit, setShowEdit] = useState(false)
+    const router = useRouter()
+    const { mediaID, postID } = router.query
 
     useEffect(() => {
         setShowEdit(false)
@@ -42,6 +45,7 @@ export default function CommentCard({ comment }: { comment: Comment }) {
         console.log(postDeleteData)
         axios.post(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/comment/delete/${comment._id}`, postDeleteData, { withCredentials: true })
             .then((response) => {
+                router.push(`/${mediaID}/${postID}`)
                 console.log(response)
              }, (err) => { 
                 console.log(err) 
@@ -61,6 +65,7 @@ export default function CommentCard({ comment }: { comment: Comment }) {
 
         axios.put(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/comment/update/${comment._id}`, editFormValues, { withCredentials: true })
             .then((response) => {
+                router.push(`/${mediaID}/${postID}`)
                 setShowEdit(false)
             }, (err) => {
                 console.log(err)
