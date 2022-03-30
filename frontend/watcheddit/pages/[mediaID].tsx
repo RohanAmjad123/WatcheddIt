@@ -1,5 +1,5 @@
 import React from 'react'
-import { GetStaticPaths, GetStaticProps } from 'next'
+import { GetServerSideProps } from 'next'
 import MediaCard from "../components/MediaCard";
 import { Grid } from "@mui/material";
 import PostCard from "../components/PostCard";
@@ -39,21 +39,7 @@ export default function MediaPage({ media, postsList }: { media: Media, postsLis
     );
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-    const res = await fetch(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/media`);
-    const mediaList = await res.json();
-
-    const paths = mediaList.map((media: Media) => ({
-        params: { mediaID: media.imdbID },
-    }))
-
-    return {
-        paths,
-        fallback: false,
-    };
-}
-
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
     const params = context.params!
     const mediaRes = await fetch(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/media/${params.mediaID}`);
     const media = await mediaRes.json();

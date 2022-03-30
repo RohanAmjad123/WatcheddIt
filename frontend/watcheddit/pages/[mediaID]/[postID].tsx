@@ -1,4 +1,4 @@
-import { GetStaticPaths, GetStaticProps } from 'next'
+import { GetServerSideProps } from 'next'
 import { Post, Comment } from '../../interfaces/index'
 import PostCard from '../../components/PostCard'
 import { Grid } from '@mui/material'
@@ -33,24 +33,7 @@ export default function PostPage({ post, commentsList }: { post: Post, commentsL
     );
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-    const postRes = await fetch(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/posts/`);
-    const postList = await postRes.json();
-
-    const paths = postList.map((post: Post) => ({
-        params: {
-            mediaID: post.imdbID,
-            postID: post._id
-        },
-    }))
-
-    return {
-        paths,
-        fallback: false,
-    };
-}
-
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
     const params = context.params!
     const postRes = await fetch(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/media/${params.mediaID}/post/${params.postID}/`);
     const post = await postRes.json();
