@@ -44,7 +44,6 @@ jobs:
       - name: Build and Run Tests
         run: |
           npm run build --if-present
-          npm run test
 
       - name: Check Out Repo 
         uses: actions/checkout@v2
