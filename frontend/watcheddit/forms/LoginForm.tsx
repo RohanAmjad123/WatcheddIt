@@ -15,8 +15,12 @@ export default function LoginForm() {
     const router = useRouter();
     const dispatch = useAppDispatch()
     const [formValues, setFormValues] = useState(defaultLoginValues);
+    const [incorrectUsername, setIncorrectUsername] = useState(false);
+    const [incorrectPassword, setIncorrectPassword] = useState(false);
 
     const handleChange = (event: any) => {
+        setIncorrectUsername(false)
+        setIncorrectPassword(false)
         const { name, value } = event.target;
         setFormValues(prevState => ({
             ...prevState,
@@ -36,7 +40,14 @@ export default function LoginForm() {
                 username = response.data.username
                 type = response.data.type
                 successfulLogin = true
+                setIncorrectUsername(false)
+                setIncorrectPassword(false)
             }, (error) => {
+                if (error.response.data === "No matching username found") {
+                    setIncorrectUsername(true)
+                } else if (error.response.data === "Wrong password") {
+                    setIncorrectPassword(true)
+                }
                 console.log(error)
             })
             
@@ -73,10 +84,10 @@ export default function LoginForm() {
         <FormControl>
             <Grid container direction="column" spacing={3}>
                 <Grid item>
-                    <TextField required name="username" onChange={handleChange} label="Username" autoComplete="username" autoFocus />
+                    <TextField error={incorrectUsername} helperText={incorrectUsername ? "Incorrect username" : "" } required name="username" onChange={handleChange} label="Username" autoComplete="username" autoFocus />
                 </Grid>
                 <Grid item>
-                    <TextField required type="password" name="password" onChange={handleChange} label="Password" autoComplete="current-password" />
+                    <TextField error={incorrectPassword} helperText={incorrectPassword ? "Incorrect password" : "" } required type="password" name="password" onChange={handleChange} label="Password" autoComplete="current-password" />
                 </Grid>
                 <Grid item>
                     <Button variant="contained" onClick={handleClick} color="success">Log in</Button>
