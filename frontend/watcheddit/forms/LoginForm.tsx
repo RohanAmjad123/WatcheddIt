@@ -52,7 +52,7 @@ export default function LoginForm() {
             })
             
         if (successfulLogin) {
-            axios.get('https://watcheddit-ljy5gpprra-uc.a.run.app/api/myratings', { withCredentials: true })
+            await axios.get('https://watcheddit-ljy5gpprra-uc.a.run.app/api/myratings', { withCredentials: true })
                 .then((response) => {
                     ratings = response.data
                     console.log(response)
