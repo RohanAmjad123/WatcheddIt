@@ -47,7 +47,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-const apiBase = 'http://www.omdbapi.com/?apikey=33ec892d&t='
+const apiBase = 'https://www.omdbapi.com/?apikey=33ec892d&t='
 
 const defaultMedia = {
     Title: "",
