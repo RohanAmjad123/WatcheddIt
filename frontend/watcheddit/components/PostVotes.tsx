@@ -15,9 +15,11 @@ import axios from 'axios'
 export default function PostVotes({ postId }: { postId: string }) {
     const userState = useAppSelector((state) => state)
     const router = useRouter();
-    const { mediaID, postID } = router.query
+    const { mediaID } = router.query
+    const [voteToggle, setVoteToggle] = useState(false)
 
     const dispatch = useAppDispatch()
+    
     const [votes, setVotes] = useState<Vote>({
         _id: postId,
         upVote: 0,
@@ -25,7 +27,7 @@ export default function PostVotes({ postId }: { postId: string }) {
     });
 
     useEffect(() => {
-        axios.get(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/post/${postID}/voting`, { withCredentials: true })
+        axios.get(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/post/${postId}/voting`, { withCredentials: true })
         .then((res) => {
             console.log(res.data)
             if (res.data !== "") {
@@ -38,17 +40,17 @@ export default function PostVotes({ postId }: { postId: string }) {
         }, (err) => {
             console.log(err)
         })
-    })
+    }, [voteToggle, postId])
 
     const handleUpvoteClickNotVoted = () => {
         const vote = {
             vote: true
         }
 
-        axios.post(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/post/${postID}/voting/user`, vote, { withCredentials: true })
+        axios.post(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/post/${postId}/voting/user`, vote, { withCredentials: true })
         .then((res) => {
-            router.push(`/${mediaID}/${postID}`)
             console.log(res)
+            setVoteToggle(!voteToggle)
         }, (err) => {
             console.log(err)
         })
@@ -64,10 +66,10 @@ export default function PostVotes({ postId }: { postId: string }) {
             vote: false
         }
 
-        axios.post(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/post/${postID}/voting/user`, vote, { withCredentials: true })
+        axios.post(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/post/${postId}/voting/user`, vote, { withCredentials: true })
         .then((res) => {
-            router.push(`/${mediaID}/${postID}`)
             console.log(res)
+            setVoteToggle(!voteToggle)
         }, (err) => {
             console.log(err)
         })
@@ -79,10 +81,13 @@ export default function PostVotes({ postId }: { postId: string }) {
     }
 
     const handleUpvoteClickVotedUpvote = () => {
-        axios.delete(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/post/${postID}/voting/user`, { withCredentials: true })
+        axios.delete(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/post/${postId}/voting/user`, { withCredentials: true })
         .then((res) => {
-            router.push(`/${mediaID}/${postID}`)
             console.log(res)
+            setVotes(prevState => ({
+                ...prevState,
+                upVote: prevState.upVote - 1
+            }))
         }, (err) => {
             console.log(err)
         })
@@ -98,10 +103,10 @@ export default function PostVotes({ postId }: { postId: string }) {
             vote: false
         }
 
-        axios.put(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/post/${postID}/voting/user`, vote, { withCredentials: true })
+        axios.put(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/post/${postId}/voting/user`, vote, { withCredentials: true })
         .then((res) => {
-            router.push(`/${mediaID}/${postID}`)
             console.log(res)
+            setVoteToggle(!voteToggle)
         }, (err) => {
             console.log(err)
         })
@@ -117,10 +122,10 @@ export default function PostVotes({ postId }: { postId: string }) {
             vote: true
         }
 
-        axios.put(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/post/${postID}/voting/user`, vote, { withCredentials: true })
+        axios.put(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/post/${postId}/voting/user`, vote, { withCredentials: true })
         .then((res) => {
-            router.push(`/${mediaID}/${postID}`)
             console.log(res)
+            setVoteToggle(!voteToggle)
         }, (err) => {
             console.log(err)
         })
@@ -132,10 +137,13 @@ export default function PostVotes({ postId }: { postId: string }) {
     }
 
     const handleDownvoteClickVotedDownvote = () => {
-        axios.delete(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/post/${postID}/voting/user`, { withCredentials: true })
+        axios.delete(`https://watcheddit-ljy5gpprra-uc.a.run.app/api/post/${postId}/voting/user`, { withCredentials: true })
         .then((res) => {
-            router.push(`/${mediaID}/${postID}`)
             console.log(res)
+            setVotes(prevState => ({
+                ...prevState,
+                downVote: prevState.downVote - 1
+            }))
         }, (err) => {
             console.log(err)
         })
